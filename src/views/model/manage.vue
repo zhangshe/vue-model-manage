@@ -93,7 +93,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="24">
+            <el-col :span="12">
               <el-form-item label="模型文件" prop="DeptName">
                 <el-upload
                   ref="upload"
@@ -107,6 +107,11 @@
                   <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
                   <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
                 </el-upload>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="上传密钥" prop="key">
+                <el-input v-model="ruleForm.key" />
               </el-form-item>
             </el-col>
           </el-row>

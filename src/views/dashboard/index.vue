@@ -36,7 +36,7 @@
           type="primary"
           icon="el-icon-circle-plus"
           @click="addModel"
-        >创建模型</el-button>
+        >上传模型</el-button>
         <span style="margin-left:20%;">共有{{ pageQuery.total }} 项模型</span>
       </el-col>
       <el-col :span="10" style="text-align:right;">
