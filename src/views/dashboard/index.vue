@@ -28,7 +28,15 @@
       </div>
     </div>
     <el-row style="margin-top:2%;">
-      <el-col :span="12" style="text-align:left;font-size:20px;">
+      <el-col :span="10" :offset="2" style="text-align:left;font-size:20px;">
+        <el-button
+          ref="btnAddModel"
+          class="filter-item"
+          style="margin-left: 10px;"
+          type="primary"
+          icon="el-icon-circle-plus"
+          @click="addModel"
+        >创建模型</el-button>
         <span style="margin-left:20%;">共有{{ pageQuery.total }} 项模型</span>
       </el-col>
       <el-col :span="10" style="text-align:right;">
@@ -196,6 +204,11 @@ export default {
         path: 'Detail',
         query: { type: 'detail' },
         params: { data: row }
+      })
+    },
+    addModel() {
+      this.$router.push({
+        path: 'Manage'
       })
     }
   }
