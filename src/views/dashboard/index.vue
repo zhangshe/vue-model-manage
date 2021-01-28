@@ -96,7 +96,8 @@
 import { mapGetters } from 'vuex'
 import { Loading } from 'element-ui'
 import {
-  getModelInfo
+  getModelInfo,
+  addViewNum
 } from '@/api/fmu'
 export default {
   name: 'Dashboard',
@@ -158,10 +159,16 @@ export default {
       this.getList()
     },
     detailModel(row) {
-      this.$router.push({
-        path: 'Detail',
-        query: { type: 'detail' },
-        params: { data: row }
+      addViewNum({ moduleId: row.ModelID }).then(response => {
+        this.message = response.RespMsg
+        this.title = '失败'
+        this.type = 'error'
+        if (response.RespCode === 1) {
+          this.$router.push({
+            name: 'Detail',
+            params: { data: row }
+          })
+        }
       })
     },
     addModel() {

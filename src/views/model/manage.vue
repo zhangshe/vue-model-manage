@@ -28,18 +28,18 @@
     </div>
     <el-row>
       <el-col :span="20" :offset="2">
-        <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="120px" style="margin-top:3%;" class="demo-ruleForm">
+        <el-form ref="ruleForm" :model="modelForm" :rules="rules" label-width="120px" style="margin-top:3%;" class="demo-ruleForm">
           <el-row>
             <el-col :span="24">
-              <el-form-item label="模型名称" prop="name">
-                <el-input v-model="ruleForm.name" />
+              <el-form-item label="模型名称" prop="ModelName">
+                <el-input v-model="modelForm.ModelName" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="14">
-              <el-form-item label="模型类别" prop="resource">
-                <el-radio-group v-model="ruleForm.resource">
+              <el-form-item label="模型类别" prop="ModelType">
+                <el-radio-group v-model="modelForm.ModelType">
                   <el-radio label="FMU" />
                   <el-radio label="API" />
                 </el-radio-group>
@@ -47,7 +47,7 @@
             </el-col>
             <el-col :span="10" style="text-align:right;">
               <el-form-item label="语言" style="text-align:right" prop="Language">
-                <el-select v-model="ruleForm.Language" placeholder="请选择语言" style="width:100%;">
+                <el-select v-model="modelForm.Language" placeholder="请选择语言" style="width:100%;">
                   <el-option label="Java" value="Java" />
                   <el-option label="Python" value="Python" />
                   <el-option label="Matlab" value="Matlab" />
@@ -60,7 +60,7 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="应用场景" prop="Scene">
-                <el-select v-model="ruleForm.Scene" multiple placeholder="请选择应用场景" style="width:100%;">
+                <el-select v-model="modelForm.Scene" multiple placeholder="请选择应用场景" style="width:100%;">
                   <el-option label="市场研究" value="Java" />
                   <el-option label="绿色生态" value="Python" />
                   <el-option label="低碳节能" value="Matlab" />
@@ -74,20 +74,20 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="上传部门" style="text-align:right" prop="OrgName">
-                <el-select v-model="ruleForm.OrgName" placeholder="上传部门" style="width:100%;">
-                  <el-option label="前瞻技术研究室" value="1" />
-                  <el-option label="数据技术应用室" value="2" />
-                  <el-option label="软件研发室" value="3" />
+                <el-select v-model="modelForm.OrgName" placeholder="上传部门" style="width:100%;">
+                  <el-option label="前瞻技术研究室" value="前瞻技术研究室" />
+                  <el-option label="数据技术应用室" value="数据技术应用室" />
+                  <el-option label="软件研发室" value="软件研发室" />
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="上传科室" style="text-align:right" prop="DeptName">
-                <el-select v-model="ruleForm.DeptName" placeholder="上传科室" style="width:100%;">
-                  <el-option label="工业互联网标识组" value="1" />
-                  <el-option label="数据组" value="2" />
-                  <el-option label="仿真技术组" value="3" />
-                  <el-option label="创新技术组" value="4" />
+                <el-select v-model="modelForm.DeptName" placeholder="上传科室" style="width:100%;">
+                  <el-option label="工业互联网标识组" value="工业互联网标识组" />
+                  <el-option label="数据组" value="数据组" />
+                  <el-option label="仿真技术组" value="仿真技术组" />
+                  <el-option label="创新技术组" value="创新技术组" />
                 </el-select>
               </el-form-item>
             </el-col>
@@ -111,21 +111,21 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="上传密钥" prop="key">
-                <el-input v-model="ruleForm.key" />
+                <el-input v-model="modelForm.ApiKey" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
-              <el-form-item label="输入数据样例" prop="desc">
-                <el-input v-model="ruleForm.InputData" type="textarea" />
+              <el-form-item label="输入数据样例" prop="InputData">
+                <el-input v-model="modelForm.InputData" type="textarea" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
-              <el-form-item label="输出数据样例" prop="desc">
-                <el-input v-model="ruleForm.OutputData" type="textarea" />
+              <el-form-item label="输出数据样例" prop="OutputData">
+                <el-input v-model="modelForm.OutputData" type="textarea" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -146,26 +146,32 @@ export default {
   data() {
     return {
       fileList: [],
-      ruleForm: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+      modelForm: {
+        ModelID: '',
+        ModelName: '',
+        ModelType: '',
+        Language: '',
+        Scene: '',
+        Introduction: '',
+        OrgID: '',
+        OrgName: '',
+        DeptID: '',
+        DeptName: '',
+        Uploader: '',
+        InputData: '',
+        OutputData: '',
+        UpdateTime: '',
+        DownloadNum: 0,
+        ViewNum: 0,
+        ApiKey: ''
       },
       rules: {
-        name: [
+        ModelName: [
           { required: true, message: '请输入模型名称', trigger: 'blur' }
         //   { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
-        resource: [
+        ModelType: [
           { required: true, message: '请选择模型类别', trigger: 'change' }
-        ],
-        desc: [
-          { required: true, message: '请填写数据样例', trigger: 'blur' }
         ]
       }
     }
@@ -213,7 +219,7 @@ export default {
     },
     // 关闭页面
     closetab() {
-      this.$store.dispatch('tagsView/delView', this.$route)
+      // this.$store.dispatch('tagsView/delView', this.$route)
       this.$router.go(-1)
     }
   }

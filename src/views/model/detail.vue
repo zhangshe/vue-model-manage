@@ -29,7 +29,7 @@
     <div>
       <el-row>
         <el-col :span="20" :offset="2" style="margin-top:1%;margin-bottom:2%;">
-          <label style="font-size:26px;color:#3A5E9D;margin-top:1%;">XXXXXXXXX模型</label>
+          <label style="font-size:26px;color:#3A5E9D;margin-top:1%;">{{ modelForm.ModelName }}</label>
           <el-row style="margin-top:1%;">
             <el-col :span="8">
               <img style="float:left;" src="@/assets/images/clock.png">
@@ -44,7 +44,7 @@
                 font-size:20px;"
               >
                 <span style="margin-left:5px;">最新更新时间：</span>
-                <span> 2020-11-11 </span>
+                <span> {{ modelForm.UpdateTime }} </span>
               </div>
             </el-col>
             <el-col :span="8">
@@ -60,7 +60,7 @@
                 font-size:20px;"
               >
                 <span style="margin-left:5px;">访问量：</span>
-                <span> 23 次 </span>
+                <span> {{ modelForm.ViewNum }} 次 </span>
               </div>
             </el-col>
             <el-col :span="8">
@@ -76,25 +76,25 @@
                 font-size:20px;"
               >
                 <span style="margin-left:5px;">调用量：</span>
-                <span> 11 次 </span>
+                <span> {{ modelForm.DownloadNum }} 次 </span>
               </div>
             </el-col>
           </el-row>
           <hr>
           <el-row>
             <div style="margin:1% 0px;"><label style="font-size:24px;">基本信息</label></div>
-            <div style="margin:1% 0px;"><label style="font-size:24px;">模型简介：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</label></div>
-            <div style="margin:1% 0px;"><label style="font-size:24px;">模型类型：FMU</label></div>
-            <div style="margin:1% 0px;"><label style="font-size:24px;">应用场景：XXX</label></div>
+            <div style="margin:1% 0px;"><label style="font-size:24px;">模型简介：{{ modelForm.Introduction }}</label></div>
+            <div style="margin:1% 0px;"><label style="font-size:24px;">模型类型：{{ modelForm.ModelType }}</label></div>
+            <div style="margin:1% 0px;"><label style="font-size:24px;">应用场景：{{ modelForm.Scene }}</label></div>
           </el-row>
           <hr>
           <el-row>
             <div style="margin:1% 0px;"><label style="font-size:24px;">模型详细信息</label></div>
-            <div style="margin:1% 0px;"><label style="font-size:24px;">输入数据样例：XXX</label></div>
-            <div style="margin:1% 0px;"><label style="font-size:24px;">输出数据样例：XXX</label></div>
+            <div style="margin:1% 0px;"><label style="font-size:24px;">输入数据样例：{{ modelForm.InputData }}</label></div>
+            <div style="margin:1% 0px;"><label style="font-size:24px;">输出数据样例：{{ modelForm.OutputData }}</label></div>
           </el-row>
           <el-row>
-            <el-button style="width:200px;" type="warning">模型调用</el-button>
+            <el-button style="width:200px;" type="warning" @click="InvokeClick()">模型调用</el-button>
           </el-row>
           <el-col :span="24" style="text-align:center;">
             <el-button @click="resetForm()">返回</el-button>
@@ -107,10 +107,34 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import {
+  addInvokeNum
+} from '@/api/fmu'
 export default {
   name: 'Detail',
   data() {
     return {
+      modelForm: {
+        DeptID: null,
+        DeptName: null,
+        DownloadNum: 0,
+        GUID: null,
+        InputData: null,
+        Introduction: '',
+        Language: null,
+        ModelFileUrl: null,
+        ModelID: '',
+        ModelName: '',
+        ModelType: 1,
+        OrgID: null,
+        OrgName: null,
+        OutputData: null,
+        Scene: '',
+        StartScript: null,
+        UpdateTime: null,
+        Uploader: null,
+        ViewNum: 0
+      }
     }
   },
   computed: {
@@ -120,7 +144,9 @@ export default {
     ])
   },
   created() {
-    // this.saveCreateTime = this.$route.params.date
+    this.modelForm = this.$route.params.data
+    this.modelForm.ViewNum = parseInt(this.modelForm.ViewNum) + 1
+    // console.log(this.modelForm)
     // if (this.$route.query.type === 'edit' || this.$route.query.type === 'check') {
     //   this.getDetialInfo()
     // }
@@ -135,8 +161,21 @@ export default {
     },
     // 关闭页面
     closetab() {
-      this.$store.dispatch('tagsView/delView', this.$route)
+      // this.$store.dispatch('tagsView/delView', this.$route)
       this.$router.go(-1)
+    },
+    InvokeClick() {
+      addInvokeNum({ moduleId: this.modelForm.ModelID }).then(response => {
+        this.message = response.RespMsg
+        this.title = '失败'
+        this.type = 'error'
+        if (response.RespCode === 1) {
+          this.modelForm.DownloadNum = parseInt(this.modelForm.DownloadNum) + 1
+          this.modelForm.ViewNum = parseInt(this.modelForm.ViewNum) + 1
+          // this.$forceUpdate()
+          alert('调用成功！')
+        }
+      })
     }
   }
 }
