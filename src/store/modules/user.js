@@ -1,12 +1,18 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
-
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    orgId: '',
+    orgName: '',
+    orgCode: '',
+    userId: '',
+    roleIds: '',
+    menus: '',
+    pageElement: ''
   }
 }
 
@@ -24,6 +30,27 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_ORG_NAME: (state, orgName) => {
+    state.orgName = orgName
+  },
+  SET_ORG_ID: (state, orgId) => {
+    state.orgId = orgId
+  },
+  SET_ORG_CODE: (state, orgCode) => {
+    state.orgCode = orgCode
+  },
+  SET_USER_ID: (state, userId) => {
+    state.userId = userId
+  },
+  SET_ROLE_IDS: (state, roleIds) => {
+    state.roleIds = roleIds
+  },
+  SET_MENUS: (state, menus) => {
+    state.menus = menus
+  },
+  SET_PAGEELEMENT: (state, pageElement) => {
+    state.pageElement = pageElement
   }
 }
 
@@ -32,11 +59,13 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
+      login({ account: username.trim(), password: password }).then(response => {
+        // const { Data } = response
+        // commit('SET_TOKEN', data.token)
+        // setToken(data.token)
+        commit('SET_TOKEN', response.Data.UserId)
+        setToken(response.Data.UserId)
+        resolve(response)
       }).catch(error => {
         reject(error)
       })
@@ -46,18 +75,22 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
-
-        if (!data) {
-          return reject('Verification failed, please Login again.')
+      getInfo({ userid: state.token }).then(response => {
+        const { Data } = response
+        if (!Data) {
+          reject('验证失败！请重新登录')
         }
-
-        const { name, avatar } = data
-
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
+        const { UserName, OrgName, OrgId, OrgCode, RoleIds, UserId, Menus, PageElement } = Data
+        commit('SET_NAME', UserName)
+        commit('SET_ORG_NAME', OrgName)
+        commit('SET_ORG_ID', OrgId)
+        commit('SET_ORG_CODE', OrgCode)
+        commit('SET_USER_ID', UserId)
+        commit('SET_ROLE_IDS', RoleIds)
+        commit('SET_MENUS', Menus)
+        commit('SET_PAGEELEMENT', PageElement)
+        // commit('SET_AVATAR', avatar)
+        resolve(Data)
       }).catch(error => {
         reject(error)
       })
@@ -94,4 +127,3 @@ export default {
   mutations,
   actions
 }
-

@@ -40,23 +40,23 @@
         <span style="margin-left:20%;">共有{{ pageQuery.total }} 项模型</span>
       </el-col>
       <el-col :span="10" style="text-align:right;">
-        <el-input v-model="searchContent" placeholder="请输入搜索模型名称" style="width:40%;" class="input-with-select">
+        <el-input v-model="pageQuery.modelName" placeholder="请输入搜索模型名称" style="width:40%;" class="input-with-select">
           <el-button slot="append" icon="el-icon-search" @click="searchModel" />
         </el-input>
       </el-col>
     </el-row>
-    <el-row v-for="(item, index) in modelList" v-show="modelList.length > 0" :key="'model'+index">
+    <el-row v-for="(item, index) in modelList" v-show="modelList.length > 0" :key="'model'+index" style="cursor:pointer">
       <el-col :span="20" :offset="2" style="border:1px solid #ccc;margin-top:1%;">
         <el-row :gutter="20" style="margin:1% 0;">
           <el-col :span="18">
-            <div>
-              <label style="color:#4D6DA6;display: inline-block;margin: 10px 5px;font-size: 20px;">{{ item.ModelName }}</label>
+            <div style="" @click="detailModel(item)">
+              <label style="color:#4D6DA6;display: inline-block;margin: 10px 5px;font-size: 20px;cursor:pointer;">{{ item.ModelName }}</label>
             </div>
           </el-col>
           <el-col :span="6">
             <div style=" display: flex;align-items: center;justify-content: top;text-align: justify;">
               <el-button type="text" style="font-size: 16px;color:#878282;">&nbsp;&nbsp;<i class="el-icon-download" />&nbsp;&nbsp;{{ item.DownloadNum }}次</el-button>
-              <el-button type="text" style="font-size: 16px;color:#878282;margin-left:10%;" @click="detailModel(item)">&nbsp;&nbsp;<svg-icon icon-class="eye-open" />&nbsp;&nbsp;{{ item.ViewNum }}次</el-button>
+              <el-button type="text" style="font-size: 16px;color:#878282;margin-left:10%;">&nbsp;&nbsp;<svg-icon icon-class="eye-open" />&nbsp;&nbsp;{{ item.ViewNum }}次</el-button>
             </div>
           </el-col>
         </el-row>
@@ -94,7 +94,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+import { Loading } from 'element-ui'
+import {
+  getModelInfo
+} from '@/api/fmu'
 export default {
   name: 'Dashboard',
   data() {
@@ -102,6 +105,7 @@ export default {
       searchContent: '',
       modelList: [], // 模型列表
       pageQuery: {
+        modelName: '',
         pageIndex: 1,
         pageSize: 10,
         total: 0
@@ -123,73 +127,27 @@ export default {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
     searchModel() {
+      this.pageQuery.pageIndex = 1
+      this.getList()
     },
     getList() {
-      this.modelList = [{
-        'ModelID': '1111',
-        'ModelName': '测试模型111',
-        'ModelType': 'FMU',
-        'Scene': '市场研究',
-        'Introduction': 'XXXXXXXXXXXXXXXXXXXXXXXXXX',
-        'UpdateTime': '2021-01-26 10:45',
-        'DownloadNum': 23,
-        'ViewNum': 111
-      }, {
-        'ModelID': '1111',
-        'ModelName': '测试模型111',
-        'ModelType': 'FMU',
-        'Scene': '市场研究',
-        'Introduction': 'XXXXXXXXXXXXXXXXXXXXXXXXXX',
-        'UpdateTime': '2021-01-26 10:45',
-        'DownloadNum': 23,
-        'ViewNum': 111
-      }, {
-        'ModelID': '1111',
-        'ModelName': '测试模型111',
-        'ModelType': 'FMU',
-        'Scene': '市场研究',
-        'Introduction': 'XXXXXXXXXXXXXXXXXXXXXXXXXX',
-        'UpdateTime': '2021-01-26 10:45',
-        'DownloadNum': 23,
-        'ViewNum': 111
-      }, {
-        'ModelID': '1111',
-        'ModelName': '测试模型111',
-        'ModelType': 'FMU',
-        'Scene': '市场研究',
-        'Introduction': 'XXXXXXXXXXXXXXXXXXXXXXXXXX',
-        'UpdateTime': '2021-01-26 10:45',
-        'DownloadNum': 23,
-        'ViewNum': 111
-      }, {
-        'ModelID': '1111',
-        'ModelName': '测试模型111',
-        'ModelType': 'FMU',
-        'Scene': '市场研究',
-        'Introduction': 'XXXXXXXXXXXXXXXXXXXXXXXXXX',
-        'UpdateTime': '2021-01-26 10:45',
-        'DownloadNum': 23,
-        'ViewNum': 111
-      }, {
-        'ModelID': '1111',
-        'ModelName': '测试模型111',
-        'ModelType': 'FMU',
-        'Scene': '市场研究',
-        'Introduction': 'XXXXXXXXXXXXXXXXXXXXXXXXXX',
-        'UpdateTime': '2021-01-26 10:45',
-        'DownloadNum': 23,
-        'ViewNum': 111
-      }, {
-        'ModelID': '1111',
-        'ModelName': '测试模型111',
-        'ModelType': 'FMU',
-        'Scene': '市场研究',
-        'Introduction': 'XXXXXXXXXXXXXXXXXXXXXXXXXX',
-        'UpdateTime': '2021-01-26 10:45',
-        'DownloadNum': 23,
-        'ViewNum': 111
-      }]
-      this.pageQuery.total = 11
+      const loadingInstance = Loading.service({ fullscreen: false })
+      getModelInfo(this.pageQuery).then(response => {
+        if (response.RespCode === 1) {
+          this.modelList = response.Data.Data
+          this.pageQuery.total = response.Data.TotalCount
+          loadingInstance.close()
+        } else {
+          loadingInstance.close()
+          this.$notify({
+            position: 'bottom-right',
+            title: '失败',
+            message: response.RespMsg,
+            type: 'error',
+            duration: 2000
+          })
+        }
+      })
     },
     handleSizeChange(val) {
       this.pageQuery.pageSize = val

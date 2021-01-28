@@ -96,6 +96,9 @@
           <el-row>
             <el-button style="width:200px;" type="warning">模型调用</el-button>
           </el-row>
+          <el-col :span="24" style="text-align:center;">
+            <el-button @click="resetForm()">返回</el-button>
+          </el-col>
         </el-col>
       </el-row>
     </div>
@@ -126,6 +129,14 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    resetForm() {
+      this.closetab()
+    },
+    // 关闭页面
+    closetab() {
+      this.$store.dispatch('tagsView/delView', this.$route)
+      this.$router.go(-1)
     }
   }
 }
