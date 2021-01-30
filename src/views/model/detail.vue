@@ -5,13 +5,13 @@
         <img style="height:80px;margin-left:5%;" src="@/assets/images/logo.png">
       </div>
       <h1 style="color:#fff;float:left;line-height: 55px;margin-left: 5%;">中汽数据模型管理系统</h1>
-      <div class="verticalBar" />
+      <div class="verticalBar"/>
       <h3 style="color:#CCC;float:left;line-height: 55px;">模型详情</h3>
       <div class="right-menu">
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
             <h3 style="color:#FFF;cursor: pointer;">{{ name }}</h3>
-            <i class="el-icon-caret-bottom" />
+            <i class="el-icon-caret-bottom"/>
           </div>
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
             <router-link to="/">
@@ -84,14 +84,16 @@
           <el-row>
             <div style="margin:1% 0px;"><label style="font-size:24px;">基本信息</label></div>
             <div style="margin:1% 0px;"><label style="font-size:24px;">模型简介：{{ modelForm.Introduction }}</label></div>
-            <div style="margin:1% 0px;"><label style="font-size:24px;">模型类型：{{ modelForm.ModelType | parseType }}</label></div>
+            <div style="margin:1% 0px;"><label style="font-size:24px;">模型类型：{{
+                modelForm.ModelType | parseType
+              }}</label></div>
             <div style="margin:1% 0px;"><label style="font-size:24px;">应用场景：{{ modelForm.Scene }}</label></div>
             <ul class="list-group">
-              <li class="list-group-item">GUID:&nbsp;<span id="model_description.guid" /></li>
-              <li class="list-group-item">FMI版本:&nbsp;<span id="model_description.fmi_version" /></li>
-              <li class="list-group-item">作者:&nbsp;<span id="model_description.author" /></li>
-              <li class="list-group-item">生成工具:&nbsp;<span id="model_description.generation_tool" /></li>
-              <li class="list-group-item">生成时间:&nbsp;<span id="model_description.generation_date_and_time" /></li>
+              <li class="list-group-item">GUID:&nbsp;<span id="model_description.guid"/></li>
+              <li class="list-group-item">FMI版本:&nbsp;<span id="model_description.fmi_version"/></li>
+              <li class="list-group-item">作者:&nbsp;<span id="model_description.author"/></li>
+              <li class="list-group-item">生成工具:&nbsp;<span id="model_description.generation_tool"/></li>
+              <li class="list-group-item">生成时间:&nbsp;<span id="model_description.generation_date_and_time"/></li>
             </ul>
 
           </el-row>
@@ -101,38 +103,38 @@
             <div class="table">
               <table class="table table-sm">
                 <thead>
-                  <tr>
-                    <th>开始时间</th>
-                    <th>停止时间</th>
-                    <th>相对容差</th>
-                    <th>步长</th>
-                  </tr>
+                <tr>
+                  <th>开始时间</th>
+                  <th>停止时间</th>
+                  <th>相对容差</th>
+                  <th>步长</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><input id="model_description.default_experiment.startTime" class="form-control"></td>
-                    <td><input id="model_description.default_experiment.stopTime" class="form-control"></td>
-                    <td><input id="model_description.default_experiment.tolerance" class="form-control"></td>
-                    <td><input id="model_description.default_experiment.stepSize" class="form-control"></td>
-                  </tr>
+                <tr>
+                  <td><input id="model_description.default_experiment.startTime" class="form-control"></td>
+                  <td><input id="model_description.default_experiment.stopTime" class="form-control"></td>
+                  <td><input id="model_description.default_experiment.tolerance" class="form-control"></td>
+                  <td><input id="model_description.default_experiment.stepSize" class="form-control"></td>
+                </tr>
                 </tbody>
               </table>
             </div>
             <div class="table">
               <table class="table table-sm">
                 <thead>
-                  <tr>
-                    <th>名称</th>
-                    <th>索引</th>
-                    <th>描述</th>
-                    <th>变量类别</th>
-                    <th>初始化</th>
-                    <th>可变性</th>
-                    <th>值类型</th>
-                    <th>模拟输入</th>
-                  </tr>
+                <tr>
+                  <th>名称</th>
+                  <th>索引</th>
+                  <th>描述</th>
+                  <th>变量类别</th>
+                  <th>初始化</th>
+                  <th>可变性</th>
+                  <th>值类型</th>
+                  <th>模拟输入</th>
+                </tr>
                 </thead>
-                <tbody id="model_description.model_variables" />
+                <tbody id="model_description.model_variables"/>
               </table>
             </div>
 
@@ -143,7 +145,7 @@
             <el-button style="width:200px;margin-bottom:1%;" type="warning" @click="InvokeClick()">模型调用</el-button>
           </el-row>
           <el-row>
-            <textarea id="msg" class="form-control" style="height:200px;" />
+            <textarea id="msg" class="form-control" style="height:200px;"/>
           </el-row>
           <el-col :span="24" style="text-align:center;margin-top:1%;">
             <el-button @click="resetForm()">返回</el-button>
@@ -155,7 +157,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import {
   addInvokeNum, PostInvokelog, getModelInfoById
 } from '@/api/fmu'
@@ -169,7 +171,9 @@ export default {
       return date
     },
     parseType(value) {
-      if (value === 0) { return '.FMU' } else return '.API'
+      if (value === 0) {
+        return '.FMU'
+      } else return '.API'
     }
   },
   data() {
@@ -209,10 +213,12 @@ export default {
     // if (this.$route.query.type === 'edit' || this.$route.query.type === 'check') {
     //   this.getDetialInfo()
     // }
-    var null2str = function(data) {
+    var null2str = function (data) {
       if (data == null || data === 'null') {
         return ''
-      } else { return data }
+      } else {
+        return data
+      }
     }
 
     if (this.$route.query.moduleId !== null) {
@@ -223,8 +229,7 @@ export default {
         // this.paperInfoData = response.Data
         this.modelForm = response.Data
         this.modelForm.ViewNum = parseInt(this.modelForm.ViewNum) + 1
-
-        var rpc_address = 'http://127.0.0.1:9091/thrift'
+        var rpc_address = 'http://192.168.144.24:9091/thrift'
         // eslint-disable-next-line no-undef
         var transport = new Thrift.TXHRTransport(rpc_address)
         // eslint-disable-next-line no-undef
@@ -257,12 +262,24 @@ export default {
         // 属性列表
         document.getElementById('model_description.model_variables').innerHTML = ''
 
-        model_description.model_variables.sort(function(a, b) {
+        model_description.model_variables.sort(function (a, b) {
           return b.value_reference - a.value_reference
         })
 
-        var typeTest = function(obj) {
-          if (obj.integer_attribute != null) { return 'integer' } else if (obj.real_attribute != null) { return 'real' } else if (obj.string_attribute != null) { return 'string' } else if (obj.boolean_attribute != null) { return 'boolean' } else if (obj.enumeration_attribute != null) { return 'enumeration' } else { return '-' }
+        var typeTest = function (obj) {
+          if (obj.integer_attribute != null) {
+            return 'integer'
+          } else if (obj.real_attribute != null) {
+            return 'real'
+          } else if (obj.string_attribute != null) {
+            return 'string'
+          } else if (obj.boolean_attribute != null) {
+            return 'boolean'
+          } else if (obj.enumeration_attribute != null) {
+            return 'enumeration'
+          } else {
+            return '-'
+          }
         }
 
         // eslint-disable-next-line no-array-constructor
@@ -333,7 +350,7 @@ export default {
       this.$router.go(-1)
     },
     InvokeClick() {
-      addInvokeNum({ moduleId: this.modelForm.ModelID }).then(response => {
+      addInvokeNum({moduleId: this.modelForm.ModelID}).then(response => {
         this.message = response.RespMsg
         this.title = '失败'
         this.type = 'error'
@@ -344,7 +361,7 @@ export default {
           document.getElementById('msg').value = ''
 
           try {
-            var rpc_address = 'http://127.0.0.1:9091/thrift'
+            var rpc_address = 'http://192.168.144.24:9091/thrift'
             // eslint-disable-next-line no-undef
             var transport = new Thrift.TXHRTransport(rpc_address)
             // eslint-disable-next-line no-undef
@@ -367,10 +384,22 @@ export default {
             for (var __i in input_params) {
               var _i = input_params[__i]
               var _v = document.getElementById(_i.index.toString()).value
-              if (_i.type == 'integer') { client.write_integer(instance_id, [_i.index], [_v]) } else if (_i.type == 'real') { client.write_real(instance_id, [_i.index], [_v]) } else if (_i.type == 'string') { client.write_string(instance_id, [_i.index], [_v]) } else if (_i.type == 'boolean') { client.write_boolean(instance_id, [_i.index], [_v.toLowerCase() == 'true']) } else if (_i.type == 'enumeration') { client.write_integer(instance_id, [_i.index], [_v]) }
+              if (_i.type == 'integer') {
+                client.write_integer(instance_id, [_i.index], [_v])
+              } else if (_i.type == 'real') {
+                client.write_real(instance_id, [_i.index], [_v])
+              } else if (_i.type == 'string') {
+                client.write_string(instance_id, [_i.index], [_v])
+              } else if (_i.type == 'boolean') {
+                client.write_boolean(instance_id, [_i.index], [_v.toLowerCase() == 'true'])
+              } else if (_i.type == 'enumeration') {
+                client.write_integer(instance_id, [_i.index], [_v])
+              }
             }
 
-            if (step_size == 0) { step_size = 1 }
+            if (step_size == 0) {
+              step_size = 1
+            }
 
             var t0 = performance.now()
 
@@ -388,7 +417,17 @@ export default {
                 var _i = output_params[__i]
                 _text += _i.name + '='
                 var _v = null
-                if (_i.type == 'integer') { _v = client.read_integer(instance_id, [_i.index]) } else if (_i.type == 'real') { _v = client.read_real(instance_id, [_i.index]) } else if (_i.type == 'string') { _v = client.read_string(instance_id, [_i.index]) } else if (_i.type == 'boolean') { _v = client.read_boolean(instance_id, [_i.index]) } else if (_i.type == 'enumeration') { _v = client.read_integer(instance_id, [_i.index]) }
+                if (_i.type == 'integer') {
+                  _v = client.read_integer(instance_id, [_i.index])
+                } else if (_i.type == 'real') {
+                  _v = client.read_real(instance_id, [_i.index])
+                } else if (_i.type == 'string') {
+                  _v = client.read_string(instance_id, [_i.index])
+                } else if (_i.type == 'boolean') {
+                  _v = client.read_boolean(instance_id, [_i.index])
+                } else if (_i.type == 'enumeration') {
+                  _v = client.read_integer(instance_id, [_i.index])
+                }
                 _text += _v.value + ' ,'
               }
 
