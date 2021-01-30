@@ -194,9 +194,7 @@ export default {
         UpdateTime: null,
         Uploader: null,
         ViewNum: 0
-      },
-      inputParams: null,
-      outParams: null
+      }
     }
   },
   computed: {
@@ -428,7 +426,9 @@ export default {
             InvokeTime: time,
             Invoker: '管理员',
             OrgID: this.modelForm.OrgID,
-            DeptID: this.modelForm.DeptID
+            OrgName: this.modelForm.OrgName,
+            DeptID: this.modelForm.DeptID,
+            DeptName: this.modelForm.DeptName
           })
         }
       })

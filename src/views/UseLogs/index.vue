@@ -60,12 +60,12 @@
         width="180">
       </el-table-column>
       <el-table-column
-        prop="OrgID"
-        label="机构"
+        prop="OrgName"
+        label="部门"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="DeptID"
+        prop="DeptName"
         label="科室"
         width="180">
       </el-table-column>
