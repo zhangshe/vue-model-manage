@@ -173,7 +173,8 @@ export default {
     },
     addModel() {
       this.$router.push({
-        path: 'Manage'
+        name: 'Manage',
+        params: { type: 'create' }
       })
     }
   }

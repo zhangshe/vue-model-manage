@@ -28,7 +28,7 @@
     </div>
     <el-row>
       <el-col :span="20" :offset="2">
-        <el-form ref="ruleForm" :model="modelForm" :rules="rules" label-width="120px" style="margin-top:3%;" class="demo-ruleForm">
+        <el-form ref="modelManageForm" :model="modelForm" :rules="rules" label-width="120px" style="margin-top:3%;" class="demo-ruleForm">
           <el-row>
             <el-col :span="24">
               <el-form-item label="模型名称" prop="ModelName">
@@ -40,12 +40,12 @@
             <el-col :span="14">
               <el-form-item label="模型类别" prop="ModelType">
                 <el-radio-group v-model="modelForm.ModelType">
-                  <el-radio label="FMU" />
-                  <el-radio label="API" />
+                  <el-radio :label="0">FMU</el-radio>
+                  <el-radio :label="1">API</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
-            <el-col :span="10" style="text-align:right;">
+            <el-col v-if="modelForm.ModelType==1" :span="10" style="text-align:right;">
               <el-form-item label="语言" style="text-align:right" prop="Language">
                 <el-select v-model="modelForm.Language" placeholder="请选择语言" style="width:100%;">
                   <el-option label="Java" value="Java" />
@@ -130,7 +130,8 @@
             </el-col>
           </el-row>
           <el-form-item style="text-align:center;">
-            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+            <el-button v-if="this.$route.params.type=='create'" type="primary" @click="submitForm()">创建模型</el-button>
+            <el-button v-else type="primary" @click="submitForm()">编辑模型</el-button>
             <el-button @click="resetForm('ruleForm')">关闭</el-button>
           </el-form-item>
         </el-form>
@@ -140,7 +141,13 @@
 </template>
 
 <script>
+
 import { mapGetters } from 'vuex'
+// import {
+//   addModule,
+//   updateModule,
+//   delModel
+// } from '@/api/fmu'
 export default {
   name: 'Detail',
   data() {
@@ -149,7 +156,7 @@ export default {
       modelForm: {
         ModelID: '',
         ModelName: '',
-        ModelType: '',
+        ModelType: 0,
         Language: '',
         Scene: '',
         Introduction: '',
@@ -187,15 +194,27 @@ export default {
     // if (this.$route.query.type === 'edit' || this.$route.query.type === 'check') {
     //   this.getDetialInfo()
     // }
+    var rpc_address = 'http://127.0.0.1:9091/thrift'
+    // eslint-disable-next-line no-undef
+    var transport = new Thrift.TXHRTransport(rpc_address)
+    // eslint-disable-next-line no-undef
+    var protocol = new Thrift.TJSONProtocol(transport)
+    // eslint-disable-next-line no-undef
+    var client = new FmuServiceClient(protocol)
+
+    var model_description = client.get_model_description('{0878329c-0786-4c87-912b-397eff2268a4}')
+    console.log(model_description)
   },
   methods: {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    submitForm() {
+      this.$refs['modelManageForm'].validate((valid) => {
         if (valid) {
+          this.modelForm.Scene = this.modelForm.Scene.join(',')
+          console.log(this.modelForm)
           alert('submit!')
         } else {
           console.log('error submit!!')
@@ -204,8 +223,8 @@ export default {
         this.closetab()
       })
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields()
+    resetForm() {
+      this.$refs['modelManageForm'].resetFields()
       this.closetab()
     },
     submitUpload() {

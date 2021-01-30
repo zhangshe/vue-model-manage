@@ -27,10 +27,29 @@ export function addInvokeNum(data) {
   })
 }
 
-export function login(data) {
+// 添加模型
+export function addModule(data) {
   return request({
-    url: '/User/Login',
+    url: '/FMUModel/AddModule',
     method: 'post',
+    data
+  })
+}
+
+// 修改模型
+export function updateModule(data) {
+  return request({
+    url: '/FMUModel/UpdateModule',
+    method: 'post',
+    data
+  })
+}
+
+// 删除模型
+export function delModel(data) {
+  return request({
+    url: '/FMUModel/DelModel',
+    method: 'delete',
     data
   })
 }
