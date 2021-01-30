@@ -60,6 +60,12 @@ export const constantRoutes = [
     component: () => import('@/views/model/manage'),
     meta: { title: '上传模型', icon: 'dashboard' }
   },
+  {
+    path: '/UseLog',
+    name: 'UseLog',
+    component: () => import('@/views/UseLogs/index'),
+    meta: { title: '日志记录', icon: 'dashboard' }
+  },
   // {
   //   path: '/',
   //   component: Layout,

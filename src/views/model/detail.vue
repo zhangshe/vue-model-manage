@@ -108,7 +108,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import {
-  addInvokeNum, Invokelog
+  addInvokeNum, PostInvokelog
 } from '@/api/fmu'
 
 export default {
@@ -181,7 +181,7 @@ export default {
           const userip = localStorage.getItem('Ip')
           const time = new Date()
           console.log('detail.vue', userip, time, this.modelForm)
-          Invokelog({
+          PostInvokelog({
             ModelGUID: this.modelForm.GUID,
             InvokeIP: userip,
             InvokeTime: time,

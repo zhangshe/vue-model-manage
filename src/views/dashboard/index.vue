@@ -39,7 +39,9 @@
         >上传模型
         </el-button>
         <span style="margin-left:20%;">共有{{ pageQuery.total }} 项模型</span>
+        <span @click="showLog" style="margin: 7% ;cursor: pointer">查看记录</span>
       </el-col>
+
       <el-col :span="10" style="text-align:right;">
         <el-input v-model="pageQuery.modelName" placeholder="请输入搜索模型名称" style="width:40%;" class="input-with-select">
           <el-button slot="append" icon="el-icon-search" @click="searchModel"/>
@@ -186,6 +188,12 @@ export default {
       this.$router.push({
         name: 'Manage',
         params: { type: 'create' }
+      })
+    },
+    showLog() {
+      this.$router.push({
+        name: 'UseLog'
+
       })
     }
   }

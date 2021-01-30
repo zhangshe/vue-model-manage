@@ -53,11 +53,21 @@ export function delModel(data) {
     data
   })
 }
-// 删除模型
-export function Invokelog(data) {
+
+// 上传调用记录
+export function PostInvokelog(data) {
   return request({
     url: '/FMUModel/PostUseRecord',
     method: 'post',
     data
+  })
+}
+// 获取调用记录
+export function GetInvokeLog(query) {
+  return request({
+    url: '/FMUModel/GetUseRecord',
+    method: 'get',
+    params: query
+
   })
 }
