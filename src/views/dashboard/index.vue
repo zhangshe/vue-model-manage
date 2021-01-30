@@ -5,14 +5,14 @@
         <img style="height:80px;margin-left:5%;" src="@/assets/images/logo.png">
       </div>
       <h1 style="color:#fff;float:left;line-height: 55px;margin-left: 5%;">中汽数据模型管理系统</h1>
-      <div class="verticalBar"/>
+      <div class="verticalBar" />
       <h3 style="color:#CCC;float:left;line-height: 55px;">技术目录</h3>
       <div class="right-menu">
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
             <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
             <h3 style="color:#FFF;cursor: pointer;">{{ name }}</h3>
-            <i class="el-icon-caret-bottom"/>
+            <i class="el-icon-caret-bottom" />
           </div>
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
             <router-link to="/">
@@ -39,34 +39,39 @@
         >上传模型
         </el-button>
         <span style="margin-left:20%;">共有{{ pageQuery.total }} 项模型</span>
-        <span @click="showLog" style="margin: 7% ;cursor: pointer">查看记录</span>
+        <span style="margin: 7% ;cursor: pointer" @click="showLog">查看记录</span>
       </el-col>
 
       <el-col :span="10" style="text-align:right;">
         <el-input v-model="pageQuery.modelName" placeholder="请输入搜索模型名称" style="width:40%;" class="input-with-select">
-          <el-button slot="append" icon="el-icon-search" @click="searchModel"/>
+          <el-button slot="append" icon="el-icon-search" @click="searchModel" />
         </el-input>
       </el-col>
     </el-row>
-    <el-row v-for="(item, index) in modelList" v-show="modelList.length > 0" :key="'model'+index"
-            style="cursor:pointer">
+    <el-row
+      v-for="(item, index) in modelList"
+      v-show="modelList.length > 0"
+      :key="'model'+index"
+      style="cursor:pointer"
+    >
       <el-col :span="20" :offset="2" style="border:1px solid #ccc;margin-top:1%;">
         <el-row :gutter="20" style="margin:1% 0;">
           <el-col :span="18">
             <div style="" @click="detailModel(item)">
               <label style="color:#4D6DA6;display: inline-block;margin: 10px 5px;font-size: 20px;cursor:pointer;">{{
-                  item.ModelName
-                }}</label>
+                item.ModelName
+              }}</label>
             </div>
           </el-col>
           <el-col :span="6">
             <div style=" display: flex;align-items: center;justify-content: top;text-align: justify;">
-              <el-button type="text" style="font-size: 16px;color:#878282;">&nbsp;&nbsp;<i class="el-icon-download"/>&nbsp;&nbsp;{{
-                  item.DownloadNum
-                }}次
+              <el-button type="text" style="font-size: 16px;color:#878282;">&nbsp;&nbsp;<i class="el-icon-download" />&nbsp;&nbsp;{{
+                item.DownloadNum
+              }}次
               </el-button>
               <el-button type="text" style="font-size: 16px;color:#878282;margin-left:10%;">&nbsp;&nbsp;<svg-icon
-                icon-class="eye-open"/>&nbsp;&nbsp;{{ item.ViewNum }}次
+                icon-class="eye-open"
+              />&nbsp;&nbsp;{{ item.ViewNum }}次
               </el-button>
             </div>
           </el-col>
@@ -78,13 +83,13 @@
         </el-row>
         <el-row style="margin:1.5% 0;font-size:20px;padding-left:1.5%">
           <el-col :span="8">
-            <label>格式：</label><label>{{ item.ModelType }}</label>
+            <label>格式：</label><label>{{ item.ModelType | parseType }}</label>
           </el-col>
           <el-col :span="8">
             <label>应用场景：</label><label>{{ item.Scene }}</label>
           </el-col>
           <el-col :span="8">
-            <label>更新时间：</label><label>{{ item.UpdateTime }}</label>
+            <label>更新时间：</label><label>{{ item.UpdateTime | parseTime }}</label>
           </el-col>
         </el-row>
       </el-col>
@@ -113,6 +118,16 @@ import {
 
 export default {
   name: 'Dashboard',
+  filters: {
+    parseTime(value) {
+      var dateee = new Date(value).toJSON()
+      var date = new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+      return date
+    },
+    parseType(value) {
+      if (value === 0) { return '.FMU' } else return '.API'
+    }
+  },
   data() {
     return {
       searchContent: '',
@@ -138,6 +153,22 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    dateFormat: function(row) {
+      var t = new Date(row.createTime)// row 表示一行数据, createTime 表示要格式化的字段名称
+      if (!t) {
+        return ''
+      }
+      const year = t.getFullYear()
+      const month = this.dateIfAddZero(t.getMonth() + 1)
+      const day = this.dateIfAddZero(t.getDate())
+      const hours = this.dateIfAddZero(t.getHours())
+      const minutes = this.dateIfAddZero(t.getMinutes())
+      const seconds = this.dateIfAddZero(t.getSeconds())
+      return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
+    },
+    dateIfAddZero: function(time) {
+      return time < 10 ? '0' + time : time
     },
     searchModel() {
       this.pageQuery.pageIndex = 1

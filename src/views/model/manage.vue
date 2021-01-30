@@ -68,12 +68,12 @@
             <el-col :span="24">
               <el-form-item label="应用场景" prop="Scene">
                 <el-select v-model="modelForm.Scene" multiple placeholder="请选择应用场景" style="width:100%;">
-                  <el-option label="市场研究" value="Java" />
-                  <el-option label="绿色生态" value="Python" />
-                  <el-option label="低碳节能" value="Matlab" />
-                  <el-option label="智能网联" value="C++" />
-                  <el-option label="智能座舱" value="C#" />
-                  <el-option label="工业互联网" value="C#" />
+                  <el-option label="市场研究" value="市场研究" />
+                  <el-option label="绿色生态" value="绿色生态" />
+                  <el-option label="低碳节能" value="低碳节能" />
+                  <el-option label="智能网联" value="智能网联" />
+                  <el-option label="智能座舱" value="智能座舱" />
+                  <el-option label="工业互联网" value="工业互联网" />
                 </el-select>
               </el-form-item>
             </el-col>
@@ -121,7 +121,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="上传密钥" prop="upload_key">
+              <el-form-item label="上传密钥" prop="UploadKey">
                 <el-input v-model="modelForm.UploadKey" />
               </el-form-item>
             </el-col>
@@ -205,16 +205,16 @@ export default {
     // if (this.$route.query.type === 'edit' || this.$route.query.type === 'check') {
     //   this.getDetialInfo()
     // }
-    var rpc_address = 'http://127.0.0.1:9091/thrift'
-    // eslint-disable-next-line no-undef
-    var transport = new Thrift.TXHRTransport(rpc_address)
-    // eslint-disable-next-line no-undef
-    var protocol = new Thrift.TJSONProtocol(transport)
-    // eslint-disable-next-line no-undef
-    var client = new FmuServiceClient(protocol)
+    // var rpc_address = 'http://127.0.0.1:9091/thrift'
+    // // eslint-disable-next-line no-undef
+    // var transport = new Thrift.TXHRTransport(rpc_address)
+    // // eslint-disable-next-line no-undef
+    // var protocol = new Thrift.TJSONProtocol(transport)
+    // // eslint-disable-next-line no-undef
+    // var client = new FmuServiceClient(protocol)
 
-    var model_description = client.get_model_description('{0878329c-0786-4c87-912b-397eff2268a4}')
-    console.log(model_description)
+    // var model_description = client.get_model_description('{0878329c-0786-4c87-912b-397eff2268a4}')
+    // console.log(model_description)
   },
   methods: {
     async logout() {
@@ -227,7 +227,6 @@ export default {
           // alert(this.modelForm.Scene.length)
           // alert(this.modelForm.Scene[0])
           // alert(this.modelForm.Scene)
-        //   uploadModule()
           if (this.modelForm.Scene.length === 1) {
             this.modelForm.Scene = this.modelForm.Scene[0]
           } else {
@@ -283,6 +282,7 @@ export default {
                 type: 'sucess',
                 duration: 2000
               })
+              this.closetab()
             } else {
               this.$notify({
                 position: 'bottom-right',
@@ -291,10 +291,10 @@ export default {
                 type: 'error',
                 duration: 2000
               })
+              this.closetab()
             }
           })
         }
-        this.closetab()
       })
     },
     resetForm() {
@@ -328,8 +328,8 @@ export default {
     // 关闭页面
     closetab() {
       // this.$store.dispatch('tagsView/delView', this.$route)
-      this.$router.go(-1)
-      // this.$router.push({ name: 'Dashboard' })
+      // this.$router.go(-1)
+      this.$router.push({ name: 'Dashboard' })
     }
   }
 }
