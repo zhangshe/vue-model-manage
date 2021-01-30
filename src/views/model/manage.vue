@@ -114,6 +114,8 @@
                   :on-error="handleError"
                   :file-list="fileList"
                   :auto-upload="false"
+                  :limit="1"
+                  accept=".fmu"
                 >
                   <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
                   <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
@@ -141,8 +143,7 @@
             </el-col>
           </el-row>
           <el-form-item style="text-align:center;">
-            <el-button v-if="this.$route.params.type=='create'" type="primary" @click="submitForm()">上传模型</el-button>
-            <el-button v-else type="primary" @click="submitForm()">编辑模型</el-button>
+            <el-button type="primary" @click="submitForm()">上传模型</el-button>
             <el-button @click="resetForm('ruleForm')">关闭</el-button>
           </el-form-item>
         </el-form>
@@ -229,8 +230,10 @@ export default {
           // alert(this.modelForm.Scene)
           if (this.modelForm.Scene.length === 1) {
             this.modelForm.Scene = this.modelForm.Scene[0]
-          } else {
+          } else if (this.modelForm.Scene.length > 1) {
             this.modelForm.Scene = this.modelForm.Scene.join(',')
+          } else {
+            this.modelForm.Scene = ''
           }
           //   // console.log(this.modelForm)
           //   this.$refs.upload.submit()
@@ -280,7 +283,7 @@ export default {
                 title: '提示',
                 message: response.RespMsg,
                 type: 'sucess',
-                duration: 2000
+                duration: 5000
               })
               this.closetab()
             } else {
@@ -289,9 +292,9 @@ export default {
                 title: '失败',
                 message: response.RespMsg,
                 type: 'error',
-                duration: 2000
+                duration: 5000
               })
-              this.closetab()
+              // this.closetab()
             }
           })
         }
