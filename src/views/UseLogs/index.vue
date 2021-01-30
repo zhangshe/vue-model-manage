@@ -31,15 +31,15 @@
       :data="tableData"
       stripe
       style="width: 100%">
-      <el-table-column
-        prop="ID"
-        label="序号"
-        width="180">
-      </el-table-column>
+<!--      <el-table-column-->
+<!--        prop="ID"-->
+<!--        label="序号"-->
+<!--        width="180">-->
+<!--      </el-table-column>-->
       <el-table-column
         prop="ModelGUID"
         label="模型GUID"
-        >
+      >
       </el-table-column>
       <el-table-column
         prop="InvokeIP"
@@ -70,6 +70,16 @@
         width="180">
       </el-table-column>
     </el-table>
+    <el-pagination
+      background
+      :total="pageQuery.total"
+      layout="prev, pager, next"
+      :current-page="pageQuery.pageIndex"
+      :page-size="pageQuery.pageSize"
+      style="padding-top: 3%;text-align: center;"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
   </div>
 
 </template>
@@ -79,8 +89,8 @@ import { GetInvokeLog } from '@/api/fmu'
 
 export default {
   name: 'UserLog',
-  filters:{
-    parseTime(value){
+  filters: {
+    parseTime(value) {
       var dateee = new Date(value).toJSON()
       var date = new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
       return date
@@ -88,26 +98,42 @@ export default {
   },
   data() {
     return {
-      tableData: []
+      tableData: [],
+      pageQuery: {
+        pageIndex: 1,
+        pageSize: 10,
+        total: 100
+      }
     }
   },
   created() {
-    GetInvokeLog({
-      pageindex: 1,
-      pagesize: 500
-    }).then(response => {
-      if (response.RespCode === 1) {
-        this.tableData = response.Data.Data
-      } else {
-        this.$notify({
-          position: 'bottom-right',
-          title: '失败',
-          message: response.RespMsg,
-          type: 'error',
-          duration: 2000
-        })
-      }
-    })
+    this.UpdateLog()
+  },
+  methods: {
+    UpdateLog: function() {
+      GetInvokeLog(this.pageQuery).then(response => {
+        if (response.RespCode === 1) {
+          this.tableData = response.Data.Data
+          this.pageQuery.total = response.Data.TotalCount
+        } else {
+          this.$notify({
+            position: 'bottom-right',
+            title: '失败',
+            message: response.RespMsg,
+            type: 'error',
+            duration: 2000
+          })
+        }
+      })
+    },
+    handleSizeChange: function(val) {
+      this.pageQuery.pageSize = val
+      this.UpdateLog()
+    },
+    handleCurrentChange: function(val) {
+      this.pageQuery.pageIndex = val
+      this.UpdateLog()
+    }
   }
 }
 </script>
