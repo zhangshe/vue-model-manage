@@ -32,18 +32,42 @@
       stripe
       style="width: 100%">
       <el-table-column
-        prop="date"
-        label="日期"
+        prop="ID"
+        label="序号"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="name"
-        label="姓名"
+        prop="ModelGUID"
+        label="模型GUID"
+        >
+      </el-table-column>
+      <el-table-column
+        prop="InvokeIP"
+        label="调用者IP"
         width="180">
       </el-table-column>
       <el-table-column
-        prop="address"
-        label="地址">
+        prop="InvokeTime"
+        label="调用时间"
+        width="300">
+        <template slot-scope="scope">
+          <span>{{ scope.row.InvokeTime | parseTime }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="Invoker"
+        label="调用者"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="OrgID"
+        label="机构"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="DeptID"
+        label="科室"
+        width="180">
       </el-table-column>
     </el-table>
   </div>
@@ -51,35 +75,26 @@
 </template>
 
 <script>
-import { GetInvokeLog, getModelInfo } from '@/api/fmu'
+import { GetInvokeLog } from '@/api/fmu'
 
 export default {
   name: 'UserLog',
+  filters:{
+    parseTime(value){
+      var dateee = new Date(value).toJSON()
+      var date = new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+      return date
+    }
+  },
   data() {
     return {
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      tableData: []
     }
   },
   created() {
     GetInvokeLog({
       pageindex: 1,
-      pagesize: 10
+      pagesize: 500
     }).then(response => {
       if (response.RespCode === 1) {
         this.tableData = response.Data.Data
