@@ -37,6 +37,13 @@
             </el-col>
           </el-row>
           <el-row>
+            <el-col :span="24">
+              <el-form-item label="模型描述" prop="Introduction" type="textarea">
+                <el-input v-model="modelForm.Introduction" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
             <el-col :span="14">
               <el-form-item label="模型类别" prop="ModelType">
                 <el-radio-group v-model="modelForm.ModelType">
@@ -95,12 +102,16 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="模型文件" prop="DeptName">
+                <!-- :action="urlUpload"
+                  :data="{modelData: JSON.stringify(modelForm) }" -->
                 <el-upload
                   ref="upload"
                   class="upload-demo"
-                  action="https://jsonplaceholder.typicode.com/posts/"
+                  action=""
+                  :on-success="handleSuccess"
                   :on-preview="handlePreview"
                   :on-remove="handleRemove"
+                  :on-error="handleError"
                   :file-list="fileList"
                   :auto-upload="false"
                 >
@@ -110,8 +121,8 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="上传密钥" prop="key">
-                <el-input v-model="modelForm.ApiKey" />
+              <el-form-item label="上传密钥" prop="upload_key">
+                <el-input v-model="modelForm.UploadKey" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -130,7 +141,7 @@
             </el-col>
           </el-row>
           <el-form-item style="text-align:center;">
-            <el-button v-if="this.$route.params.type=='create'" type="primary" @click="submitForm()">创建模型</el-button>
+            <el-button v-if="this.$route.params.type=='create'" type="primary" @click="submitForm()">上传模型</el-button>
             <el-button v-else type="primary" @click="submitForm()">编辑模型</el-button>
             <el-button @click="resetForm('ruleForm')">关闭</el-button>
           </el-form-item>
@@ -143,11 +154,9 @@
 <script>
 
 import { mapGetters } from 'vuex'
-// import {
-//   addModule,
-//   updateModule,
-//   delModel
-// } from '@/api/fmu'
+import {
+  uploadModule
+} from '@/api/fmu'
 export default {
   name: 'Detail',
   data() {
@@ -170,7 +179,7 @@ export default {
         UpdateTime: '',
         DownloadNum: 0,
         ViewNum: 0,
-        ApiKey: ''
+        UploadKey: ''
       },
       rules: {
         ModelName: [
@@ -180,7 +189,9 @@ export default {
         ModelType: [
           { required: true, message: '请选择模型类别', trigger: 'change' }
         ]
-      }
+      },
+      // urlUpload: 'http://localhost:9528/dev-api/' + 'FMUModel/Post'
+      urlUpload: process.env.VUE_APP_SERVICE_URL + 'FMUModel/Post'
     }
   },
   computed: {
@@ -210,15 +221,78 @@ export default {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
-    submitForm() {
+    submitForm(param) {
       this.$refs['modelManageForm'].validate((valid) => {
         if (valid) {
-          this.modelForm.Scene = this.modelForm.Scene.join(',')
-          console.log(this.modelForm)
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
+          // alert(this.modelForm.Scene.length)
+          // alert(this.modelForm.Scene[0])
+          // alert(this.modelForm.Scene)
+        //   uploadModule()
+          if (this.modelForm.Scene.length === 1) {
+            this.modelForm.Scene = this.modelForm.Scene[0]
+          } else {
+            this.modelForm.Scene = this.modelForm.Scene.join(',')
+          }
+          //   // console.log(this.modelForm)
+          //   this.$refs.upload.submit()
+          //   // alert('submit!')
+          // } else {
+          //   console.log('error submit!!')
+          //   return false
+          // }
+          //    var fileObj = param.file;
+          //         var form = new FormData();
+          //   uploadModule(this.pageQuery).then(response => {
+          //   if (response.RespCode === 1) {
+          //     this.modelList = response.Data.Data
+          //     this.pageQuery.total = response.Data.TotalCount
+          //     loadingInstance.close()
+          //   } else {
+          //     loadingInstance.close()
+          //     this.$notify({
+          //       position: 'bottom-right',
+          //       title: '失败',
+          //       message: response.RespMsg,
+          //       type: 'error',
+          //       duration: 2000
+          //     })
+          //   }
+          // })
+          var fileValue = document.querySelector('.el-upload .el-upload__input')
+          var fd = new window.FormData()
+          // 配置post请求的参数。参数名file,后面跟要传的文件）
+          fd.append('modelData', JSON.stringify(this.modelForm))
+          fd.append('file', fileValue.files[0])
+          // var xhr = new XMLHttpRequest()
+          // xhr.open('POST', this.urlUpload, true)
+          // // url就是要发送的post请求的地址
+          // xhr.send(fd)
+          // xhr.onload = () => {
+          //   console.log(xhr)
+          //   // if (xhr.status === 200) {
+          //   //   this.imgurl = JSON.parse(xhr.responseText).url
+          //   //   console.log(this.imgurl)
+          //   // }
+          // }
+          uploadModule(fd).then(response => {
+            if (response.RespCode === 1) {
+              this.$notify({
+                position: 'bottom-right',
+                title: '提示',
+                message: response.RespMsg,
+                type: 'sucess',
+                duration: 2000
+              })
+            } else {
+              this.$notify({
+                position: 'bottom-right',
+                title: '失败',
+                message: response.RespMsg,
+                type: 'error',
+                duration: 2000
+              })
+            }
+          })
         }
         this.closetab()
       })
@@ -227,19 +301,35 @@ export default {
       this.$refs['modelManageForm'].resetFields()
       this.closetab()
     },
-    submitUpload() {
-      this.$refs.upload.submit()
-    },
     handleRemove(file, fileList) {
       console.log(file, fileList)
     },
     handlePreview(file) {
       console.log(file)
     },
+    handleSuccess(res, file) {
+      this.$notify({
+        position: 'bottom-right',
+        title: '提示',
+        message: '操作成功',
+        type: 'success',
+        duration: 2000
+      })
+    },
+    handleError(err, file, fileList) {
+      this.$notify({
+        position: 'bottom-right',
+        title: '提示',
+        message: err + '上传失败!',
+        type: 'error',
+        duration: 2000
+      })
+    },
     // 关闭页面
     closetab() {
       // this.$store.dispatch('tagsView/delView', this.$route)
       this.$router.go(-1)
+      // this.$router.push({ name: 'Dashboard' })
     }
   }
 }

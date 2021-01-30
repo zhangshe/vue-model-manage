@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+﻿import request from '@/utils/request'
 
 // 获取模型列表
 export function getModelInfo(query) {
@@ -24,6 +24,15 @@ export function addInvokeNum(data) {
     url: '/FMUModel/AddInvokeNum',
     method: 'put',
     params: data
+  })
+}
+
+// 上传模型
+export function uploadModule(data) {
+  return request({
+    url: '/FMUModel/Post',
+    method: 'post',
+    data
   })
 }
 
