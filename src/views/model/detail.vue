@@ -108,8 +108,9 @@
 <script>
 import { mapGetters } from 'vuex'
 import {
-  addInvokeNum
+  addInvokeNum, Invokelog
 } from '@/api/fmu'
+
 export default {
   name: 'Detail',
   data() {
@@ -150,6 +151,8 @@ export default {
     // if (this.$route.query.type === 'edit' || this.$route.query.type === 'check') {
     //   this.getDetialInfo()
     // }
+    //加载用户信息
+
   },
   methods: {
     async logout() {
@@ -173,10 +176,24 @@ export default {
           this.modelForm.DownloadNum = parseInt(this.modelForm.DownloadNum) + 1
           this.modelForm.ViewNum = parseInt(this.modelForm.ViewNum) + 1
           // this.$forceUpdate()
+          // 调用成功记录调用者IP 调用时间并入库
+          const userip = localStorage.getItem('Ip')
+          const time = new Date()
+          console.log('detail.vue', userip, time)
+          Invokelog({
+            ModelGUID: this.GUID,
+            InvokeIP: userip,
+            InvokeTime: time,
+            Invoker: '管理员',
+            OrgID: this.OrgID,
+            DeptID: this.DeptID
+
+          })
           alert('调用成功！')
         }
       })
     }
+
   }
 }
 </script>
@@ -187,8 +204,9 @@ export default {
   overflow: hidden;
   position: relative;
   // background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
   background-color: #2F5597;
+
   .right-menu {
     float: right;
     height: 100%;
@@ -236,22 +254,23 @@ export default {
           right: -20px;
           top: 40px;
           font-size: 12px;
-          color:#FFF;
+          color: #FFF;
         }
       }
     }
   }
-    .verticalBar {
-        float: left;
-        width: 2px;
-        height: 29px;
-        background: #fff;
-       // display: inline-block;
-        margin-top: 31px;
-        vertical-align: top;
-        margin-right: 29px;
-        margin-left: 30px;
-    }
+
+  .verticalBar {
+    float: left;
+    width: 2px;
+    height: 29px;
+    background: #fff;
+    // display: inline-block;
+    margin-top: 31px;
+    vertical-align: top;
+    margin-right: 29px;
+    margin-left: 30px;
+  }
 }
 
 </style>

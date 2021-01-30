@@ -9,6 +9,13 @@
     <script src="<%= BASE_URL %>/fmu/thrift.js"></script>
     <script src="<%= BASE_URL %>/fmu/FmuService.js"></script>
     <script src="<%= BASE_URL %>/fmu/service_types.js"></script>
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script type="text/javascript">
+      var Ip=returnCitySN['cip']
+      var cityname=returnCitySN['cname']
+      localStorage.setItem('Ip', Ip)
+      localStorage.setItem('cityname', cityname)
+    </script>
   </head>
   <body>
     <noscript>

@@ -53,3 +53,11 @@ export function delModel(data) {
     data
   })
 }
+// 删除模型
+export function Invokelog(data) {
+  return request({
+    url: '/FMUModel/PostUseRecord',
+    method: 'post',
+    data
+  })
+}
