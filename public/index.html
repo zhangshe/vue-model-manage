@@ -6,6 +6,295 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= webpackConfig.name %></title>
+    <!-- <link rel="stylesheet" href="<%= BASE_URL %>/fmu/css/style.css"> -->
+    <style>
+        .form-control {
+	padding: 0.5rem 0.75rem; border-radius: 0.25rem; border: 1px solid rgba(0, 0, 0, 0.15); transition:border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out; border-image: none; width: 100%; color: rgb(73, 80, 87); line-height: 1.25; font-size: 1rem; display: block; background-image: none; background-clip: padding-box; background-color: rgb(255, 255, 255); -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+}
+.table {
+	width: 100%; margin-bottom: 1rem; max-width: 100%; background-color: transparent;
+}
+.table th {
+	padding: 0.75rem; vertical-align: top; border-top-color: rgb(233, 236, 239); border-top-width: 1px; border-top-style: solid;
+}
+.table td {
+	padding: 0.75rem; vertical-align:middle; border-top-color: rgb(233, 236, 239); border-top-width: 1px; border-top-style: solid;
+}
+.table thead th {
+	vertical-align: bottom; border-bottom-color: rgb(233, 236, 239); border-bottom-width: 2px; border-bottom-style: solid;
+}
+.table tbody + tbody {
+	border-top-color: rgb(233, 236, 239); border-top-width: 2px; border-top-style: solid;
+}
+.table .table {
+	background-color: rgb(255, 255, 255);
+}
+.table-sm th {
+	/*padding: 0.3rem;*/ font-weight: bold!important;
+}
+.table-bordered {
+	border: 1px solid rgb(233, 236, 239); border-image: none;
+}
+.table-bordered th {
+	border: 1px solid rgb(233, 236, 239); border-image: none;
+}
+.table-bordered td {
+	border: 1px solid rgb(233, 236, 239); border-image: none;
+}
+.table-bordered thead th {
+	border-bottom-width: 2px;
+}
+.table-bordered thead td {
+	border-bottom-width: 2px;
+}
+.table-striped tbody tr:nth-of-type(2n+1) {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+.table-hover tbody tr:hover {
+	background-color: rgba(0, 0, 0, 0.075);
+}
+.table-primary {
+	background-color: rgb(184, 218, 255);
+}
+.table-primary > th {
+	background-color: rgb(184, 218, 255);
+}
+.table-primary > td {
+	background-color: rgb(184, 218, 255);
+}
+.table-hover .table-primary:hover {
+	background-color: rgb(159, 205, 255);
+}
+.table-hover .table-primary:hover > td {
+	background-color: rgb(159, 205, 255);
+}
+.table-hover .table-primary:hover > th {
+	background-color: rgb(159, 205, 255);
+}
+.table-secondary {
+	background-color: rgb(221, 223, 226);
+}
+.table-secondary > th {
+	background-color: rgb(221, 223, 226);
+}
+.table-secondary > td {
+	background-color: rgb(221, 223, 226);
+}
+.table-hover .table-secondary:hover {
+	background-color: rgb(207, 210, 214);
+}
+.table-hover .table-secondary:hover > td {
+	background-color: rgb(207, 210, 214);
+}
+.table-hover .table-secondary:hover > th {
+	background-color: rgb(207, 210, 214);
+}
+.table-success {
+	background-color: rgb(195, 230, 203);
+}
+.table-success > th {
+	background-color: rgb(195, 230, 203);
+}
+.table-success > td {
+	background-color: rgb(195, 230, 203);
+}
+.table-hover .table-success:hover {
+	background-color: rgb(177, 223, 187);
+}
+.table-hover .table-success:hover > td {
+	background-color: rgb(177, 223, 187);
+}
+.table-hover .table-success:hover > th {
+	background-color: rgb(177, 223, 187);
+}
+.table-info {
+	background-color: rgb(190, 229, 235);
+}
+.table-info > th {
+	background-color: rgb(190, 229, 235);
+}
+.table-info > td {
+	background-color: rgb(190, 229, 235);
+}
+.table-hover .table-info:hover {
+	background-color: rgb(171, 221, 229);
+}
+.table-hover .table-info:hover > td {
+	background-color: rgb(171, 221, 229);
+}
+.table-hover .table-info:hover > th {
+	background-color: rgb(171, 221, 229);
+}
+.table-warning {
+	background-color: rgb(255, 238, 186);
+}
+.table-warning > th {
+	background-color: rgb(255, 238, 186);
+}
+.table-warning > td {
+	background-color: rgb(255, 238, 186);
+}
+.table-hover .table-warning:hover {
+	background-color: rgb(255, 232, 161);
+}
+.table-hover .table-warning:hover > td {
+	background-color: rgb(255, 232, 161);
+}
+.table-hover .table-warning:hover > th {
+	background-color: rgb(255, 232, 161);
+}
+.table-danger {
+	background-color: rgb(245, 198, 203);
+}
+.table-danger > th {
+	background-color: rgb(245, 198, 203);
+}
+.table-danger > td {
+	background-color: rgb(245, 198, 203);
+}
+.table-hover .table-danger:hover {
+	background-color: rgb(241, 176, 183);
+}
+.table-hover .table-danger:hover > td {
+	background-color: rgb(241, 176, 183);
+}
+.table-hover .table-danger:hover > th {
+	background-color: rgb(241, 176, 183);
+}
+.table-light {
+	background-color: rgb(253, 253, 254);
+}
+.table-light > th {
+	background-color: rgb(253, 253, 254);
+}
+.table-light > td {
+	background-color: rgb(253, 253, 254);
+}
+.table-hover .table-light:hover {
+	background-color: rgb(236, 236, 246);
+}
+.table-hover .table-light:hover > td {
+	background-color: rgb(236, 236, 246);
+}
+.table-hover .table-light:hover > th {
+	background-color: rgb(236, 236, 246);
+}
+.table-dark {
+	background-color: rgb(198, 200, 202);
+}
+.table-dark > th {
+	background-color: rgb(198, 200, 202);
+}
+.table-dark > td {
+	background-color: rgb(198, 200, 202);
+}
+.table-hover .table-dark:hover {
+	background-color: rgb(185, 187, 190);
+}
+.table-hover .table-dark:hover > td {
+	background-color: rgb(185, 187, 190);
+}
+.table-hover .table-dark:hover > th {
+	background-color: rgb(185, 187, 190);
+}
+.table-active {
+	background-color: rgba(0, 0, 0, 0.075);
+}
+.table-active > th {
+	background-color: rgba(0, 0, 0, 0.075);
+}
+.table-active > td {
+	background-color: rgba(0, 0, 0, 0.075);
+}
+.table-hover .table-active:hover {
+	background-color: rgba(0, 0, 0, 0.075);
+}
+.table-hover .table-active:hover > td {
+	background-color: rgba(0, 0, 0, 0.075);
+}
+.table-hover .table-active:hover > th {
+	background-color: rgba(0, 0, 0, 0.075);
+}
+.thead-inverse th {
+	color: rgb(255, 255, 255); background-color: rgb(33, 37, 41);
+}
+.thead-default th {
+	color: rgb(73, 80, 87); background-color: rgb(233, 236, 239);
+}
+.table-inverse {
+	color: rgb(255, 255, 255); background-color: rgb(33, 37, 41);
+}
+.table-inverse th {
+	border-color: rgb(50, 56, 62);
+}
+.table-inverse td {
+	border-color: rgb(50, 56, 62);
+}
+.table-inverse thead th {
+	border-color: rgb(50, 56, 62);
+}
+.table-inverse.table-bordered {
+	border: 0px currentColor; border-image: none;
+}
+.table-inverse.table-striped tbody tr:nth-of-type(2n+1) {
+	background-color: rgba(255, 255, 255, 0.05);
+}
+.table-inverse.table-hover tbody tr:hover {
+	background-color: rgba(255, 255, 255, 0.075);
+}
+.list-group {
+	padding-left: 0px; margin-bottom: 0px; display: flex; flex-direction: column; -webkit-box-orient: vertical; -webkit-box-direction: normal;
+}
+.list-group-item-action {
+	width: 100%; text-align: inherit; color: rgb(73, 80, 87);
+}
+.list-group-item-action:focus {
+	color: rgb(73, 80, 87); text-decoration: none; background-color: rgb(248, 249, 250);
+}
+.list-group-item-action:hover {
+	color: rgb(73, 80, 87); text-decoration: none; background-color: rgb(248, 249, 250);
+}
+.list-group-item-action:active {
+	color: rgb(33, 37, 41); background-color: rgb(233, 236, 239);
+}
+.list-group-item {
+	padding: 0.75rem 1.25rem; border: 1px solid rgba(0, 0, 0, 0.125); border-image: none; margin-bottom: -1px; display: block; position: relative; background-color: rgb(255, 255, 255);
+}
+:first-child.list-group-item {
+	border-top-left-radius: 0.25rem; border-top-right-radius: 0.25rem;
+}
+:last-child.list-group-item {
+	margin-bottom: 0px; border-bottom-right-radius: 0.25rem; border-bottom-left-radius: 0.25rem;
+}
+.list-group-item:focus {
+	text-decoration: none;
+}
+.list-group-item:hover {
+	text-decoration: none;
+}
+.list-group-item.disabled {
+	color: rgb(134, 142, 150); background-color: rgb(255, 255, 255);
+}
+:disabled.list-group-item {
+	color: rgb(134, 142, 150); background-color: rgb(255, 255, 255);
+}
+.list-group-item.active {
+	border-color: rgb(0, 123, 255); color: rgb(255, 255, 255); z-index: 2; background-color: rgb(0, 123, 255);
+}
+.list-group-flush .list-group-item {
+	border-radius: 0px; border-right-color: currentColor; border-left-color: currentColor; border-right-width: 0px; border-left-width: 0px; border-right-style: none; border-left-style: none;
+}
+:first-child.list-group-flush :first-child.list-group-item {
+	border-top-color: currentColor; border-top-width: 0px; border-top-style: none;
+}
+:last-child.list-group-flush :last-child.list-group-item {
+	border-bottom-color: currentColor; border-bottom-width: 0px; border-bottom-style: none;
+}
+.list-group-item-primary {
+	color: rgb(0, 64, 133); background-color: rgb(184, 218, 255);
+}
+    </style>
+    </style>
     <script src="<%= BASE_URL %>/fmu/thrift.js"></script>
     <script src="<%= BASE_URL %>/fmu/FmuService.js"></script>
     <script src="<%= BASE_URL %>/fmu/service_types.js"></script>

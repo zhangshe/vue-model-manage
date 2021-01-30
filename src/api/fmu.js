@@ -26,7 +26,14 @@ export function addInvokeNum(data) {
     params: data
   })
 }
-
+// 获取模型
+export function getModelInfoById(query) {
+  return request({
+    url: '/FMUModel/GetFMUDetail',
+    method: 'get',
+    params: query
+  })
+}
 // 上传模型
 export function uploadModule(data) {
   return request({

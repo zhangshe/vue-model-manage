@@ -207,10 +207,10 @@ export default {
         this.title = '失败'
         this.type = 'error'
         if (response.RespCode === 1) {
-          console.log('index.vue', row)
+          // console.log('index.vue', row)
           this.$router.push({
-            name: 'Detail',
-            params: { data: row }
+            path: 'Detail',
+            query: { moduleId: row.ModelID }
           })
         }
       })
