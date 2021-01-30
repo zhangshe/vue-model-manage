@@ -86,9 +86,9 @@
 
 <script>
 import { GetInvokeLog } from '@/api/fmu'
+import { mapGetters } from 'vuex'
 
 export default {
-  name: 'UserLog',
   filters: {
     parseTime(value) {
       var dateee = new Date(value).toJSON()
@@ -134,6 +134,12 @@ export default {
       this.pageQuery.pageIndex = val
       this.UpdateLog()
     }
+  },
+  computed: {
+    ...mapGetters([
+      'name',
+      'avatar'
+    ])
   }
 }
 </script>

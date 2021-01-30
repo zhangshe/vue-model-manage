@@ -151,7 +151,7 @@ export default {
     // if (this.$route.query.type === 'edit' || this.$route.query.type === 'check') {
     //   this.getDetialInfo()
     // }
-    //加载用户信息
+    // 加载用户信息
     this.modelForm = this.$route.params.data
     console.log('detail.vue', this.modelForm)
   },
@@ -180,7 +180,6 @@ export default {
           // 调用成功记录调用者IP 调用时间并入库
           const userip = localStorage.getItem('Ip')
           const time = new Date()
-          console.log('detail.vue', userip, time, this.modelForm)
           PostInvokelog({
             ModelGUID: this.modelForm.GUID,
             InvokeIP: userip,
