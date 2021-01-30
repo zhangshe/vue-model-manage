@@ -5,13 +5,13 @@
         <img style="height:80px;margin-left:5%;" src="@/assets/images/logo.png">
       </div>
       <h1 style="color:#fff;float:left;line-height: 55px;margin-left: 5%;">中汽数据模型管理系统</h1>
-      <div class="verticalBar" />
+      <div class="verticalBar"/>
       <h3 style="color:#CCC;float:left;line-height: 55px;">模型详情</h3>
       <div class="right-menu">
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
             <h3 style="color:#FFF;cursor: pointer;">{{ name }}</h3>
-            <i class="el-icon-caret-bottom" />
+            <i class="el-icon-caret-bottom"/>
           </div>
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
             <router-link to="/">
@@ -152,7 +152,8 @@ export default {
     //   this.getDetialInfo()
     // }
     //加载用户信息
-
+    this.modelForm = this.$route.params.data
+    console.log('detail.vue', this.modelForm)
   },
   methods: {
     async logout() {
@@ -179,14 +180,14 @@ export default {
           // 调用成功记录调用者IP 调用时间并入库
           const userip = localStorage.getItem('Ip')
           const time = new Date()
-          console.log('detail.vue', userip, time)
+          console.log('detail.vue', userip, time, this.modelForm)
           Invokelog({
-            ModelGUID: this.GUID,
+            ModelGUID: this.modelForm.GUID,
             InvokeIP: userip,
             InvokeTime: time,
             Invoker: '管理员',
-            OrgID: this.OrgID,
-            DeptID: this.DeptID
+            OrgID: this.modelForm.OrgID,
+            DeptID: this.modelForm.DeptID
 
           })
           alert('调用成功！')
