@@ -67,7 +67,7 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="应用场景" prop="Scene">
-                <el-select v-model="modelForm.Scene" multiple placeholder="请选择应用场景" style="width:100%;">
+                <el-select v-model="modelForm.SceneValue" multiple placeholder="请选择应用场景" style="width:100%;">
                   <el-option label="市场研究" value="市场研究" />
                   <el-option label="绿色生态" value="绿色生态" />
                   <el-option label="低碳节能" value="低碳节能" />
@@ -114,7 +114,6 @@
                   :on-error="handleError"
                   :file-list="fileList"
                   :auto-upload="false"
-                  :limit="1"
                   accept=".fmu"
                 >
                   <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
@@ -169,6 +168,7 @@ export default {
         ModelType: 0,
         Language: '',
         Scene: '',
+        SceneValue: [],
         Introduction: '',
         OrgID: '',
         OrgName: '',
@@ -231,9 +231,7 @@ export default {
           if (this.modelForm.Scene.length === 1) {
             this.modelForm.Scene = this.modelForm.Scene[0]
           } else if (this.modelForm.Scene.length > 1) {
-            this.modelForm.Scene = this.modelForm.Scene.join(',')
-          } else {
-            this.modelForm.Scene = ''
+            this.modelForm.Scene = this.modelForm.SceneValue.join(',')
           }
           //   // console.log(this.modelForm)
           //   this.$refs.upload.submit()
@@ -294,6 +292,7 @@ export default {
                 type: 'error',
                 duration: 5000
               })
+              // this.modelForm.Scene = this.modelForm.Scene.split(',')
               // this.closetab()
             }
           })
