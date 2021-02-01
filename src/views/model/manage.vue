@@ -81,20 +81,32 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="上传部门" style="text-align:right" prop="OrgName">
-                <el-select v-model="modelForm.OrgName" placeholder="上传部门" style="width:100%;">
-                  <el-option label="前瞻技术研究室" value="前瞻技术研究室" />
+                <el-select v-model="modelForm.OrgName" placeholder="上传部门" style="width:100%;" @change="selectChange">
+                  <!-- <el-option label="前瞻技术研究室" value="前瞻技术研究室" />
                   <el-option label="数据技术应用室" value="数据技术应用室" />
-                  <el-option label="软件研发室" value="软件研发室" />
+                  <el-option label="软件研发室" value="软件研发室" /> -->
+                  <el-option
+                    v-for="(item,index) in OrgList[0].children"
+                    :key="index"
+                    :label="item.name"
+                    :value="item.name"
+                  />
                 </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="上传科室" style="text-align:right" prop="DeptName">
                 <el-select v-model="modelForm.DeptName" placeholder="上传科室" style="width:100%;">
-                  <el-option label="工业互联网标识组" value="工业互联网标识组" />
+                  <!-- <el-option label="工业互联网标识组" value="工业互联网标识组" />
                   <el-option label="数据组" value="数据组" />
                   <el-option label="仿真技术组" value="仿真技术组" />
-                  <el-option label="创新技术组" value="创新技术组" />
+                  <el-option label="创新技术组" value="创新技术组" /> -->
+                  <el-option
+                    v-for="(dept,index) in DeptList"
+                    :key="index"
+                    :label="dept.name"
+                    :value="dept.name"
+                  />
                 </el-select>
               </el-form-item>
             </el-col>
@@ -162,6 +174,258 @@ export default {
   data() {
     return {
       fileList: [],
+      OrgList: [
+        {
+          id: '23CB934D-02F7-4177-BD38-C8624FA86F7E',
+          name: '中汽数据有限公司',
+          code: '100',
+          level: 1,
+          children: [
+            {
+              id: 'C765DEDC-3FD7-4B71-9D8F-D2CA8F22DEEB',
+              name: '综合管理部（党群工作部、纪检室）',
+              code: '100001',
+              level: 2,
+              children: [
+                {
+                  id: '87E24FE3-7A20-4511-899A-4DACB6EA926F',
+                  name: '市场发展室',
+                  code: '100001001',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: 'E5B192A1-DFAF-4059-B02F-871F821EB848',
+                  name: '财务室',
+                  code: '100001002',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: '0F57B657-FB9E-468F-BD78-2D2921D04111',
+                  name: '办公室',
+                  code: '100001003',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: '992A65FC-E6BE-4159-92D2-F20D8D1A762D',
+                  name: '发展运营室',
+                  code: '100001004',
+                  level: 3,
+                  children: null
+                }
+              ]
+            },
+            {
+              id: '710018C0-59E2-4EDF-8315-C2164737BEEC',
+              name: '数据业务部',
+              code: '100002',
+              level: 2,
+              children: [
+                {
+                  id: '8A9EB7A9-E63A-4792-BE5F-0BD3E8196A37',
+                  name: '市场数据室',
+                  code: '100002001',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: '9D9EB9A8-A449-4C41-8DBB-83EA1CB67390',
+                  name: '后市场数据室',
+                  code: '100002002',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: '1B57BD3D-94D0-4F8C-B4B0-9CB3029FD7A1',
+                  name: '产品数据室',
+                  code: '100002003',
+                  level: 3,
+                  children: null
+                }
+              ]
+            },
+            {
+              id: 'F5159C06-0F83-4C11-B4BC-A06A0F00C3BF',
+              name: '生态业务部',
+              code: '100003',
+              level: 2,
+              children: [
+
+                {
+                  id: 'FFE86A05-DC36-4964-91C0-C45A36B2F6A5',
+                  name: '绿色低碳研究室',
+                  code: '100003001',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: '9DDAB284-DFD6-49FB-90AD-E13619B60071',
+                  name: '汽车材料研究室',
+                  code: '100003002',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: '39EA3C61-80BB-4A5E-ABFA-2AED5C371396',
+                  name: '回收利用研究室',
+                  code: '100003003',
+                  level: 3,
+                  children: null
+                }
+              ]
+            },
+            {
+              id: '36EB6B6B-7C48-409D-AD13-6A0A3F26433B',
+              name: '软件业务部',
+              code: '100004',
+              level: 2,
+              children: [
+                {
+                  id: '9CED4BA7-D0C2-4F90-AD04-57620688A2D4',
+                  name: '研发信息系统室',
+                  code: '100004001',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: '3E1ABE30-B572-4D5E-AA37-DEDC0EB68589',
+                  name: '制造信息系统室',
+                  code: '100004002',
+                  level: 3,
+                  children: null
+                }
+              ]
+            },
+            {
+              id: '016BA428-E10E-46C2-9455-71FAE8D95722',
+              name: '智能网联部',
+              code: '100005',
+              level: 2,
+              children: [
+                {
+                  id: '8B455BFD-4556-4923-93D6-EE8BEDDB3097',
+                  name: '智能网联数据室',
+                  code: '100005001',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: 'E848A0AF-A668-454C-BD05-A807D243BAA7',
+                  name: '智能网联应用室',
+                  code: '100005002',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: 'A8D37AA4-0AE8-47E7-AAD4-D51275FC8FF8',
+                  name: '网联技术研究室',
+                  code: '100005003',
+                  level: 3,
+                  children: null
+                }
+              ]
+            },
+            {
+              id: '8C25C3EE-D722-41AC-BACD-CC424D807748',
+              name: '低碳业务部',
+              code: '100006',
+              level: 2,
+              children: [
+                {
+                  id: 'C872DFC4-1D81-46C2-A2DA-87268029BDB7',
+                  name: '节能战略研究室',
+                  code: '100006001',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: '474E7DD7-E8BA-4836-84E9-28BA10924698',
+                  name: '清洁能源研究室',
+                  code: '100006002',
+                  level: 3,
+                  children: null
+                }
+              ]
+            },
+            {
+              id: 'E584A6B7-DC64-4DD2-A8BF-3CAE4EDEB7F1',
+              name: '基础研究部',
+              code: '100007',
+              level: 2,
+              children: [
+                {
+                  id: '7ADFDAA1-F75C-4E6F-AFDB-E406ED37BC00',
+                  name: '软件研发室',
+                  code: '100007001',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: 'F3E7FAA7-BE95-42E0-9EBF-D2FC4B493E9A',
+                  name: '数据技术应用室',
+                  code: '100007002',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: '087483AE-DF14-4B33-8C98-2ED36BDD8F9F',
+                  name: '前瞻技术研究室',
+                  code: '100007003',
+                  level: 3,
+                  children: null
+                }
+              ]
+            },
+            {
+              id: '4F4EAD8C-A730-4D9F-ABC6-C44F70894050',
+              name: '新能源业务部',
+              code: '100008',
+              level: 2,
+              children: [
+                {
+                  id: '87E2A548-E5A3-41E7-83F2-060AFF931758',
+                  name: '氢能源研究室',
+                  code: '100008001',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: '38818D66-8990-4DAD-9E00-05EC3F6B2FAA',
+                  name: '新能源数据室',
+                  code: '100008002',
+                  level: 3,
+                  children: null
+                }
+              ]
+            },
+            {
+              id: '108F1B23-6D5D-4B5F-A3A4-536360A78C99',
+              name: '中汽研智能网联技术（天津）有限公司',
+              code: '100009',
+              level: 2,
+              children: [
+                {
+                  id: '3B570BD2-C43C-4EDC-8DD2-4C2E257B0BF9',
+                  name: '技术发展室',
+                  code: '100009001',
+                  level: 3,
+                  children: null
+                },
+                {
+                  id: 'E0AE34EA-F897-4143-8776-9F7966F5A9E5',
+                  name: '业务发展室',
+                  code: '100009002',
+                  level: 3,
+                  children: null
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      DeptList: [],
       modelForm: {
         ModelID: '',
         ModelName: '',
@@ -221,6 +485,21 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    selectChange(val) {
+      this.OrgList[0].children.forEach(element => {
+        if (element.name === val) {
+          this.DeptList = element.children
+        }
+      })
+      // console.log(this.OrgList.filter(p => p.name === val))
+      // console.log(item)
+      // this.DeptList = this.OrgList.find((item) => {
+
+      //   // 筛选出匹配数据
+      //   return item.name === val
+      // })
+      // console.log(this.DeptList)
     },
     submitForm(param) {
       this.$refs['modelManageForm'].validate((valid) => {
