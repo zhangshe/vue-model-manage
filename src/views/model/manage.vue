@@ -113,22 +113,48 @@
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row>
+          <el-row v-if="modelForm.ModelType===0">
             <el-col :span="12">
-              <el-form-item label="模型文件" prop="DeptName">
+              <el-form-item label="模型文件">
                 <!-- :action="urlUpload"
-                  :data="{modelData: JSON.stringify(modelForm) }" -->
+                  :data="{modelData: JSON.stringify(modelForm) }"
+                  :on-preview="handlePreview"
+                  :on-remove="handleRemove"
+                  -->
                 <el-upload
                   ref="upload"
                   class="upload-demo"
                   action=""
                   :on-success="handleSuccess"
-                  :on-preview="handlePreview"
-                  :on-remove="handleRemove"
                   :on-error="handleError"
                   :file-list="fileList"
                   :auto-upload="false"
                   accept=".fmu"
+                >
+                  <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
+                  <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
+                </el-upload>
+              </el-form-item>
+            </el-col>
+            <el-col v-if="false" :span="12">
+              <el-form-item label="上传密钥" prop="UploadKey">
+                <el-input v-model="modelForm.UploadKey" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row v-if="modelForm.ModelType===1">
+            <el-col :span="12">
+              <el-form-item label="API模型文件">
+                <el-upload
+                  ref="uploadAPI"
+                  class="upload-demo"
+                  :action="apiUpload"
+                  :on-success="handleSuccessAPI"
+                  :on-error="handleErrorAPI"
+                  :on-remove="handleRemoveAPI"
+                  :file-list="fileListAPI"
+                  accept=".zip"
                 >
                   <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
                   <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
@@ -156,7 +182,8 @@
             </el-col>
           </el-row>
           <el-form-item style="text-align:center;">
-            <el-button type="primary" @click="submitForm()">上传模型</el-button>
+            <el-button v-if="modelForm.ModelType===0" type="primary" @click="submitFmu()">上传模型</el-button>
+            <el-button v-if="modelForm.ModelType===1" type="primary" @click="submitAPI()">上传模型</el-button>
             <el-button @click="resetForm('ruleForm')">关闭</el-button>
           </el-form-item>
         </el-form>
@@ -170,13 +197,17 @@
 import { mapGetters } from 'vuex'
 import { Loading } from 'element-ui'
 import {
-  uploadModule
+  uploadModule,
+  delApiFile,
+  addAPIModule
 } from '@/api/fmu'
 export default {
   name: 'Detail',
   data() {
     return {
+      modelData: {},
       fileList: [],
+      fileListAPI: [],
       OrgList: [
         {
           id: '23CB934D-02F7-4177-BD38-C8624FA86F7E',
@@ -437,6 +468,7 @@ export default {
         Scene: '',
         SceneValue: [],
         Introduction: '',
+        ModelFileUrl: '',
         OrgID: '',
         OrgName: '',
         DeptID: '',
@@ -459,7 +491,8 @@ export default {
         ]
       },
       // urlUpload: 'http://localhost:9528/dev-api/' + 'FMUModel/Post'
-      urlUpload: process.env.VUE_APP_SERVICE_URL + 'FMUModel/Post'
+      urlUpload: process.env.VUE_APP_SERVICE_URL + 'FMUModel/Post',
+      apiUpload: process.env.VUE_APP_SERVICE_URL + 'FMUModel/UploadApiFile'
     }
   },
   computed: {
@@ -505,16 +538,14 @@ export default {
       // })
       // console.log(this.DeptList)
     },
-    submitForm(param) {
+    // Fmu模型保存
+    submitFmu() {
       this.$refs['modelManageForm'].validate((valid) => {
         if (valid) {
           const loadingInstance = Loading.service({ fullscreen: false })
-          // alert(this.modelForm.Scene.length)
-          // alert(this.modelForm.Scene[0])
-          // alert(this.modelForm.Scene)
-          if (this.modelForm.Scene.length === 1) {
-            this.modelForm.Scene = this.modelForm.Scene[0]
-          } else if (this.modelForm.Scene.length > 1) {
+          if (this.modelForm.SceneValue.length === 1) {
+            this.modelForm.Scene = this.modelForm.SceneValue[0]
+          } else if (this.modelForm.SceneValue.length > 1) {
             this.modelForm.Scene = this.modelForm.SceneValue.join(',')
           }
           //   // console.log(this.modelForm)
@@ -589,12 +620,12 @@ export default {
       this.$refs['modelManageForm'].resetFields()
       this.closetab()
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePreview(file) {
-      console.log(file)
-    },
+    // handleRemove(file, fileList) {
+    //   console.log(file, fileList)
+    // },
+    // handlePreview(file) {
+    //   console.log(file)
+    // },
     handleSuccess(res, file) {
       this.$notify({
         position: 'bottom-right',
@@ -618,6 +649,69 @@ export default {
       // this.$store.dispatch('tagsView/delView', this.$route)
       // this.$router.go(-1)
       this.$router.push({ name: 'Dashboard' })
+    },
+    handleSuccessAPI(res, file) {
+      this.modelForm.ModelFileUrl = file.response.Data.url
+      this.modelForm.InputData = JSON.stringify(JSON.parse(file.response.Data.content).InPut)
+      this.modelForm.OutputData = JSON.stringify(JSON.parse(file.response.Data.content).OutPut)
+      // this.$notify({
+      //   position: 'bottom-right',
+      //   title: '提示',
+      //   message: '操作成功',
+      //   type: 'success',
+      //   duration: 2000
+      // })
+    },
+    handleErrorAPI(err, file, fileList) {
+      this.$notify({
+        position: 'bottom-right',
+        title: '提示',
+        message: err + '上传失败!',
+        type: 'error',
+        duration: 2000
+      })
+    },
+    handleRemoveAPI(file, fileList) {
+      console.log('del', file)
+      delApiFile({ filePath: file.response.Data.url }).then(response => {
+      })
+    },
+    // API模型保存
+    submitAPI() {
+      this.$refs['modelManageForm'].validate((valid) => {
+        if (valid) {
+          const loadingInstance = Loading.service({ fullscreen: false })
+          if (this.modelForm.SceneValue.length === 1) {
+            this.modelForm.Scene = this.modelForm.SceneValue[0]
+          } else if (this.modelForm.SceneValue.length > 1) {
+            this.modelForm.Scene = this.modelForm.SceneValue.join(',')
+          }
+          addAPIModule(this.modelForm).then(response => {
+            if (response.RespCode === 1) {
+              this.$notify({
+                position: 'bottom-right',
+                title: '提示',
+                message: response.RespMsg,
+                type: 'success',
+                duration: 2000
+              })
+              loadingInstance.close()
+              this.closetab()
+            } else {
+              this.$notify({
+                position: 'bottom-right',
+                title: '失败',
+                message: response.RespMsg,
+                type: 'error',
+                duration: 5000
+              })
+              loadingInstance.close()
+              // this.modelForm.Scene = this.modelForm.Scene.split(',')
+              // this.closetab()
+            }
+          })
+        }
+      })
     }
   }
 }

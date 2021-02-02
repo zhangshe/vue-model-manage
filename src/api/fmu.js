@@ -43,10 +43,10 @@ export function uploadModule(data) {
   })
 }
 
-// 添加模型
-export function addModule(data) {
+// 添加API模型
+export function addAPIModule(data) {
   return request({
-    url: '/FMUModel/AddModule',
+    url: '/FMUModel/AddAPIModule',
     method: 'post',
     data
   })
@@ -85,5 +85,14 @@ export function GetInvokeLog(query) {
     method: 'get',
     params: query
 
+  })
+}
+
+// 删除API文件
+export function delApiFile(data) {
+  return request({
+    url: '/FMUModel/DelApiFile',
+    method: 'post',
+    params: data
   })
 }
