@@ -1,9 +1,11 @@
 <template>
   <div>
     <div class="navbar">
-      <div style="margin:10px;float:left;">
-        <img style="height:80px;margin-left:5%;" src="@/assets/images/logo.png">
-      </div>
+      <!-- <div style="margin:10px;float:left;">
+        <div style="height:80px;width:100%;margin-left:5%;background-color:#FFF">
+          <img style="height:80px;" src="@/assets/images/logo.png">
+        </div>
+      </div> -->
       <h1 style="color:#fff;float:left;line-height: 55px;margin-left: 5%;">中汽数据模型管理系统</h1>
       <div class="verticalBar" />
       <h3 style="color:#CCC;float:left;line-height: 55px;">技术目录</h3>

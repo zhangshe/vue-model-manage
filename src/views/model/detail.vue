@@ -1,17 +1,19 @@
 <template>
   <div>
     <div class="navbar">
-      <div style="margin:10px;float:left;">
-        <img style="height:80px;margin-left:5%;" src="@/assets/images/logo.png">
-      </div>
+      <!-- <div style="margin:10px;float:left;">
+        <div style="height:80px;width:100%;margin-left:5%;background-color:#FFF">
+          <img style="height:80px;" src="@/assets/images/logo.png">
+        </div>
+      </div> -->
       <h1 style="color:#fff;float:left;line-height: 55px;margin-left: 5%;">中汽数据模型管理系统</h1>
-      <div class="verticalBar"/>
+      <div class="verticalBar" />
       <h3 style="color:#CCC;float:left;line-height: 55px;">模型详情</h3>
       <div class="right-menu">
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
             <h3 style="color:#FFF;cursor: pointer;">{{ name }}</h3>
-            <i class="el-icon-caret-bottom"/>
+            <i class="el-icon-caret-bottom" />
           </div>
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
             <router-link to="/">
@@ -29,10 +31,10 @@
     <div>
       <el-row>
         <el-col :span="20" :offset="2" style="margin-top:1%;margin-bottom:2%;">
-          <label style="font-size:26px;color:#3A5E9D;margin-top:1%;">{{ modelForm.ModelName }}</label>
+          <label style="font-size:30px;color:#3A5E9D;margin-top:1%;">{{ modelForm.ModelName }}</label>
           <el-row style="margin-top:1%;">
             <el-col :span="8">
-              <img style="float:left;" src="@/assets/images/clock.png">
+              <img style="float:left;width:32px;height:32px;" src="@/assets/images/clock.png">
               <div
                 style="
                 display: flex;
@@ -40,7 +42,7 @@
                 text-align: justify;
                 width: 80%;
                 float: left;
-                height: 64px;
+                height: 32px;
                 font-size:20px;"
               >
                 <span style="margin-left:5px;">更新时间：</span>
@@ -48,7 +50,7 @@
               </div>
             </el-col>
             <el-col :span="8">
-              <img style="float:left;" src="@/assets/images/visit.png">
+              <img style="float:left;width:32px;height:32px;" src="@/assets/images/visit.png">
               <div
                 style="
                 display: flex;
@@ -56,7 +58,7 @@
                 text-align: justify;
                 width: 80%;
                 float: left;
-                height: 64px;
+                height: 32px;
                 font-size:20px;"
               >
                 <span style="margin-left:5px;">访问量：</span>
@@ -64,7 +66,7 @@
               </div>
             </el-col>
             <el-col :span="8">
-              <img style="float:left;" src="@/assets/images/download.png">
+              <img style="float:left;width:32px;height:32px;" src="@/assets/images/download.png">
               <div
                 style="
                 display: flex;
@@ -72,7 +74,7 @@
                 text-align: justify;
                 width: 80%;
                 float: left;
-                height: 64px;
+                height: 32px;
                 font-size:20px;"
               >
                 <span style="margin-left:5px;">调用量：</span>
@@ -82,47 +84,63 @@
           </el-row>
           <hr>
           <el-row>
-            <div style="margin:1% 0px;"><label style="font-size:24px;">基本信息</label></div>
-            <div style="margin:1% 0px;"><label style="font-size:24px;">模型简介：{{ modelForm.Introduction }}</label></div>
-            <div style="margin:1% 0px;"><label style="font-size:24px;">模型类型：{{
+            <div style="margin:1.5% 0px;"><label style="font-size:22px;">基本信息</label></div>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">模型简介：</label><span style="font-size:16px;font-weight:100;">{{ modelForm.Introduction }}</span>
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">模型类型：</label><span style="font-size:16px;font-weight:100;">{{
                 modelForm.ModelType | parseType
-              }}</label></div>
-            <div style="margin:1% 0px;"><label style="font-size:24px;">应用场景：{{ modelForm.Scene }}</label></div>
-            <ul class="list-group">
-              <li class="list-group-item">GUID:&nbsp;<span id="model_description.guid"/></li>
-              <li class="list-group-item">FMI版本:&nbsp;<span id="model_description.fmi_version"/></li>
-              <li class="list-group-item">作者:&nbsp;<span id="model_description.author"/></li>
-              <li class="list-group-item">生成工具:&nbsp;<span id="model_description.generation_tool"/></li>
-              <li class="list-group-item">生成时间:&nbsp;<span id="model_description.generation_date_and_time"/></li>
-            </ul>
-
+              }}</span>
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">应用场景：</label><span style="font-size:16px;font-weight:100;">{{ modelForm.Scene }}</span>
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">GUID：</label><span id="model_description.guid" style="font-size:16px;font-weight:100;" />
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">FMI版本：</label><span id="model_description.fmi_version" style="font-size:16px;font-weight:100;" />
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">作者：</label><span id="model_description.author" style="font-size:16px;font-weight:100;" />
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">生成工具：</label><span id="model_description.generation_tool" style="font-size:16px;font-weight:100;" />
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">生成时间：</label><span id="model_description.generation_date_and_time" style="font-size:16px;font-weight:100;" />
+            </el-col>
+            <el-col v-if="modelForm.ModelType===1" :span="24" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">输入数据样例：</label><span style="font-size:16px;font-weight:100;">{{ modelForm.InputData }}</span>
+            </el-col>
+            <el-col v-if="modelForm.ModelType===1" :span="24" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">输出数据样例：</label><span style="font-size:16px;font-weight:100;">{{ modelForm.OutputData }}</span>
+            </el-col>
           </el-row>
-          <hr>
           <el-row>
-            <div style="margin:1% 0px;"><label style="font-size:24px;">模型详细信息</label></div>
-            <div class="table">
-              <table class="table table-sm">
-                <thead>
+            <div style="margin:1.5% 0px;"><label style="font-size:22px;">实验信息</label></div>
+            <table class="pure-table pure-table-horizontal">
+              <thead>
                 <tr>
                   <th>开始时间</th>
                   <th>停止时间</th>
                   <th>相对容差</th>
                   <th>步长</th>
                 </tr>
-                </thead>
-                <tbody>
+              </thead>
+              <tbody>
                 <tr>
                   <td><input id="model_description.default_experiment.startTime" class="form-control"></td>
                   <td><input id="model_description.default_experiment.stopTime" class="form-control"></td>
                   <td><input id="model_description.default_experiment.tolerance" class="form-control"></td>
                   <td><input id="model_description.default_experiment.stepSize" class="form-control"></td>
                 </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="table">
-              <table class="table table-sm">
-                <thead>
+              </tbody>
+            </table>
+            <div style="margin:1.5% 0px;"><label style="font-size:22px;">模型变量信息</label></div>
+            <table class="pure-table pure-table-horizontal">
+              <thead>
                 <tr>
                   <th>名称</th>
                   <th>索引</th>
@@ -133,19 +151,15 @@
                   <th>值类型</th>
                   <th>模拟输入</th>
                 </tr>
-                </thead>
-                <tbody id="model_description.model_variables"/>
-              </table>
-            </div>
-
-            <div style="margin:1% 0px;"><label style="font-size:24px;">输入数据样例：{{ modelForm.InputData }}</label></div>
-            <div style="margin:1% 0px;"><label style="font-size:24px;">输出数据样例：{{ modelForm.OutputData }}</label></div>
+              </thead>
+              <tbody id="model_description.model_variables" />
+            </table>
           </el-row>
           <el-row>
-            <el-button style="width:200px;margin-bottom:1%;" type="warning" @click="InvokeClick()">模型调用</el-button>
+            <el-button style="width:200px;margin-bottom:1%;margin-top:1%;" type="warning" @click="InvokeClick()">模型调用</el-button>
           </el-row>
           <el-row>
-            <textarea id="msg" class="form-control" style="height:200px;"/>
+            <textarea id="msg" class="form-control" style="height:200px;" />
           </el-row>
           <el-col :span="24" style="text-align:center;margin-top:1%;">
             <el-button @click="resetForm()">返回</el-button>
@@ -157,7 +171,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import {
   addInvokeNum, PostInvokelog, getModelInfoById
 } from '@/api/fmu'
@@ -213,7 +227,7 @@ export default {
     // if (this.$route.query.type === 'edit' || this.$route.query.type === 'check') {
     //   this.getDetialInfo()
     // }
-    var null2str = function (data) {
+    var null2str = function(data) {
       if (data == null || data === 'null') {
         return ''
       } else {
@@ -229,7 +243,7 @@ export default {
         // this.paperInfoData = response.Data
         this.modelForm = response.Data
         this.modelForm.ViewNum = parseInt(this.modelForm.ViewNum) + 1
-        var rpc_address = 'http://192.168.144.24:9091/thrift'
+        var rpc_address = process.env.VUE_APP_RPC_ADDRESS
         // eslint-disable-next-line no-undef
         var transport = new Thrift.TXHRTransport(rpc_address)
         // eslint-disable-next-line no-undef
@@ -262,11 +276,11 @@ export default {
         // 属性列表
         document.getElementById('model_description.model_variables').innerHTML = ''
 
-        model_description.model_variables.sort(function (a, b) {
+        model_description.model_variables.sort(function(a, b) {
           return b.value_reference - a.value_reference
         })
 
-        var typeTest = function (obj) {
+        var typeTest = function(obj) {
           if (obj.integer_attribute != null) {
             return 'integer'
           } else if (obj.real_attribute != null) {
@@ -350,7 +364,7 @@ export default {
       this.$router.go(-1)
     },
     InvokeClick() {
-      addInvokeNum({moduleId: this.modelForm.ModelID}).then(response => {
+      addInvokeNum({ moduleId: this.modelForm.ModelID }).then(response => {
         this.message = response.RespMsg
         this.title = '失败'
         this.type = 'error'
@@ -361,7 +375,7 @@ export default {
           document.getElementById('msg').value = ''
 
           try {
-            var rpc_address = 'http://192.168.144.24:9091/thrift'
+            var rpc_address = process.env.VUE_APP_RPC_ADDRESS
             // eslint-disable-next-line no-undef
             var transport = new Thrift.TXHRTransport(rpc_address)
             // eslint-disable-next-line no-undef

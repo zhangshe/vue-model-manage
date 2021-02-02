@@ -1,9 +1,11 @@
 <template>
   <div>
     <div class="navbar">
-      <div style="margin:10px;float:left;">
-        <img style="height:80px;margin-left:5%;" src="@/assets/images/logo.png">
-      </div>
+      <!-- <div style="margin:10px;float:left;">
+        <div style="height:80px;width:100%;margin-left:5%;background-color:#FFF">
+          <img style="height:80px;" src="@/assets/images/logo.png">
+        </div>
+      </div> -->
       <h1 style="color:#fff;float:left;line-height: 55px;margin-left: 5%;">中汽数据模型管理系统</h1>
       <div class="verticalBar" />
       <h3 style="color:#CCC;float:left;line-height: 55px;">创建模型</h3>
@@ -81,7 +83,7 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="上传部门" style="text-align:right" prop="OrgName">
-                <el-select v-model="modelForm.OrgName" placeholder="上传部门" style="width:100%;" @change="selectChange">
+                <el-select v-model="modelForm.OrgName" filterable clearable placeholder="上传部门" style="width:100%;" @change="selectChange">
                   <!-- <el-option label="前瞻技术研究室" value="前瞻技术研究室" />
                   <el-option label="数据技术应用室" value="数据技术应用室" />
                   <el-option label="软件研发室" value="软件研发室" /> -->
@@ -96,7 +98,7 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="上传科室" style="text-align:right" prop="DeptName">
-                <el-select v-model="modelForm.DeptName" placeholder="上传科室" style="width:100%;">
+                <el-select v-model="modelForm.DeptName" filterable clearable placeholder="上传科室" style="width:100%;">
                   <!-- <el-option label="工业互联网标识组" value="工业互联网标识组" />
                   <el-option label="数据组" value="数据组" />
                   <el-option label="仿真技术组" value="仿真技术组" />
@@ -133,20 +135,20 @@
                 </el-upload>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col v-if="false" :span="12">
               <el-form-item label="上传密钥" prop="UploadKey">
                 <el-input v-model="modelForm.UploadKey" />
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row>
+          <el-row v-if="modelForm.ModelType==1">
             <el-col :span="24">
               <el-form-item label="输入数据样例" prop="InputData">
                 <el-input v-model="modelForm.InputData" type="textarea" />
               </el-form-item>
             </el-col>
           </el-row>
-          <el-row>
+          <el-row v-if="modelForm.ModelType==1">
             <el-col :span="24">
               <el-form-item label="输出数据样例" prop="OutputData">
                 <el-input v-model="modelForm.OutputData" type="textarea" />
@@ -166,6 +168,7 @@
 <script>
 
 import { mapGetters } from 'vuex'
+import { Loading } from 'element-ui'
 import {
   uploadModule
 } from '@/api/fmu'
@@ -444,7 +447,7 @@ export default {
         UpdateTime: '',
         DownloadNum: 0,
         ViewNum: 0,
-        UploadKey: ''
+        UploadKey: process.env.VUE_APP_UploadKey
       },
       rules: {
         ModelName: [
@@ -489,6 +492,7 @@ export default {
     selectChange(val) {
       this.OrgList[0].children.forEach(element => {
         if (element.name === val) {
+          this.modelForm.DeptName = ''
           this.DeptList = element.children
         }
       })
@@ -504,6 +508,7 @@ export default {
     submitForm(param) {
       this.$refs['modelManageForm'].validate((valid) => {
         if (valid) {
+          const loadingInstance = Loading.service({ fullscreen: false })
           // alert(this.modelForm.Scene.length)
           // alert(this.modelForm.Scene[0])
           // alert(this.modelForm.Scene)
@@ -559,9 +564,10 @@ export default {
                 position: 'bottom-right',
                 title: '提示',
                 message: response.RespMsg,
-                type: 'sucess',
-                duration: 5000
+                type: 'success',
+                duration: 2000
               })
+              loadingInstance.close()
               this.closetab()
             } else {
               this.$notify({
@@ -571,6 +577,7 @@ export default {
                 type: 'error',
                 duration: 5000
               })
+              loadingInstance.close()
               // this.modelForm.Scene = this.modelForm.Scene.split(',')
               // this.closetab()
             }

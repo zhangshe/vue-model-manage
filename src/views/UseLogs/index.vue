@@ -1,18 +1,20 @@
 <template>
   <div>
     <div class="navbar">
-      <div style="margin:10px;float:left;">
-        <img style="height:80px;margin-left:5%;" src="@/assets/images/logo.png">
-      </div>
+      <!-- <div style="margin:10px;float:left;">
+        <div style="height:80px;width:100%;margin-left:5%;background-color:#FFF">
+          <img style="height:80px;" src="@/assets/images/logo.png">
+        </div>
+      </div> -->
       <h1 style="color:#fff;float:left;line-height: 55px;margin-left: 5%;">中汽数据模型管理系统</h1>
-      <div class="verticalBar"/>
+      <div class="verticalBar" />
       <h3 style="color:#CCC;float:left;line-height: 55px;">技术目录</h3>
       <div class="right-menu">
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
             <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
             <h3 style="color:#FFF;cursor: pointer;">{{ name }}</h3>
-            <i class="el-icon-caret-bottom"/>
+            <i class="el-icon-caret-bottom" />
           </div>
           <el-dropdown-menu slot="dropdown" class="user-dropdown">
             <router-link to="/">
@@ -30,26 +32,27 @@
     <el-table
       :data="tableData"
       stripe
-      style="width: 100%">
-<!--      <el-table-column-->
-<!--        prop="ID"-->
-<!--        label="序号"-->
-<!--        width="180">-->
-<!--      </el-table-column>-->
+      style="width: 100%"
+    >
+      <!--      <el-table-column-->
+      <!--        prop="ID"-->
+      <!--        label="序号"-->
+      <!--        width="180">-->
+      <!--      </el-table-column>-->
       <el-table-column
         prop="ModelGUID"
         label="模型GUID"
-      >
-      </el-table-column>
+      />
       <el-table-column
         prop="InvokeIP"
         label="调用者IP"
-        width="180">
-      </el-table-column>
+        width="180"
+      />
       <el-table-column
         prop="InvokeTime"
         label="调用时间"
-        width="300">
+        width="300"
+      >
         <template slot-scope="scope">
           <span>{{ scope.row.InvokeTime | parseTime }}</span>
         </template>
@@ -57,18 +60,18 @@
       <el-table-column
         prop="Invoker"
         label="调用者"
-        width="180">
-      </el-table-column>
+        width="180"
+      />
       <el-table-column
         prop="OrgName"
         label="部门"
-        width="180">
-      </el-table-column>
+        width="180"
+      />
       <el-table-column
         prop="DeptName"
         label="科室"
-        width="180">
-      </el-table-column>
+        width="180"
+      />
     </el-table>
     <el-pagination
       background
@@ -80,6 +83,11 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
+    <el-row>
+      <el-col :span="24" style="text-align:center;margin-top:1%;">
+        <el-button @click="resetForm()">返回</el-button>
+      </el-col>
+    </el-row>
   </div>
 
 </template>
@@ -106,10 +114,24 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters([
+      'name',
+      'avatar'
+    ])
+  },
   created() {
     this.UpdateLog()
   },
   methods: {
+    resetForm() {
+      this.closetab()
+    },
+    // 关闭页面
+    closetab() {
+      // this.$store.dispatch('tagsView/delView', this.$route)
+      this.$router.go(-1)
+    },
     UpdateLog: function() {
       GetInvokeLog(this.pageQuery).then(response => {
         if (response.RespCode === 1) {
@@ -134,12 +156,6 @@ export default {
       this.pageQuery.pageIndex = val
       this.UpdateLog()
     }
-  },
-  computed: {
-    ...mapGetters([
-      'name',
-      'avatar'
-    ])
   }
 }
 </script>
