@@ -83,7 +83,7 @@
             </el-col>
           </el-row>
           <hr>
-          <el-row>
+          <el-row v-if="modelForm.ModelType===0">
             <div style="margin:1.5% 0px;"><label style="font-size:22px;">基本信息</label></div>
             <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
               <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">模型简介：</label><span style="font-size:16px;font-weight:100;">{{ modelForm.Introduction }}</span>
@@ -94,31 +94,79 @@
               }}</span>
             </el-col>
             <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
-              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">应用场景：</label><span style="font-size:16px;font-weight:100;">{{ modelForm.Scene }}</span>
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">应用场景：</label>
+              <span style="font-size:16px;font-weight:100;">{{ modelForm.Scene }}</span>
             </el-col>
             <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
-              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">GUID：</label><span id="model_description.guid" style="font-size:16px;font-weight:100;" />
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">GUID：</label>
+              <span id="model_description.guid" style="font-size:16px;font-weight:100;" />
+
             </el-col>
             <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
-              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">FMI版本：</label><span id="model_description.fmi_version" style="font-size:16px;font-weight:100;" />
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">FMI版本：</label>
+              <span id="model_description.fmi_version" style="font-size:16px;font-weight:100;" />
             </el-col>
             <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
-              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">作者：</label><span id="model_description.author" style="font-size:16px;font-weight:100;" />
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">作者：</label>
+              <span id="model_description.author" style="font-size:16px;font-weight:100;" />
+
             </el-col>
             <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
-              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">生成工具：</label><span id="model_description.generation_tool" style="font-size:16px;font-weight:100;" />
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">生成工具：</label>
+              <span id="model_description.generation_tool" style="font-size:16px;font-weight:100;" />
+
             </el-col>
             <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
-              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">生成时间：</label><span id="model_description.generation_date_and_time" style="font-size:16px;font-weight:100;" />
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">生成时间：</label>
+              <span id="model_description.generation_date_and_time" style="font-size:16px;font-weight:100;" />
             </el-col>
-            <el-col v-if="modelForm.ModelType===1" :span="24" style="font-size:18px;margin-bottom:1%;">
-              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">输入数据样例：</label><span style="font-size:16px;font-weight:100;">{{ modelForm.InputData }}</span>
+
+          </el-row>
+          <el-row v-if="modelForm.ModelType===1">
+            <div style="margin:1.5% 0px;"><label style="font-size:22px;">基本信息</label></div>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">模型简介：</label><span style="font-size:16px;font-weight:100;">{{ modelForm.Introduction }}</span>
             </el-col>
-            <el-col v-if="modelForm.ModelType===1" :span="24" style="font-size:18px;margin-bottom:1%;">
-              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">输出数据样例：</label><span style="font-size:16px;font-weight:100;">{{ modelForm.OutputData }}</span>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">模型类型：</label><span style="font-size:16px;font-weight:100;">{{
+                modelForm.ModelType | parseType
+              }}</span>
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">应用场景：</label>
+              <span style="font-size:16px;font-weight:100;">{{ modelForm.Scene }}</span>
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">GUID：</label>
+              <span style="font-size:16px;font-weight:100;">{{ JSON.parse(modelForm.ApiDescribe)===null?"":JSON.parse(modelForm.ApiDescribe).Guid }}</span>
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">API版本：</label>
+              <span style="font-size:16px;font-weight:100;">{{ JSON.parse(modelForm.ApiDescribe)===null?"":JSON.parse(modelForm.ApiDescribe).Version }}</span>
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">作者：</label>
+              <span style="font-size:16px;font-weight:100;">{{ JSON.parse(modelForm.ApiDescribe)===null?"":JSON.parse(modelForm.ApiDescribe).Author }}</span>
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">生成工具：</label>
+              <span style="font-size:16px;font-weight:100;">{{ JSON.parse(modelForm.ApiDescribe)===null?"":JSON.parse(modelForm.ApiDescribe).GenerationTool }}</span>
+            </el-col>
+            <el-col :span="12" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">生成时间：</label>
+              <span style="font-size:16px;font-weight:100;">{{ JSON.parse(modelForm.ApiDescribe)===null?"":JSON.parse(modelForm.ApiDescribe).CreateTime }}</span>
+            </el-col>
+
+            <el-col :span="24" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">输入数据样例：</label>
+              <span style="font-size:16px;font-weight:100;">{{ modelForm.InputData }}</span>
+            </el-col>
+            <el-col :span="24" style="font-size:18px;margin-bottom:1%;">
+              <label style="width:128px;font-weight:500;display:inline-block;text-align:right;">输出数据样例：</label>
+              <span style="font-size:16px;font-weight:100;">{{ modelForm.OutputData }}</span>
             </el-col>
           </el-row>
-          <el-row>
+          <el-row v-if="modelForm.ModelType===0">
             <div style="margin:1.5% 0px;"><label style="font-size:22px;">实验信息</label></div>
             <table class="pure-table pure-table-horizontal">
               <thead>
@@ -155,8 +203,11 @@
               <tbody id="model_description.model_variables" />
             </table>
           </el-row>
-          <el-row>
+          <el-row v-if="modelForm.ModelType===0">
             <el-button style="width:200px;margin-bottom:1%;margin-top:1%;" type="warning" @click="InvokeClick()">模型调用</el-button>
+          </el-row>
+          <el-row v-else>
+            <el-button style="width:200px;margin-bottom:1%;margin-top:1%;" type="warning" @click="ApiClick()">API调用</el-button>
           </el-row>
           <el-row>
             <textarea id="msg" class="form-control" style="height:200px;" />
@@ -211,7 +262,9 @@ export default {
         StartScript: null,
         UpdateTime: null,
         Uploader: null,
-        ViewNum: 0
+        ViewNum: 0,
+        FileName: '',
+        ApiDescribe: null
       }
     }
   },
@@ -222,11 +275,9 @@ export default {
     ])
   },
   created() {
-    // this.modelForm = this.$route.params.data
-    // console.log(this.modelForm)
-    // if (this.$route.query.type === 'edit' || this.$route.query.type === 'check') {
-    //   this.getDetialInfo()
-    // }
+
+  },
+  mounted() {
     var null2str = function(data) {
       if (data == null || data === 'null') {
         return ''
@@ -239,74 +290,74 @@ export default {
       getModelInfoById({
         modelId: this.$route.query.moduleId
       }).then(response => {
-        console.log('编辑数据', response.Data)
         // this.paperInfoData = response.Data
         this.modelForm = response.Data
         this.modelForm.ViewNum = parseInt(this.modelForm.ViewNum) + 1
-        var rpc_address = process.env.VUE_APP_RPC_ADDRESS
-        // eslint-disable-next-line no-undef
-        var transport = new Thrift.TXHRTransport(rpc_address)
-        // eslint-disable-next-line no-undef
-        var protocol = new Thrift.TJSONProtocol(transport)
-        // eslint-disable-next-line no-undef
-        var client = new FmuServiceClient(protocol)
-        var model_description = client.get_model_description(this.modelForm.GUID)
-
-        // 模型基本信息
-        for (const prop in model_description) {
-          var _dom = document.getElementById('model_description.' + prop)
-          if (_dom != null) {
-            if (_dom === document.getElementById('model_description.generation_date_and_time')) {
-              _dom.innerHTML = this.parseTime(model_description[prop])
-            } else {
-              _dom.innerHTML = model_description[prop]
+        if (response.Data.ModelType === 0) {
+          this.$nextTick(() => {
+            var rpc_address = process.env.VUE_APP_RPC_ADDRESS
+            // eslint-disable-next-line no-undef
+            var transport = new Thrift.TXHRTransport(rpc_address)
+            // eslint-disable-next-line no-undef
+            var protocol = new Thrift.TJSONProtocol(transport)
+            // eslint-disable-next-line no-undef
+            var client = new FmuServiceClient(protocol)
+            var model_description = client.get_model_description(this.modelForm.GUID)
+            // 模型基本信息
+            for (const prop in model_description) {
+              var _dom = document.getElementById('model_description.' + prop)
+              if (_dom != null) {
+                if (_dom === document.getElementById('model_description.generation_date_and_time')) {
+                  _dom.innerHTML = this.parseTime(model_description[prop])
+                } else {
+                  _dom.innerHTML = model_description[prop]
+                }
+              }
             }
-          }
-        }
 
-        // 默认实验信息
-        for (const prop in model_description.default_experiment) {
-          // eslint-disable-next-line no-redeclare
-          var _dom = document.getElementById('model_description.default_experiment.' + prop)
-          if (_dom != null) {
-            _dom.value = model_description.default_experiment[prop]
-          }
-        }
+            // 默认实验信息
+            for (const prop in model_description.default_experiment) {
+              // eslint-disable-next-line no-redeclare
+              var _dom = document.getElementById('model_description.default_experiment.' + prop)
+              if (_dom != null) {
+                _dom.value = model_description.default_experiment[prop]
+              }
+            }
 
-        // 属性列表
-        document.getElementById('model_description.model_variables').innerHTML = ''
+            // 属性列表
+            document.getElementById('model_description.model_variables').innerHTML = ''
 
-        model_description.model_variables.sort(function(a, b) {
-          return b.value_reference - a.value_reference
-        })
+            model_description.model_variables.sort(function(a, b) {
+              return b.value_reference - a.value_reference
+            })
 
-        var typeTest = function(obj) {
-          if (obj.integer_attribute != null) {
-            return 'integer'
-          } else if (obj.real_attribute != null) {
-            return 'real'
-          } else if (obj.string_attribute != null) {
-            return 'string'
-          } else if (obj.boolean_attribute != null) {
-            return 'boolean'
-          } else if (obj.enumeration_attribute != null) {
-            return 'enumeration'
-          } else {
-            return '-'
-          }
-        }
+            var typeTest = function(obj) {
+              if (obj.integer_attribute != null) {
+                return 'integer'
+              } else if (obj.real_attribute != null) {
+                return 'real'
+              } else if (obj.string_attribute != null) {
+                return 'string'
+              } else if (obj.boolean_attribute != null) {
+                return 'boolean'
+              } else if (obj.enumeration_attribute != null) {
+                return 'enumeration'
+              } else {
+                return '-'
+              }
+            }
 
-        // eslint-disable-next-line no-array-constructor
-        var input_params = new Array()
-        // eslint-disable-next-line no-array-constructor
-        var output_params = new Array()
+            // eslint-disable-next-line no-array-constructor
+            var input_params = new Array()
+            // eslint-disable-next-line no-array-constructor
+            var output_params = new Array()
 
-        for (let i = 0; i < model_description.model_variables.length; i++) {
-          var _var = model_description.model_variables[i]
+            for (let i = 0; i < model_description.model_variables.length; i++) {
+              var _var = model_description.model_variables[i]
 
-          var attr_type = typeTest(_var.attribute)
-          var objE = document.createElement('tr')
-          objE.innerHTML = '<tr><td>' + _var.name + '</td>' +
+              var attr_type = typeTest(_var.attribute)
+              var objE = document.createElement('tr')
+              objE.innerHTML = '<tr><td>' + _var.name + '</td>' +
             '<td>' + null2str(_var.value_reference) + '</td>' +
             '<td>' + null2str(_var.description) + '</td>' +
             '<td>' + null2str(_var.causality) + '</td>' +
@@ -314,36 +365,35 @@ export default {
             '<td>' + null2str(_var.variability) + '</td>' +
             '<td>' + attr_type + '</td>'
 
-          if (_var.causality === 'input') {
-            var _onj = {}
-            _onj.index = _var.value_reference
-            _onj.name = _var.name
-            _onj.type = attr_type
-            input_params.push(_onj)
+              if (_var.causality === 'input') {
+                var _onj = {}
+                _onj.index = _var.value_reference
+                _onj.name = _var.name
+                _onj.type = attr_type
+                input_params.push(_onj)
 
-            objE.innerHTML += "<td><input id='" + _var.value_reference + "' class='form-control' value='" + 1 + "'/></td></tr>"
-          } else if (_var.causality === 'output') {
-            // eslint-disable-next-line no-redeclare
-            var _onj = {}
-            _onj.index = _var.value_reference
-            _onj.name = _var.name
-            _onj.type = attr_type
-            output_params.push(_onj)
-            objE.innerHTML += '<td>-</td></tr>'
-          } else {
-            objE.innerHTML += '<td>-</td></tr>'
-          }
+                objE.innerHTML += "<td><input id='" + _var.value_reference + "' class='form-control' value='" + 1 + "'/></td></tr>"
+              } else if (_var.causality === 'output') {
+                // eslint-disable-next-line no-redeclare
+                var _onj = {}
+                _onj.index = _var.value_reference
+                _onj.name = _var.name
+                _onj.type = attr_type
+                output_params.push(_onj)
+                objE.innerHTML += '<td>-</td></tr>'
+              } else {
+                objE.innerHTML += '<td>-</td></tr>'
+              }
 
-          document.getElementById('model_description.model_variables').insertBefore(objE, document.getElementById('model_description.model_variables').childNodes[0])
+              document.getElementById('model_description.model_variables').insertBefore(objE, document.getElementById('model_description.model_variables').childNodes[0])
+            }
+
+            this.inputParams = input_params
+            this.outParams = output_params
+          })
         }
-
-        this.inputParams = input_params
-        this.outParams = output_params
       })
     }
-    // 加载用户信息
-    // this.modelForm = this.$route.params.data
-    // console.log('detail.vue', this.modelForm)
   },
   methods: {
     parseTime(value) {
@@ -485,8 +535,10 @@ export default {
           })
         }
       })
+    },
+    ApiClick() {
+      alert('API模型调用')
     }
-
   }
 }
 </script>

@@ -479,7 +479,9 @@ export default {
         UpdateTime: '',
         DownloadNum: 0,
         ViewNum: 0,
-        UploadKey: process.env.VUE_APP_UploadKey
+        UploadKey: process.env.VUE_APP_UploadKey,
+        FileName: '',
+        ApiDescribe: null
       },
       rules: {
         ModelName: [
@@ -651,16 +653,22 @@ export default {
       this.$router.push({ name: 'Dashboard' })
     },
     handleSuccessAPI(res, file) {
-      this.modelForm.ModelFileUrl = file.response.Data.url
-      this.modelForm.InputData = JSON.stringify(JSON.parse(file.response.Data.content).InPut)
-      this.modelForm.OutputData = JSON.stringify(JSON.parse(file.response.Data.content).OutPut)
-      // this.$notify({
-      //   position: 'bottom-right',
-      //   title: '提示',
-      //   message: '操作成功',
-      //   type: 'success',
-      //   duration: 2000
-      // })
+      this.modelForm.FileName = file.name
+      if (file.response.RespCode !== 1) {
+        this.$notify({
+          position: 'bottom-right',
+          title: '提示',
+          message: file.response.RespMsg,
+          type: 'error',
+          duration: 5000
+        })
+        this.fileListAPI = []
+      } else {
+        this.modelForm.ModelFileUrl = file.response.Data.url
+        this.modelForm.InputData = JSON.stringify(JSON.parse(file.response.Data.content).InPut)
+        this.modelForm.OutputData = JSON.stringify(JSON.parse(file.response.Data.content).OutPut)
+        this.modelForm.ApiDescribe = JSON.stringify(JSON.parse(file.response.Data.content))
+      }
     },
     handleErrorAPI(err, file, fileList) {
       this.$notify({
