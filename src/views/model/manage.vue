@@ -481,7 +481,8 @@ export default {
         ViewNum: 0,
         UploadKey: process.env.VUE_APP_UploadKey,
         FileName: '',
-        ApiDescribe: null
+        ApiDescribe: null,
+        ApiUnzipPath: null
       },
       rules: {
         ModelName: [
@@ -665,6 +666,7 @@ export default {
         this.fileListAPI = []
       } else {
         this.modelForm.ModelFileUrl = file.response.Data.url
+        this.modelForm.ApiUnzipPath = file.response.Data.unzippath
         this.modelForm.InputData = JSON.stringify(JSON.parse(file.response.Data.content).InPut)
         this.modelForm.OutputData = JSON.stringify(JSON.parse(file.response.Data.content).OutPut)
         this.modelForm.ApiDescribe = JSON.stringify(JSON.parse(file.response.Data.content))
