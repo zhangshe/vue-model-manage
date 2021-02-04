@@ -625,6 +625,7 @@ export default {
       })
     },
     ApiClick() {
+      debugger
       document.getElementById('map').src = process.env.VUE_APP_API_SERVICE + ':' + this.modelForm.Port + this.modelForm.SwaggerUrl // 'http://localhost:30001/api-docs'
       this.changeMapIframe()
     }
