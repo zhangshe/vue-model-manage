@@ -84,14 +84,25 @@
           </el-col>
         </el-row>
         <el-row style="margin:1.5% 0;font-size:20px;padding-left:1.5%">
-          <el-col :span="8">
-            <label>格式：</label><label>{{ item.ModelType | parseType }}</label>
+          <el-col :span="6">
+            <label>格式：</label>
+            <label>{{ item.ModelType | parseType }}</label>
           </el-col>
-          <el-col :span="8">
-            <label>应用场景：</label><label>{{ item.Scene }}</label>
+          <el-col :span="8" :offset="1">
+            <el-col :span="7" style="text-align:right;">
+              <label>应用场景：</label>
+            </el-col>
+            <el-col :span="17">
+              <label>{{ item.Scene }}</label>
+            </el-col>
           </el-col>
-          <el-col :span="8">
-            <label>更新时间：</label><label>{{ item.UpdateTime | parseTime }}</label>
+          <el-col :span="8" :offset="1">
+            <el-col :span="7" style="text-align:right;">
+              <label>更新时间：</label>
+            </el-col>
+            <el-col :span="17">
+              <label>{{ item.UpdateTime | parseTime }}</label>
+            </el-col>
           </el-col>
         </el-row>
       </el-col>

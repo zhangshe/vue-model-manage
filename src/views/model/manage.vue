@@ -157,13 +157,18 @@
                   accept=".zip"
                 >
                   <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
-                  <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
+                  <div slot="tip" class="el-upload__tip">仅能上传.zip文件</div>
                 </el-upload>
               </el-form-item>
             </el-col>
             <el-col v-if="false" :span="12">
               <el-form-item label="上传密钥" prop="UploadKey">
                 <el-input v-model="modelForm.UploadKey" />
+              </el-form-item>
+            </el-col>
+            <el-col v-if="modelForm.ModelType===1" :span="12">
+              <el-form-item label="部署端口号" prop="Port">
+                <el-input v-model="modelForm.Port" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -482,7 +487,9 @@ export default {
         UploadKey: process.env.VUE_APP_UploadKey,
         FileName: '',
         ApiDescribe: null,
-        ApiUnzipPath: null
+        ApiUnzipPath: null,
+        Port: '',
+        SwaggerUrl: ''
       },
       rules: {
         ModelName: [
@@ -669,6 +676,8 @@ export default {
         this.modelForm.ApiUnzipPath = file.response.Data.unzippath
         this.modelForm.InputData = JSON.stringify(JSON.parse(file.response.Data.content).InPut)
         this.modelForm.OutputData = JSON.stringify(JSON.parse(file.response.Data.content).OutPut)
+        this.modelForm.Port = JSON.stringify(JSON.parse(file.response.Data.content).Port)
+        this.modelForm.SwaggerUrl = JSON.stringify(JSON.parse(file.response.Data.content).SwaggerUrl)
         this.modelForm.ApiDescribe = JSON.stringify(JSON.parse(file.response.Data.content))
       }
     },
