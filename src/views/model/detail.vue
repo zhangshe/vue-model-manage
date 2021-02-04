@@ -338,7 +338,9 @@ export default {
         Uploader: null,
         ViewNum: 0,
         FileName: '',
-        ApiDescribe: null
+        ApiDescribe: null,
+        Port: '',
+        SwaggerUrl: null
       }
     }
   },
@@ -623,7 +625,7 @@ export default {
       })
     },
     ApiClick() {
-      document.getElementById('map').src = 'http://localhost:30001/api-docs'
+      document.getElementById('map').src = process.env.VUE_APP_API_SERVICE + ':' + this.modelForm.Port + this.modelForm.SwaggerUrl // 'http://localhost:30001/api-docs'
       this.changeMapIframe()
     }
   }
