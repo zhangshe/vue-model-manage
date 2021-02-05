@@ -275,10 +275,16 @@
             </table>
           </el-row>
           <el-row v-if="modelForm.ModelType===0">
-            <el-button style="width:200px;margin-bottom:1%;margin-top:1%;" type="warning" @click="InvokeClick()">模型调用</el-button>
+            <el-button style="width:200px;margin-bottom:1%;margin-top:1%;" type="warning" @click="InvokeClick()">线上调用</el-button>
+            <el-link :underline="false" :href="fmuDemoUrl" target="_blank">
+              <el-button style="width:200px;margin-bottom:1%;margin-top:1%;margin-left:5%" type="primary">远程调用</el-button>
+            </el-link>
           </el-row>
           <el-row v-else>
-            <el-button style="width:200px;margin-bottom:1%;margin-top:1%;" type="warning" @click="ApiClick()">API调用</el-button>
+            <el-button style="width:200px;margin-bottom:1%;margin-top:1%;" type="warning" @click="ApiClick()">线上调用</el-button>
+            <el-link :underline="false" :href="APIDemoUrl" target="_blank">
+              <el-button style="width:200px;margin-bottom:1%;margin-top:1%;margin-left:5%" type="primary">远程调用</el-button>
+            </el-link>
           </el-row>
           <el-row v-if="modelForm.ModelType===0">
             <textarea id="msg" class="form-control" style="height:200px;" />
@@ -317,6 +323,8 @@ export default {
   },
   data() {
     return {
+      fmuDemoUrl: '/Downloads/fmuDemo.zip',
+      APIDemoUrl: '/Downloads/PythonAPIModel.zip',
       modelForm: {
         DeptID: null,
         DeptName: null,
@@ -625,8 +633,27 @@ export default {
       })
     },
     ApiClick() {
-      document.getElementById('map').src = process.env.VUE_APP_API_SERVICE + ':' + this.modelForm.Port + this.modelForm.SwaggerUrl // 'http://localhost:30001/api-docs'
-      this.changeMapIframe()
+      addInvokeNum({ moduleId: this.modelForm.ModelID }).then(response => {
+        if (response.RespCode === 1) {
+          const userip = localStorage.getItem('Ip')
+          const time = new Date()
+          this.modelForm.DownloadNum = parseInt(this.modelForm.DownloadNum) + 1
+          this.modelForm.ViewNum = parseInt(this.modelForm.ViewNum) + 1
+          console.log('detail.vue', userip, time, this.modelForm)
+          PostInvokelog({
+            ModelGUID: this.modelForm.GUID,
+            InvokeIP: userip,
+            InvokeTime: time,
+            Invoker: '管理员',
+            OrgID: this.modelForm.OrgID,
+            OrgName: this.modelForm.OrgName,
+            DeptID: this.modelForm.DeptID,
+            DeptName: this.modelForm.DeptName
+          })
+          document.getElementById('map').src = process.env.VUE_APP_API_SERVICE + ':' + this.modelForm.Port + this.modelForm.SwaggerUrl // 'http://localhost:30001/api-docs'
+          this.changeMapIframe()
+        }
+      })
     }
   }
 }

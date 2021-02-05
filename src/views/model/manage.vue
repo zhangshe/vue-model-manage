@@ -129,6 +129,7 @@
                   :on-error="handleError"
                   :file-list="fileList"
                   :auto-upload="false"
+                  :limit="1"
                   accept=".fmu"
                 >
                   <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
@@ -154,6 +155,8 @@
                   :on-error="handleErrorAPI"
                   :on-remove="handleRemoveAPI"
                   :file-list="fileListAPI"
+                  :before-upload="onBeforeUpload"
+                  :limit="1"
                   accept=".zip"
                 >
                   <el-button slot="trigger" size="small" type="primary">选择文件</el-button>
@@ -168,27 +171,27 @@
             </el-col>
             <el-col v-if="modelForm.ModelType===1" :span="12">
               <el-form-item label="部署端口号" prop="Port">
-                <el-input v-model="modelForm.Port" />
+                <el-input v-model="modelForm.Port" readonly="true" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row v-if="modelForm.ModelType==1">
             <el-col :span="24">
               <el-form-item label="输入数据样例" prop="InputData">
-                <el-input v-model="modelForm.InputData" type="textarea" />
+                <el-input v-model="modelForm.InputData" type="textarea" readonly="true" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row v-if="modelForm.ModelType==1">
             <el-col :span="24">
               <el-form-item label="输出数据样例" prop="OutputData">
-                <el-input v-model="modelForm.OutputData" type="textarea" />
+                <el-input v-model="modelForm.OutputData" type="textarea" readonly="true" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-form-item style="text-align:center;">
             <el-button v-if="modelForm.ModelType===0" type="primary" @click="submitFmu()">上传模型</el-button>
-            <el-button v-if="modelForm.ModelType===1" type="primary" @click="submitAPI()">上传模型</el-button>
+            <el-button v-if="modelForm.ModelType===1" type="primary" :disabled="btnContorl" @click="submitAPI()">上传模型</el-button>
             <el-button @click="resetForm('ruleForm')">关闭</el-button>
           </el-form-item>
         </el-form>
@@ -210,6 +213,7 @@ export default {
   name: 'Detail',
   data() {
     return {
+      btnContorl: false,
       modelData: {},
       fileList: [],
       fileListAPI: [],
@@ -532,6 +536,10 @@ export default {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
+    onBeforeUpload(file) {
+      this.btnContorl = true
+      return true
+    },
     selectChange(val) {
       this.OrgList[0].children.forEach(element => {
         if (element.name === val) {
@@ -671,14 +679,17 @@ export default {
           duration: 5000
         })
         this.fileListAPI = []
+        this.btnContorl = false
       } else {
         this.modelForm.ModelFileUrl = file.response.Data.url
         this.modelForm.ApiUnzipPath = file.response.Data.unzippath
         this.modelForm.InputData = JSON.stringify(JSON.parse(file.response.Data.content).InPut)
         this.modelForm.OutputData = JSON.stringify(JSON.parse(file.response.Data.content).OutPut)
+        this.modelForm.GUID = JSON.stringify(JSON.parse(file.response.Data.content).Guid).replace('"', '').replace('"', '')
         this.modelForm.Port = JSON.stringify(JSON.parse(file.response.Data.content).Port)
         this.modelForm.SwaggerUrl = JSON.stringify(JSON.parse(file.response.Data.content).SwaggerUrl).replace('"', '').replace('"', '')
         this.modelForm.ApiDescribe = JSON.stringify(JSON.parse(file.response.Data.content))
+        this.btnContorl = false
       }
     },
     handleErrorAPI(err, file, fileList) {
