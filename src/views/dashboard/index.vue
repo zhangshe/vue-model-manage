@@ -57,7 +57,7 @@
       :key="'model'+index"
       style="cursor:pointer"
     >
-      <el-col :span="20" :offset="2" style="border:1px solid #ccc;margin-top:1%;font-size: 16px;font-family:宋体,微软雅黑,'Helvetica Neue', Helvetica, Arial, sans-serif">
+      <el-col :span="20" :offset="2" style="border:1px solid #ccc;margin-top:1%;font-size: 16px;">
         <el-row :gutter="20" style="margin:1% 0;">
           <el-col :span="18">
             <div style="" @click="detailModel(item)">
@@ -247,7 +247,6 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard {
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
   &-container {
     margin: 30px;
   }

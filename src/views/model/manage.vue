@@ -31,7 +31,7 @@
     </div>
     <el-row>
       <el-col :span="20" :offset="2">
-        <el-form ref="modelManageForm" :model="modelForm" :rules="rules" label-width="120px" style="margin-top:3%;font-family:宋体,微软雅黑,'Helvetica Neue', Helvetica, Arial, sans-serif" class="demo-ruleForm">
+        <el-form ref="modelManageForm" :model="modelForm" :rules="rules" label-width="120px" style="margin-top:3%;" class="demo-ruleForm">
           <el-row>
             <el-col :span="24">
               <el-form-item size="small" label="模型名称" prop="ModelName">

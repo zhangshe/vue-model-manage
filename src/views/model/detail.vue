@@ -31,7 +31,7 @@
     </div>
     <div>
       <el-row>
-        <el-col :span="20" :offset="2" style="margin-top:1%;margin-bottom:2%;font-family:宋体,微软雅黑,'Helvetica Neue', Helvetica, Arial, sans-serif">
+        <el-col :span="20" :offset="2" style="margin-top:1%;margin-bottom:2%;">
           <label style="font-size:24px;color:#3A5E9D;margin-top:1%;">{{ modelForm.ModelName }}</label>
           <el-row style="margin-top:1%;">
             <el-col :span="10">
