@@ -6,12 +6,13 @@
           <img style="height:80px;" src="@/assets/images/logo.png">
         </div>
       </div> -->
-      <h1 style="color:#fff;float:left;line-height: 55px;margin-left: 5%;">中汽数据模型管理系统</h1>
+      <h2 style="color:#fff;float:left;line-height: 45px;margin-left: 5%;">中汽数据模型管理系统</h2>
       <div class="verticalBar" />
-      <h3 style="color:#CCC;float:left;line-height: 55px;">创建模型</h3>
+      <h4 style="color:#CCC;float:left;line-height: 43px;">创建模型</h4>
       <div class="right-menu">
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
+            <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
             <h3 style="color:#FFF;cursor: pointer;">{{ name }}</h3>
             <i class="el-icon-caret-bottom" />
           </div>
@@ -30,24 +31,24 @@
     </div>
     <el-row>
       <el-col :span="20" :offset="2">
-        <el-form ref="modelManageForm" :model="modelForm" :rules="rules" label-width="120px" style="margin-top:3%;" class="demo-ruleForm">
+        <el-form ref="modelManageForm" :model="modelForm" :rules="rules" label-width="120px" style="margin-top:3%;font-family:宋体,微软雅黑,'Helvetica Neue', Helvetica, Arial, sans-serif" class="demo-ruleForm">
           <el-row>
             <el-col :span="24">
-              <el-form-item label="模型名称" prop="ModelName">
+              <el-form-item size="small" label="模型名称" prop="ModelName">
                 <el-input v-model="modelForm.ModelName" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
-              <el-form-item label="模型描述" prop="Introduction" type="textarea">
+              <el-form-item size="small" label="模型描述" prop="Introduction" type="textarea">
                 <el-input v-model="modelForm.Introduction" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="14">
-              <el-form-item label="模型类别" prop="ModelType">
+              <el-form-item size="small" label="模型类别" prop="ModelType">
                 <el-radio-group v-model="modelForm.ModelType">
                   <el-radio :label="0">FMU</el-radio>
                   <el-radio :label="1">API</el-radio>
@@ -55,7 +56,7 @@
               </el-form-item>
             </el-col>
             <el-col v-if="modelForm.ModelType==1" :span="10" style="text-align:right;">
-              <el-form-item label="语言" style="text-align:right" prop="Language">
+              <el-form-item size="small" label="语言" style="text-align:right" prop="Language">
                 <el-select v-model="modelForm.Language" placeholder="请选择语言" style="width:100%;">
                   <el-option label="Java" value="Java" />
                   <el-option label="Python" value="Python" />
@@ -68,7 +69,7 @@
           </el-row>
           <el-row>
             <el-col :span="24">
-              <el-form-item label="应用场景" prop="Scene">
+              <el-form-item size="small" label="应用场景" prop="Scene">
                 <el-select v-model="modelForm.SceneValue" multiple placeholder="请选择应用场景" style="width:100%;">
                   <el-option label="市场研究" value="市场研究" />
                   <el-option label="绿色生态" value="绿色生态" />
@@ -82,7 +83,7 @@
           </el-row>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="上传部门" style="text-align:right" prop="OrgName">
+              <el-form-item size="small" label="上传部门" style="text-align:right" prop="OrgName">
                 <el-select v-model="modelForm.OrgName" filterable clearable placeholder="上传部门" style="width:100%;" @change="selectChange">
                   <!-- <el-option label="前瞻技术研究室" value="前瞻技术研究室" />
                   <el-option label="数据技术应用室" value="数据技术应用室" />
@@ -97,7 +98,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="上传科室" style="text-align:right" prop="DeptName">
+              <el-form-item size="small" label="上传科室" style="text-align:right" prop="DeptName">
                 <el-select v-model="modelForm.DeptName" filterable clearable placeholder="上传科室" style="width:100%;">
                   <!-- <el-option label="工业互联网标识组" value="工业互联网标识组" />
                   <el-option label="数据组" value="数据组" />
@@ -115,7 +116,7 @@
           </el-row>
           <el-row v-if="modelForm.ModelType===0">
             <el-col :span="12">
-              <el-form-item label="模型文件">
+              <el-form-item size="small" label="模型文件">
                 <!-- :action="urlUpload"
                   :data="{modelData: JSON.stringify(modelForm) }"
                   :on-preview="handlePreview"
@@ -138,7 +139,7 @@
               </el-form-item>
             </el-col>
             <el-col v-if="false" :span="12">
-              <el-form-item label="上传密钥" prop="UploadKey">
+              <el-form-item size="small" label="上传密钥" prop="UploadKey">
                 <el-input v-model="modelForm.UploadKey" />
               </el-form-item>
             </el-col>
@@ -146,7 +147,7 @@
 
           <el-row v-if="modelForm.ModelType===1">
             <el-col :span="12">
-              <el-form-item label="API模型文件">
+              <el-form-item size="small" label="API模型文件">
                 <el-upload
                   ref="uploadAPI"
                   class="upload-demo"
@@ -165,34 +166,34 @@
               </el-form-item>
             </el-col>
             <el-col v-if="false" :span="12">
-              <el-form-item label="上传密钥" prop="UploadKey">
+              <el-form-item size="small" label="上传密钥" prop="UploadKey">
                 <el-input v-model="modelForm.UploadKey" />
               </el-form-item>
             </el-col>
             <el-col v-if="modelForm.ModelType===1" :span="12">
-              <el-form-item label="部署端口号" prop="Port">
+              <el-form-item size="small" label="部署端口号" prop="Port">
                 <el-input v-model="modelForm.Port" readonly="true" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row v-if="modelForm.ModelType==1">
             <el-col :span="24">
-              <el-form-item label="输入数据样例" prop="InputData">
+              <el-form-item size="small" label="输入数据样例" prop="InputData">
                 <el-input v-model="modelForm.InputData" type="textarea" readonly="true" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row v-if="modelForm.ModelType==1">
             <el-col :span="24">
-              <el-form-item label="输出数据样例" prop="OutputData">
+              <el-form-item size="small" label="输出数据样例" prop="OutputData">
                 <el-input v-model="modelForm.OutputData" type="textarea" readonly="true" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-form-item style="text-align:center;">
-            <el-button v-if="modelForm.ModelType===0" type="primary" @click="submitFmu()">上传模型</el-button>
-            <el-button v-if="modelForm.ModelType===1" type="primary" :disabled="btnContorl" @click="submitAPI()">上传模型</el-button>
-            <el-button @click="resetForm('ruleForm')">关闭</el-button>
+            <el-button v-if="modelForm.ModelType===0" size="small" type="primary" @click="submitFmu()">上传模型</el-button>
+            <el-button v-if="modelForm.ModelType===1" size="small" type="primary" :disabled="btnContorl" @click="submitAPI()">上传模型</el-button>
+            <el-button size="small" @click="resetForm('ruleForm')">关闭</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -749,16 +750,17 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  height: 100px;
+  height: 80px;
   overflow: hidden;
   position: relative;
   // background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
   background-color: #2F5597;
+
   .right-menu {
     float: right;
     height: 100%;
-    line-height: 100px;
+    line-height: 80px;
 
     &:focus {
       outline: none;
@@ -786,7 +788,7 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        line-height: 60px;
+        line-height: 50px;
         // margin-top: 5px;
         // position: relative;
 
@@ -800,24 +802,24 @@ export default {
           cursor: pointer;
           position: absolute;
           right: -20px;
-          top: 40px;
+          top: 35px;
           font-size: 12px;
-          color:#FFF;
+          color: #FFF;
         }
       }
     }
   }
-    .verticalBar {
-        float: left;
-        width: 2px;
-        height: 29px;
-        background: #fff;
-       // display: inline-block;
-        margin-top: 31px;
-        vertical-align: top;
-        margin-right: 29px;
-        margin-left: 30px;
-    }
+
+  .verticalBar {
+    float: left;
+    width: 2px;
+    height: 29px;
+    background: #fff;
+    margin-top: 26px;
+    vertical-align: top;
+    margin-right: 19px;
+    margin-left: 20px;
+  }
 }
 
 </style>

@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div class="dashboard">
     <div class="navbar">
       <!-- <div style="margin:10px;float:left;">
         <div style="height:80px;width:100%;margin-left:5%;background-color:#FFF">
           <img style="height:80px;" src="@/assets/images/logo.png">
         </div>
       </div> -->
-      <h1 style="color:#fff;float:left;line-height: 55px;margin-left: 5%;">中汽数据模型管理系统</h1>
+      <h2 style="color:#fff;float:left;line-height: 45px;margin-left: 5%;">中汽数据模型管理系统</h2>
       <div class="verticalBar" />
-      <h3 style="color:#CCC;float:left;line-height: 55px;">技术目录</h3>
+      <h4 style="color:#CCC;float:left;line-height: 43px;">技术目录</h4>
       <div class="right-menu">
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
@@ -30,13 +30,14 @@
       </div>
     </div>
     <el-row style="margin-top:2%;">
-      <el-col :span="10" :offset="2" style="text-align:left;font-size:20px;">
+      <el-col :span="10" :offset="2" style="text-align:left;font-size:14px;">
         <el-button
           ref="btnAddModel"
           class="filter-item"
           style="margin-left: 10px;"
           type="primary"
           icon="el-icon-circle-plus"
+          size="small"
           @click="addModel"
         >上传模型
         </el-button>
@@ -45,7 +46,7 @@
       </el-col>
 
       <el-col :span="10" style="text-align:right;">
-        <el-input v-model="pageQuery.modelName" placeholder="请输入搜索模型名称" style="width:40%;" class="input-with-select">
+        <el-input v-model="pageQuery.modelName" size="small" placeholder="请输入搜索模型名称" style="width:40%;" class="input-with-select">
           <el-button slot="append" icon="el-icon-search" @click="searchModel" />
         </el-input>
       </el-col>
@@ -56,11 +57,11 @@
       :key="'model'+index"
       style="cursor:pointer"
     >
-      <el-col :span="20" :offset="2" style="border:1px solid #ccc;margin-top:1%;">
+      <el-col :span="20" :offset="2" style="border:1px solid #ccc;margin-top:1%;font-size: 16px;font-family:宋体,微软雅黑,'Helvetica Neue', Helvetica, Arial, sans-serif">
         <el-row :gutter="20" style="margin:1% 0;">
           <el-col :span="18">
             <div style="" @click="detailModel(item)">
-              <label style="color:#4D6DA6;display: inline-block;margin: 10px 5px;font-size: 20px;cursor:pointer;">{{
+              <label style="color:#4D6DA6;display: inline-block;margin: 10px 5px;font-size: 16px;cursor:pointer;">{{
                 item.ModelName
               }}</label>
             </div>
@@ -78,12 +79,12 @@
             </div>
           </el-col>
         </el-row>
-        <el-row style="margin:1.5% 0;font-size:20px;padding-left:1.5%">
+        <el-row style="margin:1% 0;font-size:16px;padding-left:1.5%">
           <el-col :span="24" style="color:#848080">
             <label>描述：</label><label>{{ item.Introduction }}</label>
           </el-col>
         </el-row>
-        <el-row style="margin:1.5% 0;font-size:20px;padding-left:1.5%">
+        <el-row style="margin:1% 0;font-size:16px;padding-left:1.5%">
           <el-col :span="6">
             <label>格式：</label>
             <label>{{ item.ModelType | parseType }}</label>
@@ -246,6 +247,7 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard {
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
   &-container {
     margin: 30px;
   }
@@ -257,7 +259,7 @@ export default {
 }
 
 .navbar {
-  height: 100px;
+  height: 80px;
   overflow: hidden;
   position: relative;
   // background: #fff;
@@ -267,7 +269,7 @@ export default {
   .right-menu {
     float: right;
     height: 100%;
-    line-height: 100px;
+    line-height: 80px;
 
     &:focus {
       outline: none;
@@ -295,7 +297,7 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        line-height: 60px;
+        line-height: 50px;
         // margin-top: 5px;
         // position: relative;
 
@@ -309,7 +311,7 @@ export default {
           cursor: pointer;
           position: absolute;
           right: -20px;
-          top: 40px;
+          top: 35px;
           font-size: 12px;
           color: #FFF;
         }
@@ -322,11 +324,10 @@ export default {
     width: 2px;
     height: 29px;
     background: #fff;
-    // display: inline-block;
-    margin-top: 31px;
+    margin-top: 26px;
     vertical-align: top;
-    margin-right: 29px;
-    margin-left: 30px;
+    margin-right: 19px;
+    margin-left: 20px;
   }
 }
 

@@ -6,9 +6,9 @@
           <img style="height:80px;" src="@/assets/images/logo.png">
         </div>
       </div> -->
-      <h1 style="color:#fff;float:left;line-height: 55px;margin-left: 5%;">中汽数据模型管理系统</h1>
+      <h2 style="color:#fff;float:left;line-height: 45px;margin-left: 5%;">中汽数据模型管理系统</h2>
       <div class="verticalBar" />
-      <h3 style="color:#CCC;float:left;line-height: 55px;">技术目录</h3>
+      <h4 style="color:#CCC;float:left;line-height: 43px;">调用日志</h4>
       <div class="right-menu">
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
@@ -172,7 +172,7 @@ export default {
 }
 
 .navbar {
-  height: 100px;
+  height: 80px;
   overflow: hidden;
   position: relative;
   // background: #fff;
@@ -182,7 +182,7 @@ export default {
   .right-menu {
     float: right;
     height: 100%;
-    line-height: 100px;
+    line-height: 80px;
 
     &:focus {
       outline: none;
@@ -210,7 +210,7 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        line-height: 60px;
+        line-height: 50px;
         // margin-top: 5px;
         // position: relative;
 
@@ -224,7 +224,7 @@ export default {
           cursor: pointer;
           position: absolute;
           right: -20px;
-          top: 40px;
+          top: 35px;
           font-size: 12px;
           color: #FFF;
         }
@@ -237,11 +237,10 @@ export default {
     width: 2px;
     height: 29px;
     background: #fff;
-    // display: inline-block;
-    margin-top: 31px;
+    margin-top: 26px;
     vertical-align: top;
-    margin-right: 29px;
-    margin-left: 30px;
+    margin-right: 19px;
+    margin-left: 20px;
   }
 }
 
