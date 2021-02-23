@@ -172,21 +172,21 @@
             </el-col>
             <el-col v-if="modelForm.ModelType===1" :span="12">
               <el-form-item size="small" label="部署端口号" prop="Port">
-                <el-input v-model="modelForm.Port" readonly="true" />
+                <el-input v-model="modelForm.Port" :readonly="true" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row v-if="modelForm.ModelType==1">
             <el-col :span="24">
               <el-form-item size="small" label="输入数据样例" prop="InputData">
-                <el-input v-model="modelForm.InputData" type="textarea" readonly="true" />
+                <el-input v-model="modelForm.InputData" type="textarea" :readonly="true" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row v-if="modelForm.ModelType==1">
             <el-col :span="24">
               <el-form-item size="small" label="输出数据样例" prop="OutputData">
-                <el-input v-model="modelForm.OutputData" type="textarea" readonly="true" />
+                <el-input v-model="modelForm.OutputData" type="textarea" :readonly="true" />
               </el-form-item>
             </el-col>
           </el-row>
