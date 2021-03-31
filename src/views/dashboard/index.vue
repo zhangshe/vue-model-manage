@@ -115,7 +115,7 @@
       layout="prev, pager, next"
       :current-page="pageQuery.pageIndex"
       :page-size="pageQuery.pageSize"
-      style="padding-top: 3%;text-align: center;"
+      style="padding-top: 1%;padding-bottom: 2%;text-align: center;"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
