@@ -651,8 +651,13 @@ export default {
             DeptID: this.modelForm.DeptID,
             DeptName: this.modelForm.DeptName
           })
-          document.getElementById('map').src = process.env.VUE_APP_API_SERVICE + ':' + this.modelForm.Port + this.modelForm.SwaggerUrl // 'http://localhost:30001/api-docs'
-          this.changeMapIframe()
+          if (this.modelForm.Port !== null && this.modelForm.SwaggerUrl !== null) {
+            document.getElementById('map').src = process.env.VUE_APP_API_SERVICE + ':' + this.modelForm.Port + this.modelForm.SwaggerUrl // 'http://localhost:30001/api-docs'
+            this.changeMapIframe()
+          } else {
+            var index = this.modelForm.ModelFileUrl.split('\\').length - 1
+            window.open(process.env.VUE_APP_SERVICE_URL + 'DeployFile/' + this.modelForm.ModelFileUrl.split('\\')[index])
+          }
         }
       })
     }

@@ -684,12 +684,14 @@ export default {
       } else {
         this.modelForm.ModelFileUrl = file.response.Data.url
         this.modelForm.ApiUnzipPath = file.response.Data.unzippath
-        this.modelForm.InputData = JSON.stringify(JSON.parse(file.response.Data.content).InPut)
-        this.modelForm.OutputData = JSON.stringify(JSON.parse(file.response.Data.content).OutPut)
-        this.modelForm.GUID = JSON.stringify(JSON.parse(file.response.Data.content).Guid).replace('"', '').replace('"', '')
-        this.modelForm.Port = JSON.stringify(JSON.parse(file.response.Data.content).Port)
-        this.modelForm.SwaggerUrl = JSON.stringify(JSON.parse(file.response.Data.content).SwaggerUrl).replace('"', '').replace('"', '')
-        this.modelForm.ApiDescribe = JSON.stringify(JSON.parse(file.response.Data.content))
+        if (file.response.Data.content != null) {
+          this.modelForm.InputData = JSON.stringify(JSON.parse(file.response.Data.content).InPut)
+          this.modelForm.OutputData = JSON.stringify(JSON.parse(file.response.Data.content).OutPut)
+          this.modelForm.GUID = JSON.stringify(JSON.parse(file.response.Data.content).Guid).replace('"', '').replace('"', '')
+          this.modelForm.Port = JSON.stringify(JSON.parse(file.response.Data.content).Port)
+          this.modelForm.SwaggerUrl = JSON.stringify(JSON.parse(file.response.Data.content).SwaggerUrl).replace('"', '').replace('"', '')
+          this.modelForm.ApiDescribe = JSON.stringify(JSON.parse(file.response.Data.content))
+        }
         this.btnContorl = false
       }
     },
