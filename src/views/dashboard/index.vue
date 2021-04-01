@@ -57,51 +57,51 @@
       :key="'model'+index"
       style="cursor:pointer"
     >
-      <el-col :span="20" :offset="2" style="border:1px solid #ccc;margin-top:1%;font-size: 16px;">
+      <el-col :span="20" :offset="2" style="border:1px solid #ccc;margin-top:1%;font-size: 14px;">
         <el-row :gutter="20" style="margin:1% 0;">
           <el-col :span="18">
             <div style="" @click="detailModel(item)">
-              <label style="color:#4D6DA6;display: inline-block;margin: 10px 5px;font-size: 16px;cursor:pointer;">{{
+              <label style="color:#4D6DA6;display: inline-block;margin: 10px 5px;font-size: 14px;cursor:pointer;">{{
                 item.ModelName
               }}</label>
             </div>
           </el-col>
           <el-col :span="6">
             <div style=" display: flex;align-items: center;justify-content: top;text-align: justify;">
-              <el-button type="text" style="font-size: 16px;color:#878282;">&nbsp;&nbsp;<i class="el-icon-download" />&nbsp;&nbsp;{{
+              <el-button type="text" style="font-size: 14px;color:#878282;">&nbsp;&nbsp;<i class="el-icon-download" />&nbsp;&nbsp;{{
                 item.DownloadNum
               }}次
               </el-button>
-              <el-button type="text" style="font-size: 16px;color:#878282;margin-left:10%;">&nbsp;&nbsp;<svg-icon
+              <el-button type="text" style="font-size: 14px;color:#878282;margin-left:10%;">&nbsp;&nbsp;<svg-icon
                 icon-class="eye-open"
               />&nbsp;&nbsp;{{ item.ViewNum }}次
               </el-button>
             </div>
           </el-col>
         </el-row>
-        <el-row style="margin:1% 0;font-size:16px;padding-left:1.5%">
+        <el-row style="margin:1% 0;font-size:14px;padding-left:1.5%">
           <el-col :span="24" style="color:#848080">
             <label>描述：</label><label>{{ item.Introduction }}</label>
           </el-col>
         </el-row>
-        <el-row style="margin:1% 0;font-size:16px;padding-left:1.5%">
+        <el-row style="margin:1% 0;font-size:14px;padding-left:1.5%">
           <el-col :span="6">
             <label>格式：</label>
             <label>{{ item.ModelType | parseType }}</label>
           </el-col>
-          <el-col :span="8" :offset="1">
-            <el-col :span="7" style="text-align:right;">
+          <el-col :span="9" >
+            <el-col :span="8" style="text-align:right;">
               <label>应用场景：</label>
             </el-col>
-            <el-col :span="17">
+            <el-col :span="16">
               <label>{{ item.Scene }}</label>
             </el-col>
           </el-col>
-          <el-col :span="8" :offset="1">
-            <el-col :span="7" style="text-align:right;">
+          <el-col :span="9" >
+            <el-col :span="8" style="text-align:right;">
               <label>更新时间：</label>
             </el-col>
-            <el-col :span="17">
+            <el-col :span="16">
               <label>{{ item.UpdateTime | parseTime }}</label>
             </el-col>
           </el-col>
