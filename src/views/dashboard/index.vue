@@ -57,6 +57,8 @@
 <script>
     //import {getDicType, getOrgTree, getTotal} from '@/api/dataCatalog'
 
+    import {getModelInfo} from "@/api/fmu";
+
     export default {
         name: '',
         components: {},
@@ -77,6 +79,10 @@
         mounted() {
             //this.getTopic();
             //this.getScene();
+          let param=null;
+           getModelInfo(param).then((res) => {
+            this.count =  res.Data.TotalCount;
+          })
         },
         methods: {
             gotoList(obj) {
@@ -109,6 +115,7 @@
             //         }
             //     })
             // },
+
         },
     };
 </script>

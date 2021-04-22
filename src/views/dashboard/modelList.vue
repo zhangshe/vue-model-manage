@@ -19,7 +19,7 @@
                         <el-input v-model="form.dataName" size="small" class="keySearch"></el-input>
                         <el-button type="primary" icon="el-icon-search" size="small" class="keySearchBtn" @click="getList"></el-button>
                     </div>
-                    
+
                 </div>
                 <div class="condition">
                     <div class="condition_item">
@@ -99,10 +99,10 @@
 <script>
     // import {getDicType, getList, getOrgTree} from '@/api/dataCatalog'
     import Pagination from '@/components/common/Pagination'
-import {
-  getModelInfo,
-  addViewNum
-} from '@/api/fmu'
+    import {
+      getModelInfo,
+      addViewNum, getModelInfoByCondition
+    } from '@/api/fmu'
     export default {
         name: '',
         components: {
@@ -139,7 +139,7 @@ import {
                 dataList: [],
                 listLength: 0,
                 selectCondition: [],
-               
+
                 allkeshiList: [],
                 departmentAllSelect: false,
                 keshiAllSelect: false,
@@ -215,6 +215,11 @@ import {
                     this.listLength = res.Data.TotalCount;
                     this.total =  res.Data.TotalCount;
                 })
+              //根据条件获取模型列表
+               getModelInfoByCondition(param).then((res)=>{
+
+
+              })
             },
             goDetail(id) {
                 //this.$store.commit("SET_CONDITION", Object.assign(this.form, {keshiList: this.keshiList, condition: this.selectCondition}));
