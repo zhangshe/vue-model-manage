@@ -1,338 +1,198 @@
 <template>
-  <div class="dashboard">
-    <div class="navbar">
-      <!-- <div style="margin:10px;float:left;">
-        <div style="height:80px;width:100%;margin-left:5%;background-color:#FFF">
-          <img style="height:80px;" src="@/assets/images/logo.png">
+    <div class="main-container-new" style="width: 100%">
+        <div class="catalog_header_img" style="position: relative;;width: 100%" >
+            <div style=";width: 100%;padding-left: 150px;" class="titleBg" :style="{height: scrollerHeight}">
+                <div style="display: flex">
+                    <img src="@/assets/dataCatalog/编组 33@2x.png" alt="" style="width: 30px;height: 30px;margin-top: 3px">
+                    <div style="color:white;font-size: 27px;font-weight: 600;font-family: PingFangSC-Medium, PingFang SC;margin-left: 10px">
+                        汽车模型资源服务
+                    </div>
+                </div>
+                <div style="color:#bee3ff;font-size: 18px;font-weight: 600;font-family: PingFangSC-Medium, PingFang SC;margin-top: 10px">
+                    共汇聚
+                    <div style="display: inline;font-size: 32px;color:#FBEA1B;font-weight: 600">{{count}}</div>
+                    项行业数据资源
+                </div>
+                <div style="color:#bee3ff;font-size: 18px;font-weight: 600;font-family: PingFangSC-Medium, PingFang SC;margin-top: 10px">
+                    提供数据基本信息与数据样例的查询与展示，促进数据可视可用
+                </div>
+                <div style="width: 148px;height: 1px;background: #fff;" class="line"></div>
+            </div>
         </div>
-      </div> -->
-      <h2 style="color:#fff;float:left;line-height: 45px;margin-left: 5%;">中汽数据模型管理系统</h2>
-      <div class="verticalBar" />
-      <h4 style="color:#CCC;float:left;line-height: 43px;">技术目录</h4>
-      <div class="right-menu">
-        <el-dropdown class="avatar-container" trigger="click">
-          <div class="avatar-wrapper">
-            <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
-            <h3 style="color:#FFF;cursor: pointer;">{{ name }}</h3>
-            <i class="el-icon-caret-bottom" />
-          </div>
-          <el-dropdown-menu slot="dropdown" class="user-dropdown">
-            <router-link to="/">
-              <el-dropdown-item>
-                首页
-              </el-dropdown-item>
-            </router-link>
-            <el-dropdown-item divided @click.native="logout">
-              <span style="display:block;">注销</span>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-    </div>
-    <el-row style="margin-top:2%;">
-      <el-col :span="10" :offset="2" style="text-align:left;font-size:14px;">
-        <el-button
-          ref="btnAddModel"
-          class="filter-item"
-          style="margin-left: 10px;"
-          type="primary"
-          icon="el-icon-circle-plus"
-          size="small"
-          @click="addModel"
-        >上传模型
-        </el-button>
-        <span style="margin-left:20%;">共有{{ pageQuery.total }} 项模型</span>
-        <span style="margin: 7% ;cursor: pointer" @click="showLog">查看记录</span>
-      </el-col>
+        <div class="catalog">
+            <div class="topical">
+                <div class="catalog_title">
+                    <img src="@/assets/dataCatalog/编组 4备份 2@2x.png" alt="" width="45px">
+                    <span>部门</span>
+                    <img src="@/assets/dataCatalog/编组 4备份@2x.png" alt="" width="45px">
+                </div>
+                <div class="catalog_list">
+                    <div style="width: 290px" class="catalog_list_item" @click="gotoList(item)"
+                         v-for="(item, index) in topicList" :key="index">
+                        <img :src="require('@/assets/dataCatalog/zhuti' + (index + 1) + '.png')" alt="">
+                        <div>{{item.name}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="scene">
+                <div class="catalog_title">
+                    <img src="@/assets/dataCatalog/编组 4备份 2@2x.png" alt="" width="45px">
+                    <span>应用场景</span>
+                    <img src="@/assets/dataCatalog/编组 4备份@2x.png" alt="" width="45px">
+                </div>
+                <div class="catalog_list" >
+                    <div style="width: 390px" class="catalog_list_item" v-for="(item, index) in sceneList" :key="index"
+                         @click="gotoList1(item)">
+                        <img :src="require('@/assets/dataCatalog/scene' + (index+1) + '.png')" alt="">
+                        <div>{{item.dicItemName}}
 
-      <el-col :span="10" style="text-align:right;">
-        <el-input v-model="pageQuery.modelName" size="small" placeholder="请输入搜索模型名称" style="width:40%;" class="input-with-select">
-          <el-button slot="append" icon="el-icon-search" @click="searchModel" />
-        </el-input>
-      </el-col>
-    </el-row>
-    <el-row
-      v-for="(item, index) in modelList"
-      v-show="modelList.length > 0"
-      :key="'model'+index"
-      style="cursor:pointer"
-    >
-      <el-col :span="20" :offset="2" style="border:1px solid #ccc;margin-top:1%;font-size: 14px;">
-        <el-row :gutter="20" style="margin:1% 0;">
-          <el-col :span="18">
-            <div style="" @click="detailModel(item)">
-              <label style="color:#4D6DA6;display: inline-block;margin: 10px 5px;font-size: 14px;cursor:pointer;">{{
-                item.ModelName
-              }}</label>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </el-col>
-          <el-col :span="6">
-            <div style=" display: flex;align-items: center;justify-content: top;text-align: justify;">
-              <el-button type="text" style="font-size: 14px;color:#878282;">&nbsp;&nbsp;<i class="el-icon-download" />&nbsp;&nbsp;{{
-                item.DownloadNum
-              }}次
-              </el-button>
-              <el-button type="text" style="font-size: 14px;color:#878282;margin-left:10%;">&nbsp;&nbsp;<svg-icon
-                icon-class="eye-open"
-              />&nbsp;&nbsp;{{ item.ViewNum }}次
-              </el-button>
-            </div>
-          </el-col>
-        </el-row>
-        <el-row style="margin:1% 0;font-size:14px;padding-left:1.5%">
-          <el-col :span="24" style="color:#848080">
-            <label>描述：</label><label>{{ item.Introduction }}</label>
-          </el-col>
-        </el-row>
-        <el-row style="margin:1% 0;font-size:14px;padding-left:1.5%">
-          <el-col :span="6">
-            <label>格式：</label>
-            <label>{{ item.ModelType | parseType }}</label>
-          </el-col>
-          <el-col :span="9" >
-            <el-col :span="8" style="text-align:right;">
-              <label>应用场景：</label>
-            </el-col>
-            <el-col :span="16">
-              <label>{{ item.Scene }}</label>
-            </el-col>
-          </el-col>
-          <el-col :span="9" >
-            <el-col :span="8" style="text-align:right;">
-              <label>更新时间：</label>
-            </el-col>
-            <el-col :span="16">
-              <label>{{ item.UpdateTime | parseTime }}</label>
-            </el-col>
-          </el-col>
-        </el-row>
-      </el-col>
-    </el-row>
-    <div v-show="modelList.length == 0" class="nullList">暂无数据</div>
-    <el-pagination
-      background
-      :total="pageQuery.total"
-      layout="prev, pager, next"
-      :current-page="pageQuery.pageIndex"
-      :page-size="pageQuery.pageSize"
-      style="padding-top: 1%;padding-bottom: 2%;text-align: center;"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
-  </div>
+        </div>
+    </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { Loading } from 'element-ui'
-import {
-  getModelInfo,
-  addViewNum
-} from '@/api/fmu'
+    //import {getDicType, getOrgTree, getTotal} from '@/api/dataCatalog'
 
-export default {
-  name: 'Dashboard',
-  filters: {
-    parseTime(value) {
-      var dateee = new Date(value).toJSON()
-      var date = new Date(+new Date(dateee) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
-      return date
-    },
-    parseType(value) {
-      if (value === 0) { return '.FMU' } else return '.API'
-    }
-  },
-  data() {
-    return {
-      searchContent: '',
-      modelList: [], // 模型列表
-      pageQuery: {
-        modelName: '',
-        pageIndex: 1,
-        pageSize: 10,
-        total: 0
-      }
-    }
-  },
-  computed: {
-    ...mapGetters([
-      'name',
-      'avatar'
-    ])
-  },
-  created() {
-    this.getList()
-  },
-  methods: {
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-    },
-    dateFormat: function(row) {
-      var t = new Date(row.createTime)// row 表示一行数据, createTime 表示要格式化的字段名称
-      if (!t) {
-        return ''
-      }
-      const year = t.getFullYear()
-      const month = this.dateIfAddZero(t.getMonth() + 1)
-      const day = this.dateIfAddZero(t.getDate())
-      const hours = this.dateIfAddZero(t.getHours())
-      const minutes = this.dateIfAddZero(t.getMinutes())
-      const seconds = this.dateIfAddZero(t.getSeconds())
-      return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds
-    },
-    dateIfAddZero: function(time) {
-      return time < 10 ? '0' + time : time
-    },
-    searchModel() {
-      this.pageQuery.pageIndex = 1
-      this.getList()
-    },
-    getList() {
-      const loadingInstance = Loading.service({ fullscreen: false })
-      getModelInfo(this.pageQuery).then(response => {
-        if (response.RespCode === 1) {
-          this.modelList = response.Data.Data
-          this.pageQuery.total = response.Data.TotalCount
-          loadingInstance.close()
-        } else {
-          loadingInstance.close()
-          this.$notify({
-            position: 'bottom-right',
-            title: '失败',
-            message: response.RespMsg,
-            type: 'error',
-            duration: 2000
-          })
-        }
-      })
-    },
-    handleSizeChange(val) {
-      this.pageQuery.pageSize = val
-      this.getList()
-    },
-    handleCurrentChange(val) {
-      this.pageQuery.pageIndex = val
-      this.getList()
-    },
-    detailModel(row) {
-      addViewNum({ moduleId: row.ModelID }).then(response => {
-        this.message = response.RespMsg
-        this.title = '失败'
-        this.type = 'error'
-        if (response.RespCode === 1) {
-          // console.log('index.vue', row)
-          this.$router.push({
-            path: 'Detail',
-            query: { moduleId: row.ModelID }
-          })
-        }
-      })
-    },
-    addModel() {
-      this.$router.push({
-        name: 'Manage',
-        params: { type: 'create' }
-      })
-    },
-    showLog() {
-      this.$router.push({
-        name: 'UseLog'
-
-      })
-    }
-  }
-}
+    export default {
+        name: '',
+        components: {},
+        props: {},
+        data() {
+            return {
+                scrollerHeight: window.innerWidth / 6.66 + 'px',
+                count: '1000',
+                topicList: [{"name":"数据业务部"},{"name":"低碳业务部"},{"name":"生态业务部"},{"name":"新能源业务部"},{"name":"软件业务部"},{"name":"基础研究部"},{"name":"智能网联部"},{"name":"中汽智联"}],
+                sceneList: [{"dicItemName":"绿色生态"},{"dicItemName":"智能网联"},{"dicItemName":"智能座舱"},{"dicItemName":"市场研究"},{"dicItemName":"工业软件"},{"dicItemName":"低碳节能"}]
+            };
+        },
+        computed: {},
+        watch: {},
+        created() {
+            //this.getTotal()
+        },
+        mounted() {
+            //this.getTopic();
+            //this.getScene();
+        },
+        methods: {
+            gotoList(obj) {
+                this.$router.push({
+                    path: "/modelList",
+                    query: {topic: obj.id, name: obj.name, children: JSON.stringify(obj.children)}
+                })
+            },
+            gotoList1(obj) {
+                this.$router.push({path: "/modelList", query: {name1: obj.dicItemName}})
+            },
+            // getTopic() {
+            //     getOrgTree().then((res) => {
+            //         if (res.data[0] && res.data[0].children && res.data[0].children.length > 0) {
+            //             this.topicList = res.data[0].children;
+            //         }
+            //     })
+            // },
+            // getTotal() {
+            //     getTotal({}).then((res) => {
+            //         if (res.ok) {
+            //             this.count = res.data
+            //         }
+            //     })
+            // },
+            // getScene() {
+            //     getDicType({dicId: 6}).then((res) => {
+            //         for (var i = 0; i < res.data.length; i += 3) {
+            //             this.sceneList.push(res.data.slice(i, i + 3));
+            //         }
+            //     })
+            // },
+        },
+    };
 </script>
 
-<style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
-  }
-
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
-}
-
-.navbar {
-  height: 80px;
-  overflow: hidden;
-  position: relative;
-  // background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
-  background-color: #2F5597;
-
-  .right-menu {
-    float: right;
-    height: 100%;
-    line-height: 80px;
-
-    &:focus {
-      outline: none;
+<style scoped lang="less">
+    .line{
+        margin-top: 15px
     }
-
-    .right-menu-item {
-      display: inline-block;
-      padding: 0 8px;
-      height: 100%;
-      font-size: 18px;
-      color: #5a5e66;
-      vertical-align: text-bottom;
-
-      &.hover-effect {
-        cursor: pointer;
-        transition: background .3s;
-
-        &:hover {
-          background: rgba(0, 0, 0, .025)
+    .titleBg {
+        background: url('../../assets/dataCatalog/编组 31@2x.png');
+        background-size: 100%;
+        padding-top: 35px
+    }
+    @media screen and (min-width: 1367px) {
+        .line{
+            margin-top: 25px
         }
-      }
-    }
-
-    .avatar-container {
-      margin-right: 30px;
-
-      .avatar-wrapper {
-        line-height: 50px;
-        // margin-top: 5px;
-        // position: relative;
-
-        // .user-avatar {
-        //   cursor: pointer;
-        //   width: 40px;
-        //   height: 40px;
-        //   border-radius: 10px;
-        // }
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 35px;
-          font-size: 12px;
-          color: #FFF;
+        .titleBg {
+            background: url('../../assets/dataCatalog/编组 31@2x.png');
+            background-size: 100%;
+            padding-top: 50px
         }
-      }
     }
-  }
 
-  .verticalBar {
-    float: left;
-    width: 2px;
-    height: 29px;
-    background: #fff;
-    margin-top: 26px;
-    vertical-align: top;
-    margin-right: 19px;
-    margin-left: 20px;
-  }
-}
+    .main-container-new {
+        background-color: #F1F3F5;
 
-.nullList {
-  text-align: center;
-  margin-top: 5%;
-}
+        .catalog_header_img {
+            font-size: 0;
+        }
 
+        .catalog {
+            width: 1200px;
+            margin: 0 auto;
+
+            .topical, .scene {
+                margin-top: 30px;
+            }
+
+            .catalog_title {
+                text-align: center;
+                margin-bottom: 18px;
+
+                span {
+                    font-size: 18px;
+                    color: #2C3578;
+                    margin: 0 24px;
+                    font-weight: 600;
+                }
+            }
+
+            .catalog_list {
+                display: flex;
+                flex-wrap: wrap;
+
+                img {
+                    width: 100px;
+                    margin: 20px 30px 20px 40px;
+                }
+
+                .catalog_list_item {
+                    font-size: 16px;
+                    color: #333;
+                    font-weight: bold;
+                    /*flex: 1 1 auto;*/
+                    display: flex;
+                    align-items: center;
+                    /*justify-content: center;*/
+                    background-color: #FFF;
+                    cursor: pointer;
+                    margin-bottom: 10px;
+                    box-shadow: 0px 2px 10px 0px rgba(207, 207, 207, 0.23);
+
+                    &:not(:last-child) {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    .scene {
+        .catalog_list_item {
+            width: 33.3%;
+        }
+    }
 </style>
