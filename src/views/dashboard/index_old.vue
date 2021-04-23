@@ -89,7 +89,7 @@
             <label>格式：</label>
             <label>{{ item.ModelType | parseType }}</label>
           </el-col>
-          <el-col :span="9" >
+          <el-col :span="9">
             <el-col :span="8" style="text-align:right;">
               <label>应用场景：</label>
             </el-col>
@@ -97,7 +97,7 @@
               <label>{{ item.Scene }}</label>
             </el-col>
           </el-col>
-          <el-col :span="9" >
+          <el-col :span="9">
             <el-col :span="8" style="text-align:right;">
               <label>更新时间：</label>
             </el-col>

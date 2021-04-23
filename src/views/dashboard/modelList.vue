@@ -119,7 +119,14 @@ export default {
   props: {},
   data() {
     return {
-      topicList: [{ 'name': '数据业务部' }, { 'name': '低碳业务部' }, { 'name': '生态业务部' }, { 'name': '新能源业务部' }, { 'name': '软件业务部' }, { 'name': '基础研究部' }, { 'name': '智能网联部' }, { 'name': '中汽智联' }],
+      topicList: [{ 'name': '数据业务部', 'children': [{ 'name': '产品数据室' }, { 'name': '后市场数据室' }, { 'name': '市场数据室' }] },
+        { 'name': '低碳业务部', 'children': [{ 'name': '绿色低碳研究室' }, { 'name': '节能战略研究室' }] },
+        { 'name': '生态业务部', 'children': [{ 'name': '汽车材料研究室' }, { 'name': '回收利用研究室' }] },
+        { 'name': '新能源业务部', 'children': [{ 'name': '清洁能源研究室' }, { 'name': '新能源数据室' }, { 'name': '氢能源研究室' }] },
+        { 'name': '软件业务部', 'children': [{ 'name': '研发信息室' }, { 'name': '制造信息系统室' }] },
+        { 'name': '基础研究部', 'children': [{ 'name': '前瞻技术研究室' }, { 'name': '软件研发室' }, { 'name': '数据技术应用室' }] },
+        { 'name': '智能网联部', 'children': [{ 'name': '智能网联数据室' }, { 'name': '网联技术研究室' }, { 'name': '智能网联应用室' }] },
+        { 'name': '中汽智联', 'children': [{ 'name': '业务发展室' }, { 'name': '技术发展室' }] }],
       sceneList: [{ 'dicItemName': '绿色生态' }, { 'dicItemName': '智能网联' }, { 'dicItemName': '智能座舱' }, { 'dicItemName': '市场研究' }, { 'dicItemName': '工业软件' }, { 'dicItemName': '低碳节能' }],
       keshiList: [{ 'name': '绿色低碳研究室' }, { 'name': '节能战略研究室' }],
       form: {
@@ -221,6 +228,7 @@ export default {
       //     this.listLength = res.data.count;
       //     this.total = res.data.count;
       // })
+      console.log('查询条件', param)
       getModelInfo(param).then((res) => {
         this.dataList = res.Data.Data
         this.listLength = res.Data.TotalCount
