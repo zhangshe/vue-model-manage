@@ -43,6 +43,13 @@
               <span v-for="item in sceneList" :key="item.dicItemName" :class="classObject2(item.dicItemName)" @click="selectScene(item)">{{ item.dicItemName }}</span>
             </div>
           </div>
+          <div class="condition_item">
+            <div class="title">开发语言</div>
+            <div class="condition_item_list">
+              <span :class="{active: languageAllSelect}" @click="selectAllLanguage()">全部</span>
+              <span v-for="item in languageList" :key="item.name" :class="classObject3(item.name)" @click="selectLanguage(item)">{{ item.name }}</span>
+            </div>
+          </div>
         </div>
         <div class="condition_selected">
           <div class="condition_item">
@@ -99,7 +106,7 @@
 import Pagination from '@/components/common/Pagination'
 import {
   getModelInfo,
-  addViewNum, getModelInfoByCondition
+  addViewNum
 } from '@/api/fmu'
 export default {
   name: '',
@@ -128,13 +135,21 @@ export default {
         { 'name': '智能网联部', 'children': [{ 'name': '智能网联数据室' }, { 'name': '网联技术研究室' }, { 'name': '智能网联应用室' }] },
         { 'name': '中汽智联', 'children': [{ 'name': '业务发展室' }, { 'name': '技术发展室' }] }],
       sceneList: [{ 'dicItemName': '绿色生态' }, { 'dicItemName': '智能网联' }, { 'dicItemName': '智能座舱' }, { 'dicItemName': '市场研究' }, { 'dicItemName': '工业软件' }, { 'dicItemName': '低碳节能' }],
-      keshiList: [{ 'name': '绿色低碳研究室' }, { 'name': '节能战略研究室' }],
+      keshiList: [],
+      allkeshiList: [{ 'name': '产品数据室' }, { 'name': '后市场数据室' }, { 'name': '市场数据室' }, { 'name': '绿色低碳研究室' },
+        { 'name': '节能战略研究室' }, { 'name': '汽车材料研究室' }, { 'name': '回收利用研究室' }, { 'name': '清洁能源研究室' },
+        { 'name': '新能源数据室' }, { 'name': '氢能源研究室' }, { 'name': '研发信息室' }, { 'name': '制造信息系统室' },
+        { 'name': '前瞻技术研究室' }, { 'name': '软件研发室' }, { 'name': '数据技术应用室' }, { 'name': '智能网联数据室' },
+        { 'name': '网联技术研究室' }, { 'name': '智能网联应用室' }, { 'name': '业务发展室' }, { 'name': '技术发展室' }
+      ],
+      languageList: [{ 'name': 'FMI' }, { 'name': 'Java' }, { 'name': 'Python' }, { 'name': 'Matlab' }, { 'name': 'C++' }, { 'name': 'C#' }],
       form: {
         page: 1,
         pageSize: 10,
         departmentList: [],
         constructionMainList: [],
         dataSceneList: [],
+        dataLanguageList: [],
         dataSceneOperator: 'like',
         dataName: '',
         dataNameOperator: 'like',
@@ -144,11 +159,10 @@ export default {
       dataList: [],
       listLength: 0,
       selectCondition: [],
-
-      allkeshiList: [],
       departmentAllSelect: false,
       keshiAllSelect: false,
       sceneAllSelect: false,
+      languageAllSelect: false,
       total: 0
     }
   },
@@ -170,12 +184,12 @@ export default {
     if (this.$route.query.name) {
       this.form.departmentList.push(this.$route.query.name)
       this.selectCondition.push(this.$route.query.name)
-      // this.keshiList = JSON.parse(this.$route.query.children || '[]');
+      this.keshiList = JSON.parse(this.$route.query.children || '[]')
     }
     if (this.$route.query.name1) {
       this.form.dataSceneList.push(this.$route.query.name1)
       this.selectCondition.push(this.$route.query.name1)
-      // this.keshiList = this.allkeshiList;
+      this.keshiList = this.allkeshiList
     }
     // this.form.dataSceneList.push(this.$route.query.name);
     // this.keshiList = JSON.parse(this.$route.query.children || '[]');
@@ -203,40 +217,39 @@ export default {
       })
     },
     getList() {
-      const param = JSON.parse(JSON.stringify(this.form))
-      param.departmentList = param.departmentList.join(',')
-      param.dataSceneList = param.dataSceneList.join(',')
-      param.constructionMainList = param.constructionMainList.join(',')
-      if (!param.departmentList || param.departmentList.length === 0) {
-        delete param.departmentList
-      }
-      if (!param.dataSceneList || param.dataSceneList.length === 0) {
-        delete param.dataSceneList
-        delete param.dataSceneOperator
-      }
-      if (!param.constructionMainList || param.constructionMainList.length === 0) {
-        delete param.constructionMainList
-        delete param.constructionMainOperator
-      }
-      if (!param.dataName) {
-        delete param.dataName
-        delete param.dataNameOperator
-      }
+      // const param = JSON.parse(JSON.stringify(this.form))
+      // param.departmentList = param.departmentList.join(',')
+      // param.dataSceneList = param.dataSceneList.join(',')
+      // param.constructionMainList = param.constructionMainList.join(',')
+      // if (!param.departmentList || param.departmentList.length === 0) {
+      //   delete param.departmentList
+      // }
+      // if (!param.dataSceneList || param.dataSceneList.length === 0) {
+      //   delete param.dataSceneList
+      //   delete param.dataSceneOperator
+      // }
+      // if (!param.constructionMainList || param.constructionMainList.length === 0) {
+      //   delete param.constructionMainList
+      //   delete param.constructionMainOperator
+      // }
+      // if (!param.dataName) {
+      //   delete param.dataName
+      //   delete param.dataNameOperator
+      // }
 
-      // getList(param).then((res) => {
-      //     this.dataList = res.data.list;
-      //     this.listLength = res.data.count;
-      //     this.total = res.data.count;
-      // })
-      console.log('查询条件', param)
-      getModelInfo(param).then((res) => {
+      const pageQuery = {
+        modelName: this.form.dataName,
+        orgName: this.form.departmentList.join(','),
+        deptNameList: this.form.constructionMainList.join(','),
+        sceneList: this.form.dataSceneList.join(','),
+        languageList: this.form.dataLanguageList.join(','),
+        pageIndex: this.form.page,
+        pageSize: this.form.pageSize
+      }
+      getModelInfo(pageQuery).then((res) => {
         this.dataList = res.Data.Data
         this.listLength = res.Data.TotalCount
         this.total = res.Data.TotalCount
-      })
-      // 根据条件获取模型列表
-      getModelInfoByCondition(param).then((res) => {
-
       })
     },
     goDetail(id) {
@@ -278,6 +291,12 @@ export default {
       const that = this
       return {
         active: that.form.dataSceneList.indexOf(id) !== -1
+      }
+    },
+    classObject3(id) {
+      const that = this
+      return {
+        active: that.form.dataLanguageList.indexOf(id) !== -1
       }
     },
     selectTopic(obj) {
@@ -361,6 +380,24 @@ export default {
       }
       this.getList()
     },
+    selectLanguage(obj) {
+      const that = this
+      that.languageAllSelect = false
+      that.selectCondition = that.selectCondition.filter((item) => {
+        return item !== '全部开发语言'
+      })
+      const index = that.form.dataLanguageList.indexOf(obj.name)
+      if (index !== -1) {
+        that.form.dataLanguageList.splice(index, 1)
+        that.selectCondition = that.selectCondition.filter((item) => {
+          return item !== obj.name
+        })
+      } else {
+        that.form.dataLanguageList.push(obj.name)
+        that.selectCondition.push(obj.name)
+      }
+      this.getList()
+    },
     calcelCondition(key) {
       this.selectCondition = this.selectCondition.filter((item) => {
         return item !== key
@@ -374,7 +411,9 @@ export default {
       this.form.dataSceneList = this.form.dataSceneList.filter((item) => {
         return item !== key
       })
-
+      this.form.dataLanguageList = this.form.dataLanguageList.filter((item) => {
+        return item !== key
+      })
       this.topicList.forEach((item, index) => {
         if (item.name === key) {
           this.keshiList = this.allkeshiList
@@ -453,6 +492,26 @@ export default {
         })
       }
       flag || that.getList()
+    },
+    selectAllLanguage(flag) {
+      const that = this
+      that.languageAllSelect = !that.languageAllSelect
+      if (that.languageAllSelect) {
+        that.selectCondition.push('全部开发语言')
+        for (let i = 0; i < that.form.dataLanguageList.length; i++) {
+          for (let j = 0; j < that.selectCondition.length; j++) {
+            if (that.form.dataLanguageList[i] === that.selectCondition[j]) {
+              that.selectCondition.splice(j, 1)
+            }
+          }
+        }
+        that.form.dataLanguageList = []
+      } else {
+        that.selectCondition = that.selectCondition.filter((item) => {
+          return item !== '全部开发语言'
+        })
+      }
+      flag || that.getList()
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -467,6 +526,9 @@ export default {
         }
         if (vm.condition.condition.indexOf('全部场景') !== -1) {
           vm.selectAllScene(true)
+        }
+        if (vm.condition.condition.indexOf('全部开发语言') !== -1) {
+          vm.selectAllLanguage(true)
         }
         // vm.formSearchModel = vm.condition;
         vm.form.dataName = vm.condition.dataName
