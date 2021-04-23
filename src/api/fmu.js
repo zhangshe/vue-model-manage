@@ -8,7 +8,7 @@ export function getModelInfo(query) {
     params: query
   })
 }
-//根据条件获取模型列表
+// 根据条件获取模型列表
 export function getModelInfoByCondition(query) {
   return request({
     url: '/FMUModel/GetModelInfoListByCondition',

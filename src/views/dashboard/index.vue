@@ -1,123 +1,132 @@
 <template>
-    <div class="main-container-new" style="width: 100%">
-        <div class="catalog_header_img" style="position: relative;;width: 100%" >
-            <div style=";width: 100%;padding-left: 150px;" class="titleBg" :style="{height: scrollerHeight}">
-                <div style="display: flex">
-                    <img src="@/assets/dataCatalog/编组 33@2x.png" alt="" style="width: 30px;height: 30px;margin-top: 3px">
-                    <div style="color:white;font-size: 27px;font-weight: 600;font-family: PingFangSC-Medium, PingFang SC;margin-left: 10px">
-                        汽车模型资源服务
-                    </div>
-                </div>
-                <div style="color:#bee3ff;font-size: 18px;font-weight: 600;font-family: PingFangSC-Medium, PingFang SC;margin-top: 10px">
-                    共汇聚
-                    <div style="display: inline;font-size: 32px;color:#FBEA1B;font-weight: 600">{{count}}</div>
-                    项行业数据资源
-                </div>
-                <div style="color:#bee3ff;font-size: 18px;font-weight: 600;font-family: PingFangSC-Medium, PingFang SC;margin-top: 10px">
-                    提供数据基本信息与数据样例的查询与展示，促进数据可视可用
-                </div>
-                <div style="width: 148px;height: 1px;background: #fff;" class="line"></div>
-            </div>
+  <div class="main-container-new" style="width: 100%">
+    <div class="catalog_header_img" style="position: relative;;width: 100%">
+      <div style=";width: 100%;padding-left: 150px;" class="titleBg" :style="{height: scrollerHeight}">
+        <div style="display: flex">
+          <img src="@/assets/dataCatalog/编组 33@2x.png" alt="" style="width: 30px;height: 30px;margin-top: 3px">
+          <div style="color:white;font-size: 27px;font-weight: 600;font-family: PingFangSC-Medium, PingFang SC;margin-left: 10px">
+            汽车模型资源服务
+          </div>
         </div>
-        <div class="catalog">
-            <div class="topical">
-                <div class="catalog_title">
-                    <img src="@/assets/dataCatalog/编组 4备份 2@2x.png" alt="" width="45px">
-                    <span>部门</span>
-                    <img src="@/assets/dataCatalog/编组 4备份@2x.png" alt="" width="45px">
-                </div>
-                <div class="catalog_list">
-                    <div style="width: 290px" class="catalog_list_item" @click="gotoList(item)"
-                         v-for="(item, index) in topicList" :key="index">
-                        <img :src="require('@/assets/dataCatalog/zhuti' + (index + 1) + '.png')" alt="">
-                        <div>{{item.name}}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="scene">
-                <div class="catalog_title">
-                    <img src="@/assets/dataCatalog/编组 4备份 2@2x.png" alt="" width="45px">
-                    <span>应用场景</span>
-                    <img src="@/assets/dataCatalog/编组 4备份@2x.png" alt="" width="45px">
-                </div>
-                <div class="catalog_list" >
-                    <div style="width: 390px" class="catalog_list_item" v-for="(item, index) in sceneList" :key="index"
-                         @click="gotoList1(item)">
-                        <img :src="require('@/assets/dataCatalog/scene' + (index+1) + '.png')" alt="">
-                        <div>{{item.dicItemName}}
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div style="color:#bee3ff;font-size: 18px;font-weight: 600;font-family: PingFangSC-Medium, PingFang SC;margin-top: 10px">
+          共汇聚
+          <div style="display: inline;font-size: 32px;color:#FBEA1B;font-weight: 600">{{ count }}</div>
+          项行业数据资源
         </div>
+        <div style="color:#bee3ff;font-size: 18px;font-weight: 600;font-family: PingFangSC-Medium, PingFang SC;margin-top: 10px">
+          提供数据基本信息与数据样例的查询与展示，促进数据可视可用
+        </div>
+        <div style="width: 148px;height: 1px;background: #fff;" class="line" />
+      </div>
     </div>
+    <div class="catalog">
+      <div class="topical">
+        <div class="catalog_title">
+          <img src="@/assets/dataCatalog/编组 4备份 2@2x.png" alt="" width="45px">
+          <span>部门</span>
+          <img src="@/assets/dataCatalog/编组 4备份@2x.png" alt="" width="45px">
+        </div>
+        <div class="catalog_list">
+          <div
+            v-for="(item, index) in topicList"
+            :key="index"
+            style="width: 290px"
+            class="catalog_list_item"
+            @click="gotoList(item)"
+          >
+            <img :src="require('@/assets/dataCatalog/zhuti' + (index + 1) + '.png')" alt="">
+            <div>{{ item.name }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="scene">
+        <div class="catalog_title">
+          <img src="@/assets/dataCatalog/编组 4备份 2@2x.png" alt="" width="45px">
+          <span>应用场景</span>
+          <img src="@/assets/dataCatalog/编组 4备份@2x.png" alt="" width="45px">
+        </div>
+        <div class="catalog_list">
+          <div
+            v-for="(item, index) in sceneList"
+            :key="index"
+            style="width: 390px"
+            class="catalog_list_item"
+            @click="gotoList1(item)"
+          >
+            <img :src="require('@/assets/dataCatalog/scene' + (index+1) + '.png')" alt="">
+            <div>{{ item.dicItemName }}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-    //import {getDicType, getOrgTree, getTotal} from '@/api/dataCatalog'
 
-    import {getModelInfo} from "@/api/fmu";
+import { getModelInfo } from '@/api/fmu'
 
-    export default {
-        name: '',
-        components: {},
-        props: {},
-        data() {
-            return {
-                scrollerHeight: window.innerWidth / 6.66 + 'px',
-                count: '1000',
-                topicList: [{"name":"数据业务部"},{"name":"低碳业务部"},{"name":"生态业务部"},{"name":"新能源业务部"},{"name":"软件业务部"},{"name":"基础研究部"},{"name":"智能网联部"},{"name":"中汽智联"}],
-                sceneList: [{"dicItemName":"绿色生态"},{"dicItemName":"智能网联"},{"dicItemName":"智能座舱"},{"dicItemName":"市场研究"},{"dicItemName":"工业软件"},{"dicItemName":"低碳节能"}]
-            };
-        },
-        computed: {},
-        watch: {},
-        created() {
-            //this.getTotal()
-        },
-        mounted() {
-            //this.getTopic();
-            //this.getScene();
-          let param=null;
-           getModelInfo(param).then((res) => {
-            this.count =  res.Data.TotalCount;
-          })
-        },
-        methods: {
-            gotoList(obj) {
-                this.$router.push({
-                    path: "/modelList",
-                    query: {topic: obj.id, name: obj.name, children: JSON.stringify(obj.children)}
-                })
-            },
-            gotoList1(obj) {
-                this.$router.push({path: "/modelList", query: {name1: obj.dicItemName}})
-            },
-            // getTopic() {
-            //     getOrgTree().then((res) => {
-            //         if (res.data[0] && res.data[0].children && res.data[0].children.length > 0) {
-            //             this.topicList = res.data[0].children;
-            //         }
-            //     })
-            // },
-            // getTotal() {
-            //     getTotal({}).then((res) => {
-            //         if (res.ok) {
-            //             this.count = res.data
-            //         }
-            //     })
-            // },
-            // getScene() {
-            //     getDicType({dicId: 6}).then((res) => {
-            //         for (var i = 0; i < res.data.length; i += 3) {
-            //             this.sceneList.push(res.data.slice(i, i + 3));
-            //         }
-            //     })
-            // },
+export default {
+  name: '',
+  components: {},
+  props: {},
+  data() {
+    return {
+      scrollerHeight: window.innerWidth / 6.66 + 'px',
+      count: '1000',
+      topicList: [{ 'name': '数据业务部' }, { 'name': '低碳业务部' }, { 'name': '生态业务部' }, { 'name': '新能源业务部' }, { 'name': '软件业务部' }, { 'name': '基础研究部' }, { 'name': '智能网联部' }, { 'name': '中汽智联' }],
+      sceneList: [{ 'dicItemName': '绿色生态' }, { 'dicItemName': '智能网联' }, { 'dicItemName': '智能座舱' }, { 'dicItemName': '市场研究' }, { 'dicItemName': '工业软件' }, { 'dicItemName': '低碳节能' }]
+    }
+  },
+  computed: {},
+  watch: {},
+  created() {
+    // this.getTotal()
+  },
+  mounted() {
+    // this.getTopic();
+    // this.getScene();
+    const param = null
+    getModelInfo(param).then((res) => {
+      this.count = res.Data.TotalCount
+    })
+  },
+  methods: {
+    gotoList(obj) {
+      this.$router.push({
+        path: '/modelList',
+        query: { topic: obj.id, name: obj.name, children: JSON.stringify(obj.children) }
+      })
+    },
+    gotoList1(obj) {
+      this.$router.push({ path: '/modelList', query: { name1: obj.dicItemName }})
+    }
+    // getTopic() {
+    //     getOrgTree().then((res) => {
+    //         if (res.data[0] && res.data[0].children && res.data[0].children.length > 0) {
+    //             this.topicList = res.data[0].children;
+    //         }
+    //     })
+    // },
+    // getTotal() {
+    //     getTotal({}).then((res) => {
+    //         if (res.ok) {
+    //             this.count = res.data
+    //         }
+    //     })
+    // },
+    // getScene() {
+    //     getDicType({dicId: 6}).then((res) => {
+    //         for (var i = 0; i < res.data.length; i += 3) {
+    //             this.sceneList.push(res.data.slice(i, i + 3));
+    //         }
+    //     })
+    // },
 
-        },
-    };
+  }
+}
 </script>
 
 <style scoped lang="less">
