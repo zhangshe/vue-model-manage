@@ -36,11 +36,18 @@
               <span v-for="item in keshiList" :key="item.name" :class="classObject1(item.name)" @click="selectKeshi(item)">{{ item.name }}</span>
             </div>
           </div>
-          <div class="condition_item">
+          <div v-if="false" class="condition_item">
             <div class="title">场景筛选：</div>
             <div class="condition_item_list">
               <span :class="{active: sceneAllSelect}" @click="selectAllScene()">全部</span>
               <span v-for="item in sceneList" :key="item.dicItemName" :class="classObject2(item.dicItemName)" @click="selectScene(item)">{{ item.dicItemName }}</span>
+            </div>
+          </div>
+          <div class="condition_item">
+            <div class="title">模型筛选：</div>
+            <div class="condition_item_list">
+              <span :class="{active: modelTypeAllSelect}" @click="selectAllModelType()">全部</span>
+              <span v-for="item in modelTypeList" :key="item.name" :class="classObject4(item.name)" @click="selectModelType(item)">{{ item.name }}</span>
             </div>
           </div>
           <div class="condition_item">
@@ -92,6 +99,10 @@
               <span>最新更新时间：</span>
               <span>{{ item.UpdateTime| parseTime }}</span>
             </div>
+            <div>
+              <span>入库状态：</span>
+              <span>{{ item.StorageStatus }}</span>
+            </div>
           </div>
         </div>
 
@@ -142,7 +153,8 @@ export default {
         { 'name': '前瞻技术研究室' }, { 'name': '软件研发室' }, { 'name': '数据技术应用室' }, { 'name': '智能网联数据室' },
         { 'name': '网联技术研究室' }, { 'name': '智能网联应用室' }, { 'name': '业务发展室' }, { 'name': '技术发展室' }
       ],
-      languageList: [{ 'name': 'FMI' }, { 'name': 'Java' }, { 'name': 'Python' }, { 'name': 'Matlab' }, { 'name': 'C++' }, { 'name': 'C#' }],
+      languageList: [{ 'name': 'Java' }, { 'name': 'Python' }, { 'name': 'Matlab' }, { 'name': 'C++' }, { 'name': 'C#' }, { 'name': '其他' }],
+      modelTypeList: [{ 'name': 'FMU' }, { 'name': 'API' }, { 'name': '其他' }],
       form: {
         page: 1,
         pageSize: 10,
@@ -150,6 +162,7 @@ export default {
         constructionMainList: [],
         dataSceneList: [],
         dataLanguageList: [],
+        dataModelTypeList: [],
         dataSceneOperator: 'like',
         dataName: '',
         dataNameOperator: 'like',
@@ -163,6 +176,7 @@ export default {
       keshiAllSelect: false,
       sceneAllSelect: false,
       languageAllSelect: false,
+      modelTypeAllSelect: false,
       total: 0
     }
   },
@@ -187,7 +201,7 @@ export default {
       this.keshiList = JSON.parse(this.$route.query.children || '[]')
     }
     if (this.$route.query.name1) {
-      this.form.dataSceneList.push(this.$route.query.name1)
+      this.form.dataLanguageList.push(this.$route.query.name1)
       this.selectCondition.push(this.$route.query.name1)
       this.keshiList = this.allkeshiList
     }
@@ -243,9 +257,11 @@ export default {
         deptNameList: this.form.constructionMainList.join(','),
         sceneList: this.form.dataSceneList.join(','),
         languageList: this.form.dataLanguageList.join(','),
+        modelTypeList: this.form.dataModelTypeList.join(','),
         pageIndex: this.form.page,
         pageSize: this.form.pageSize
       }
+      console.log(pageQuery)
       getModelInfo(pageQuery).then((res) => {
         this.dataList = res.Data.Data
         this.listLength = res.Data.TotalCount
@@ -297,6 +313,12 @@ export default {
       const that = this
       return {
         active: that.form.dataLanguageList.indexOf(id) !== -1
+      }
+    },
+    classObject4(id) {
+      const that = this
+      return {
+        active: that.form.dataModelTypeList.indexOf(id) !== -1
       }
     },
     selectTopic(obj) {
@@ -398,6 +420,25 @@ export default {
       }
       this.getList()
     },
+    selectModelType(obj) {
+      const that = this
+      that.modelTypeAllSelect = false
+      that.selectCondition = that.selectCondition.filter((item) => {
+        return item !== '全部模型'
+      })
+      const index = that.form.dataModelTypeList.indexOf(obj.name)
+      if (index !== -1) {
+        that.form.dataModelTypeList.splice(index, 1)
+        that.selectCondition = that.selectCondition.filter((item) => {
+          return item !== obj.name
+        })
+      } else {
+        that.form.dataModelTypeList.push(obj.name)
+        that.selectCondition.push(obj.name)
+      }
+      this.getList()
+    },
+
     calcelCondition(key) {
       this.selectCondition = this.selectCondition.filter((item) => {
         return item !== key
@@ -412,6 +453,9 @@ export default {
         return item !== key
       })
       this.form.dataLanguageList = this.form.dataLanguageList.filter((item) => {
+        return item !== key
+      })
+      this.form.dataModelTypeList = this.form.dataModelTypeList.filter((item) => {
         return item !== key
       })
       this.topicList.forEach((item, index) => {
@@ -512,6 +556,26 @@ export default {
         })
       }
       flag || that.getList()
+    },
+    selectAllModelType(flag) {
+      const that = this
+      that.modelTypeAllSelect = !that.modelTypeAllSelect
+      if (that.modelTypeAllSelect) {
+        that.selectCondition.push('全部模型')
+        for (let i = 0; i < that.form.dataModelTypeList.length; i++) {
+          for (let j = 0; j < that.selectCondition.length; j++) {
+            if (that.form.dataModelTypeList[i] === that.selectCondition[j]) {
+              that.selectCondition.splice(j, 1)
+            }
+          }
+        }
+        that.form.dataModelTypeList = []
+      } else {
+        that.selectCondition = that.selectCondition.filter((item) => {
+          return item !== '全部模型'
+        })
+      }
+      flag || that.getList()
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -529,6 +593,9 @@ export default {
         }
         if (vm.condition.condition.indexOf('全部开发语言') !== -1) {
           vm.selectAllLanguage(true)
+        }
+        if (vm.condition.condition.indexOf('全部模型') !== -1) {
+          vm.selectAllModelType(true)
         }
         // vm.formSearchModel = vm.condition;
         vm.form.dataName = vm.condition.dataName

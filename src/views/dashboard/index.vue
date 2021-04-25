@@ -11,10 +11,10 @@
         <div style="color:#bee3ff;font-size: 18px;font-weight: 600;font-family: PingFangSC-Medium, PingFang SC;margin-top: 10px">
           共汇聚
           <div style="display: inline;font-size: 32px;color:#FBEA1B;font-weight: 600">{{ count }}</div>
-          项行业数据资源
+          项行业模型资源
         </div>
         <div style="color:#bee3ff;font-size: 18px;font-weight: 600;font-family: PingFangSC-Medium, PingFang SC;margin-top: 10px">
-          提供数据基本信息与数据样例的查询与展示，促进数据可视可用
+          提供模型的基本信息，促进模型复用及知识沉淀
         </div>
         <div style="width: 148px;height: 1px;background: #fff;" class="line" />
       </div>
@@ -42,19 +42,19 @@
       <div class="scene">
         <div class="catalog_title">
           <img src="@/assets/dataCatalog/编组 4备份 2@2x.png" alt="" width="45px">
-          <span>应用场景</span>
+          <span>开发语言</span>
           <img src="@/assets/dataCatalog/编组 4备份@2x.png" alt="" width="45px">
         </div>
         <div class="catalog_list">
           <div
-            v-for="(item, index) in sceneList"
+            v-for="(item, index) in languageList"
             :key="index"
             style="width: 390px"
             class="catalog_list_item"
             @click="gotoList1(item)"
           >
             <img :src="require('@/assets/dataCatalog/scene' + (index+1) + '.png')" alt="">
-            <div>{{ item.dicItemName }}
+            <div>{{ item.name }}
 
             </div>
           </div>
@@ -74,6 +74,10 @@ export default {
   props: {},
   data() {
     return {
+      loginForm: {
+        username: 'admin',
+        password: '111111'
+      },
       scrollerHeight: window.innerWidth / 6.66 + 'px',
       count: '1000',
       topicList: [{ 'name': '数据业务部', 'children': [{ 'name': '产品数据室' }, { 'name': '后市场数据室' }, { 'name': '市场数据室' }] },
@@ -84,7 +88,8 @@ export default {
         { 'name': '基础研究部', 'children': [{ 'name': '前瞻技术研究室' }, { 'name': '软件研发室' }, { 'name': '数据技术应用室' }] },
         { 'name': '智能网联部', 'children': [{ 'name': '智能网联数据室' }, { 'name': '网联技术研究室' }, { 'name': '智能网联应用室' }] },
         { 'name': '中汽智联', 'children': [{ 'name': '业务发展室' }, { 'name': '技术发展室' }] }],
-      sceneList: [{ 'dicItemName': '绿色生态' }, { 'dicItemName': '智能网联' }, { 'dicItemName': '智能座舱' }, { 'dicItemName': '市场研究' }, { 'dicItemName': '工业软件' }, { 'dicItemName': '低碳节能' }]
+      sceneList: [{ 'dicItemName': '绿色生态' }, { 'dicItemName': '智能网联' }, { 'dicItemName': '智能座舱' }, { 'dicItemName': '市场研究' }, { 'dicItemName': '工业软件' }, { 'dicItemName': '低碳节能' }],
+      languageList: [{ 'name': 'Java' }, { 'name': 'Python' }, { 'name': 'Matlab' }, { 'name': 'C++' }, { 'name': 'C#' }, { 'name': '其他' }]
     }
   },
   computed: {},
@@ -99,6 +104,12 @@ export default {
     getModelInfo(param).then((res) => {
       this.count = res.Data.TotalCount
     })
+    this.$store.dispatch('user/login', this.loginForm).then(() => {
+      this.$router.push({ path: this.redirect || '/' })
+      this.loading = false
+    }).catch(() => {
+      this.loading = false
+    })
   },
   methods: {
     gotoList(obj) {
@@ -108,7 +119,7 @@ export default {
       })
     },
     gotoList1(obj) {
-      this.$router.push({ path: '/modelList', query: { name1: obj.dicItemName }})
+      this.$router.push({ path: '/modelList', query: { name1: obj.name }})
     }
     // getTopic() {
     //     getOrgTree().then((res) => {

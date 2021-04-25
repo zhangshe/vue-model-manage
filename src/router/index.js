@@ -54,7 +54,7 @@ export const constantRoutes = [
     component: () => import('@/views/model/detail'),
     meta: { title: '模型信息', icon: 'dashboard' }
   },
-  
+
   {
     path: '/modelList',
     name: 'modelList',
