@@ -216,7 +216,6 @@ export default {
         this.title = '失败'
         this.type = 'error'
         if (response.RespCode === 1) {
-          // console.log('index.vue', row)
           this.$router.push({
             path: 'Detail',
             query: { moduleId: row.ModelID }
@@ -261,7 +260,6 @@ export default {
         pageIndex: this.form.page,
         pageSize: this.form.pageSize
       }
-      console.log(pageQuery)
       getModelInfo(pageQuery).then((res) => {
         this.dataList = res.Data.Data
         this.listLength = res.Data.TotalCount

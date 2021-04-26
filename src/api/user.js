@@ -7,6 +7,13 @@ export function login(data) {
     data
   })
 }
+export function LoginNew(data) {
+  return request({
+    url: '/User/LoginNew',
+    method: 'post',
+    data
+  })
+}
 
 export function getInfo(query) {
   return request({

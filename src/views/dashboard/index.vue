@@ -74,9 +74,15 @@ export default {
   props: {},
   data() {
     return {
+      // loginForm: {
+      //   username: 'admin',
+      //   password: '111111'
+      // },
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        DepartmentName: '软件开发部',
+        Account: '008054',
+        UnitName: '基础研究室',
+        UserName: 'admin'
       },
       scrollerHeight: window.innerWidth / 6.66 + 'px',
       count: '1000',
@@ -98,17 +104,21 @@ export default {
     // this.getTotal()
   },
   mounted() {
+    this.loginForm.DepartmentName = this.$route.params.DepartmentName === undefined ? '软件开发部' : this.$route.params.DepartmentName
+    this.loginForm.Account = this.$route.params.Account === undefined ? '008054' : this.$route.params.Account
+    this.loginForm.UnitName = this.$route.params.UnitName === undefined ? '基础研究室' : this.$route.params.UnitName
+    this.loginForm.UserName = this.$route.params.UserName === undefined ? 'admin' : this.$route.params.UserName
     // this.getTopic();
     // this.getScene();
-    const param = null
-    getModelInfo(param).then((res) => {
-      this.count = res.Data.TotalCount
-    })
-    this.$store.dispatch('user/login', this.loginForm).then(() => {
+    this.$store.dispatch('user/LoginNew', this.loginForm).then(() => {
       this.$router.push({ path: this.redirect || '/' })
       this.loading = false
     }).catch(() => {
       this.loading = false
+    })
+    const param = null
+    getModelInfo(param).then((res) => {
+      this.count = res.Data.TotalCount
     })
   },
   methods: {
