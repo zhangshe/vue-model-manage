@@ -79,10 +79,11 @@ export default {
       //   password: '111111'
       // },
       loginForm: {
-        DepartmentName: '软件开发部',
-        Account: '008054',
-        UnitName: '基础研究室',
-        UserName: 'admin'
+        // DepartmentName: '软件开发部',
+        // Account: '008054',
+        // UnitName: '基础研究室',
+        // UserName: 'admin'
+        userId: ''
       },
       scrollerHeight: window.innerWidth / 6.66 + 'px',
       count: '1000',
@@ -104,13 +105,28 @@ export default {
     // this.getTotal()
   },
   mounted() {
-    this.loginForm.DepartmentName = this.$route.params.DepartmentName === undefined ? '软件开发部' : this.$route.params.DepartmentName
-    this.loginForm.Account = this.$route.params.Account === undefined ? '008054' : this.$route.params.Account
-    this.loginForm.UnitName = this.$route.params.UnitName === undefined ? '基础研究室' : this.$route.params.UnitName
-    this.loginForm.UserName = this.$route.params.UserName === undefined ? 'admin' : this.$route.params.UserName
+    var url = window.location.href // 获取当前url
+
+    var dz_url = url.split('#')[0] // 获取#/之前的字符串
+
+    var cs = dz_url.split('?')[1] // 获取?之后的参数字符串
+
+    // var cs_arr = cs.split('&')  // 参数字符串分割为数组
+
+    // var cs = {}
+
+    // for (var i = 0; i < cs_arr.length; i++) { // 遍历数组，拿到json对象
+    //   cs[cs_arr[i].split('=')[0]] = cs_arr[i].split('=')[1]
+    // }
+    this.loginForm.userId = cs === undefined ? '' : cs
+    // this.loginForm.DepartmentName = this.$route.params.DepartmentName === undefined ? '软件开发部' : this.$route.params.DepartmentName
+    // this.loginForm.Account = this.$route.params.Account === undefined ? '008054' : this.$route.params.Account
+    // this.loginForm.UnitName = this.$route.params.UnitName === undefined ? '基础研究室' : this.$route.params.UnitName
+    // this.loginForm.UserName = this.$route.params.UserName === undefined ? 'admin' : this.$route.params.UserName
     // this.getTopic();
     // this.getScene();
-    this.$store.dispatch('user/LoginNew', this.loginForm).then(() => {
+    console.log('UID', cs)
+    this.$store.dispatch('user/login', this.loginForm).then(() => {
       this.$router.push({ path: this.redirect || '/' })
       this.loading = false
     }).catch(() => {

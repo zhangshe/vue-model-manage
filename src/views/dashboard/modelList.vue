@@ -224,10 +224,14 @@ export default {
       })
     },
     addModel() {
+      // this.$router.push({
+      //   name: 'Manage',
+      //   params: { type: 'create' }
+      // })
       this.$router.push({
-        name: 'Manage',
-        params: { type: 'create' }
-      })
+        name: 'www.baidu.com',
+        params: { DepartmentName: '软件开发部', Account: '0080542', UnitName: '基础研究室', UserName: 'admin' }
+      })
     },
     getList() {
       // const param = JSON.parse(JSON.stringify(this.form))
