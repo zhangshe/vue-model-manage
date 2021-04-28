@@ -6,9 +6,9 @@
           <img style="height:80px;" src="@/assets/images/logo.png">
         </div>
       </div> -->
-      <h2 style="color:#fff;float:left;line-height: 45px;margin-left: 5%;">中汽数据模型管理系统</h2>
-      <div class="verticalBar" />
-      <h4 style="color:#CCC;float:left;line-height: 43px;">模型详情</h4>
+      <h2 style="color:#fff;float:left;line-height: 45px;margin-left: 5%;">模型详情</h2>
+<!--      <div class="verticalBar" />-->
+<!--      <h4 style="color:#CCC;float:left;line-height: 43px;">模型详情</h4>-->
       <div class="right-menu">
         <el-dropdown class="avatar-container" trigger="click">
           <div class="avatar-wrapper">
@@ -96,7 +96,7 @@
             </el-col>
             <el-col :span="10" style="font-size:16px;margin-bottom:1%;">
               <el-col :span="6" :pull="1" style="text-align:right;">
-                <label style="width:128px;font-weight:500;text-align:right;">模型类型：</label>
+                <label style="width:128px;font-weight:500;text-align:right;">开发语言：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
                 <span style="font-size:16px;font-weight:100;">{{
@@ -165,11 +165,11 @@
             </el-col>
             <el-col :span="10" style="font-size:16px;margin-bottom:1%;">
               <el-col :span="6" :pull="1" style="text-align:right;">
-                <label style="width:128px;font-weight:500;text-align:right;">模型类型：</label>
+                <label style="width:128px;font-weight:500;text-align:right;">开发语言：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
                 <span style="font-size:16px;font-weight:100;">{{
-                  modelForm.ModelType | parseType
+                  modelForm.Language
                 }}</span>
               </el-col>
             </el-col>
@@ -183,44 +183,48 @@
             </el-col>
             <el-col :span="10" style="font-size:16px;margin-bottom:1%;">
               <el-col :span="6" :pull="1" style="text-align:right;">
-                <label style="width:128px;font-weight:500;text-align:right;">GUID：</label>
+                <label style="width:128px;font-weight:500;text-align:right;">模型来源：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
-                <span style="font-size:16px;font-weight:100;">{{ JSON.parse(modelForm.ApiDescribe)===null?"":JSON.parse(modelForm.ApiDescribe).Guid }}</span>
+                <span style="font-size:16px;font-weight:100;">{{
+                    modelForm.DataSource
+                  }}</span>
               </el-col>
             </el-col>
             <el-col :span="14" style="font-size:16px;margin-bottom:1%;">
               <el-col :span="6" :pull="1" style="text-align:right;">
-                <label style="width:128px;font-weight:500;text-align:right;">API版本：</label>
+                <label style="width:128px;font-weight:500;text-align:right;">上传部门：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
-                <span style="font-size:16px;font-weight:100;">{{ JSON.parse(modelForm.ApiDescribe)===null?"":JSON.parse(modelForm.ApiDescribe).Version }}</span>
+                <span style="font-size:16px;font-weight:100;">{{
+                    modelForm.OrgName
+                  }}</span>
               </el-col>
             </el-col>
             <el-col :span="10" style="font-size:16px;margin-bottom:1%;">
               <el-col :span="6" :pull="1" style="text-align:right;">
-                <label style="width:128px;font-weight:500;text-align:right;">作者：</label>
+                <label style="width:128px;font-weight:500;text-align:right;">上传科室：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
-                <span style="font-size:16px;font-weight:100;">{{ JSON.parse(modelForm.ApiDescribe)===null?"":JSON.parse(modelForm.ApiDescribe).Author }}</span>
+                <span style="font-size:16px;font-weight:100;">{{ modelForm.DeptName }}</span>
               </el-col>
             </el-col>
-            <el-col :span="14" style="font-size:16px;margin-bottom:1%;">
-              <el-col :span="6" :pull="1" style="text-align:right;">
-                <label style="width:128px;font-weight:500;text-align:right;">生成工具：</label>
-              </el-col>
-              <el-col :span="18" :pull="1" style="text-align:left;">
-                <span style="font-size:16px;font-weight:100;">{{ JSON.parse(modelForm.ApiDescribe)===null?"":JSON.parse(modelForm.ApiDescribe).GenerationTool }}</span>
-              </el-col>
-            </el-col>
-            <el-col :span="10" style="font-size:16px;margin-bottom:1%;">
-              <el-col :span="6" :pull="1" style="text-align:right;">
-                <label style="width:128px;font-weight:500;text-align:right;">生成时间：</label>
-              </el-col>
-              <el-col :span="17" :pull="1" style="text-align:left;">
-                <span style="font-size:16px;font-weight:100;">{{ JSON.parse(modelForm.ApiDescribe)===null?"":JSON.parse(modelForm.ApiDescribe).CreateTime }}</span>
-              </el-col>
-            </el-col>
+<!--            <el-col :span="14" style="font-size:16px;margin-bottom:1%;">-->
+<!--              <el-col :span="6" :pull="1" style="text-align:right;">-->
+<!--                <label style="width:128px;font-weight:500;text-align:right;">生成工具：</label>-->
+<!--              </el-col>-->
+<!--              <el-col :span="18" :pull="1" style="text-align:left;">-->
+<!--                <span style="font-size:16px;font-weight:100;">{{ JSON.parse(modelForm.ApiDescribe)===null?"":JSON.parse(modelForm.ApiDescribe).GenerationTool }}</span>-->
+<!--              </el-col>-->
+<!--            </el-col>-->
+<!--            <el-col :span="10" style="font-size:16px;margin-bottom:1%;">-->
+<!--              <el-col :span="6" :pull="1" style="text-align:right;">-->
+<!--                <label style="width:128px;font-weight:500;text-align:right;">生成时间：</label>-->
+<!--              </el-col>-->
+<!--              <el-col :span="17" :pull="1" style="text-align:left;">-->
+<!--                <span style="font-size:16px;font-weight:100;">{{ JSON.parse(modelForm.ApiDescribe)===null?"":JSON.parse(modelForm.ApiDescribe).CreateTime }}</span>-->
+<!--              </el-col>-->
+<!--            </el-col>-->
             <el-col :span="24" style="font-size:16px;margin-bottom:1%;">
               <el-col :span="4" :pull="1" style="text-align:right;">
                 <label style="width:128px;font-weight:500;text-align:right;">输入数据样例：</label>
@@ -282,10 +286,10 @@
             </el-link>
           </el-row>
           <el-row v-else>
-            <el-button style="width:200px;margin-bottom:1%;margin-top:1%;" type="warning" @click="ApiClick()">线上调用</el-button>
-            <el-link :underline="false" :href="APIDemoUrl" target="_blank">
-              <el-button style="width:200px;margin-bottom:1%;margin-top:1%;margin-left:5%" type="primary">远程调用</el-button>
-            </el-link>
+            <el-button style="width:200px;margin-bottom:1%;margin-top:1%;" type="primary" @click="ApiClick()">模型试用</el-button>
+<!--            <el-link :underline="false" :href="APIDemoUrl" target="_blank">-->
+<!--              <el-button style="width:200px;margin-bottom:1%;margin-top:1%;margin-left:5%" type="primary">远程调用</el-button>-->
+<!--            </el-link>-->
           </el-row>
           <el-row :span="24" style="text-align:center;">
             <el-button @click="resetForm()">返回</el-button>
@@ -352,7 +356,8 @@ export default {
         FileName: '',
         ApiDescribe: null,
         Port: '',
-        SwaggerUrl: null
+        SwaggerUrl: null,
+        DataSource: ''
       }
     }
   },
@@ -640,6 +645,9 @@ export default {
       })
     },
     ApiClick() {
+      //跳出提示页面
+
+      return
       addInvokeNum({ moduleId: this.modelForm.ModelID }).then(response => {
         if (response.RespCode === 1) {
           const userip = localStorage.getItem('Ip')

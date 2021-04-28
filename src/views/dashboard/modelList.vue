@@ -5,16 +5,16 @@
 
         <div class="search_num">
           <div>
-            <el-button
-              ref="btnAddModel"
-              type="primary"
-              icon="el-icon-circle-plus"
-              size="small"
-              @click="addModel"
-            >上传模型
-            </el-button>
+<!--            <el-button-->
+<!--              ref="btnAddModel"-->
+<!--              type="primary"-->
+<!--              icon="el-icon-circle-plus"-->
+<!--              size="small"-->
+<!--              @click="addModel"-->
+<!--            >上传模型-->
+<!--            </el-button>-->
           </div>
-          <span>共有<span class="num">{{ listLength }}</span>项数据</span>
+          <span>共有<span class="num">{{ listLength }}</span>项模型</span>
           <div>
             <el-input v-model="form.dataName" size="small" class="keySearch" />
             <el-button type="primary" icon="el-icon-search" size="small" class="keySearchBtn" @click="getList" />
