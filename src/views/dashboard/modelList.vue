@@ -4,15 +4,15 @@
       <div class="select_params_div">
 
         <div class="search_num">
-          <div>
-<!--            <el-button-->
-<!--              ref="btnAddModel"-->
-<!--              type="primary"-->
-<!--              icon="el-icon-circle-plus"-->
-<!--              size="small"-->
-<!--              @click="addModel"-->
-<!--            >上传模型-->
-<!--            </el-button>-->
+          <div v-if="false">
+            <el-button
+              ref="btnAddModel"
+              type="primary"
+              icon="el-icon-circle-plus"
+              size="small"
+              @click="addModel"
+            >上传模型
+            </el-button>
           </div>
           <span>共有<span class="num">{{ listLength }}</span>项模型</span>
           <div>
@@ -224,14 +224,14 @@ export default {
       })
     },
     addModel() {
-      // this.$router.push({
-      //   name: 'Manage',
-      //   params: { type: 'create' }
-      // })
       this.$router.push({
-        name: 'www.baidu.com',
-        params: { DepartmentName: '软件开发部', Account: '0080542', UnitName: '基础研究室', UserName: 'admin' }
-      })
+        name: 'Manage',
+        params: { type: 'create' }
+      })
+      // this.$router.push({
+      //   name: 'www.baidu.com',
+      //   params: { DepartmentName: '软件开发部', Account: '0080542', UnitName: '基础研究室', UserName: 'admin' }
+      // })
     },
     getList() {
       // const param = JSON.parse(JSON.stringify(this.form))

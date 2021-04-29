@@ -125,7 +125,8 @@ export default {
     // this.loginForm.UserName = this.$route.params.UserName === undefined ? 'admin' : this.$route.params.UserName
     // this.getTopic();
     // this.getScene();
-    console.log('UID', cs)
+    // console.log('URL', url)
+    // console.log('UID', cs)
     this.$store.dispatch('user/login', this.loginForm).then(() => {
       this.$router.push({ path: this.redirect || '/' })
       this.loading = false

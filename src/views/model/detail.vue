@@ -306,7 +306,22 @@
         </el-col>
       </el-row>
     </div>
+      <el-dialog
+  :visible.sync="centerDialogVisible"
+  width="30%"
+  center>
+  <template slot="title">
+    <div style="font-weight:blod;font-size:20px;color:#409EFF">模型试用</div>
+  </template>
+  <div style="margin-top:3%;margin-bottom:3%;font-size:16px;">如需试用该模型，请联系数据技术研究室！</div>
+    <div style="margin-top:3%;margin-bottom:3%;font-size:16px;"><span style="letter-spacing:0.94em;">朱悦</span> 联系电话：18210156021  邮箱：zhuyue@catarc.ac.cn</div>
+    <div style="margin-top:3%;margin-bottom:3%;font-size:16px;"><span style="margin-right:4%;">楚思思</span>联系电话：13113019634  邮箱：chusisi@catarc.ac.cn</div>
+  <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
+
 </template>
 
 <script>
@@ -332,6 +347,7 @@ export default {
   },
   data() {
     return {
+      centerDialogVisible: false,
       fmuDemoUrl: '/Downloads/fmuDemo.zip',
       APIDemoUrl: '/Downloads/PythonAPIModel.zip',
       modelForm: {
@@ -646,35 +662,34 @@ export default {
       })
     },
     ApiClick() {
-      //跳出提示页面
-
-      return
-      addInvokeNum({ moduleId: this.modelForm.ModelID }).then(response => {
-        if (response.RespCode === 1) {
-          const userip = localStorage.getItem('Ip')
-          const time = new Date()
-          this.modelForm.DownloadNum = parseInt(this.modelForm.DownloadNum) + 1
-          this.modelForm.ViewNum = parseInt(this.modelForm.ViewNum) + 1
-          console.log('detail.vue', userip, time, this.modelForm)
-          PostInvokelog({
-            ModelGUID: this.modelForm.GUID,
-            InvokeIP: userip,
-            InvokeTime: time,
-            Invoker: '管理员',
-            OrgID: this.modelForm.OrgID,
-            OrgName: this.modelForm.OrgName,
-            DeptID: this.modelForm.DeptID,
-            DeptName: this.modelForm.DeptName
-          })
-          if (this.modelForm.Port !== null && this.modelForm.SwaggerUrl !== null) {
-            document.getElementById('map').src = process.env.VUE_APP_API_SERVICE + ':' + this.modelForm.Port + this.modelForm.SwaggerUrl // 'http://localhost:30001/api-docs'
-            this.changeMapIframe()
-          } else {
-            var index = this.modelForm.ModelFileUrl.split('\\').length - 1
-            window.open(process.env.VUE_APP_SERVICE_URL + 'DeployFile/' + this.modelForm.ModelFileUrl.split('\\')[index])
-          }
-        }
-      })
+      // 跳出提示页面
+      this.centerDialogVisible = true
+      // addInvokeNum({ moduleId: this.modelForm.ModelID }).then(response => {
+      //   if (response.RespCode === 1) {
+      //     const userip = localStorage.getItem('Ip')
+      //     const time = new Date()
+      //     this.modelForm.DownloadNum = parseInt(this.modelForm.DownloadNum) + 1
+      //     this.modelForm.ViewNum = parseInt(this.modelForm.ViewNum) + 1
+      //     console.log('detail.vue', userip, time, this.modelForm)
+      //     PostInvokelog({
+      //       ModelGUID: this.modelForm.GUID,
+      //       InvokeIP: userip,
+      //       InvokeTime: time,
+      //       Invoker: '管理员',
+      //       OrgID: this.modelForm.OrgID,
+      //       OrgName: this.modelForm.OrgName,
+      //       DeptID: this.modelForm.DeptID,
+      //       DeptName: this.modelForm.DeptName
+      //     })
+      //     if (this.modelForm.Port !== null && this.modelForm.SwaggerUrl !== null) {
+      //       document.getElementById('map').src = process.env.VUE_APP_API_SERVICE + ':' + this.modelForm.Port + this.modelForm.SwaggerUrl // 'http://localhost:30001/api-docs'
+      //       this.changeMapIframe()
+      //     } else {
+      //       var index = this.modelForm.ModelFileUrl.split('\\').length - 1
+      //       window.open(process.env.VUE_APP_SERVICE_URL + 'DeployFile/' + this.modelForm.ModelFileUrl.split('\\')[index])
+      //     }
+      //   }
+      // })
     }
   }
 }
