@@ -168,7 +168,7 @@
                 <label style="width:128px;font-weight:500;text-align:right;">开发语言：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
-                <span style="font-size:16px;font-weight:100;">{{
+                <span style="font-size:16px;font-weight:500;">{{
                   modelForm.Language
                 }}</span>
               </el-col>
@@ -186,7 +186,7 @@
                 <label style="width:128px;font-weight:500;text-align:right;">模型来源：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
-                <span style="font-size:16px;font-weight:100;">{{
+                <span style="font-size:16px;font-weight:500;">{{
                     modelForm.DataSource
                   }}</span>
               </el-col>
@@ -196,7 +196,7 @@
                 <label style="width:128px;font-weight:500;text-align:right;">上传部门：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
-                <span style="font-size:16px;font-weight:100;">{{
+                <span style="font-size:16px;font-weight:500;">{{
                     modelForm.OrgName
                   }}</span>
               </el-col>
@@ -206,7 +206,7 @@
                 <label style="width:128px;font-weight:500;text-align:right;">上传科室：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
-                <span style="font-size:16px;font-weight:100;">{{ modelForm.DeptName }}</span>
+                <span style="font-size:16px;font-weight:500;">{{ modelForm.DeptName }}</span>
               </el-col>
             </el-col>
 <!--            <el-col :span="14" style="font-size:16px;margin-bottom:1%;">-->
@@ -230,7 +230,7 @@
                 <label style="width:128px;font-weight:500;text-align:right;">输入数据样例：</label>
               </el-col>
               <el-col :span="19" :pull="1" style="text-align:left;">
-                <span style="font-size:16px;font-weight:100;">{{ modelForm.InputData }}</span>
+                <span style="font-size:16px;font-weight:500;">{{ modelForm.InputData }}</span>
               </el-col>
             </el-col>
             <el-col :span="24" style="font-size:16px;margin-bottom:1%;">
@@ -238,7 +238,7 @@
                 <label style="width:128px;font-weight:500;text-align:right;">输出数据样例：</label>
               </el-col>
               <el-col :span="19" :pull="1" style="text-align:left;">
-                <span style="font-size:16px;font-weight:100;">{{ modelForm.OutputData }}</span>
+                <span style="font-size:16px;font-weight:500;">{{ modelForm.OutputData }}</span>
               </el-col>
             </el-col>
           </el-row>
@@ -308,14 +308,20 @@
     </div>
       <el-dialog
   :visible.sync="centerDialogVisible"
-  width="30%"
+  width="40%"
   center>
   <template slot="title">
     <div style="font-weight:blod;font-size:20px;color:#409EFF">模型试用</div>
   </template>
-  <div style="margin-top:3%;margin-bottom:3%;font-size:16px;">如需试用该模型，请联系数据技术研究室！</div>
+  <div style="margin:0 auto;text-align:center;">
+<el-row>
+  <el-col :offset="4" :span="4"><img style="width:50px;height:50px;" src="@/assets/images/customerService.png"></el-col>
+  <el-col :span="12"><div style="text-align:left;margin-top:6%;margin-bottom:3%;font-size:16px;"> 如需试用该模型，请联系数据技术研究室！</div></el-col>
+</el-row>
+  
     <div style="margin-top:3%;margin-bottom:3%;font-size:16px;"><span style="letter-spacing:0.94em;">朱悦</span> 联系电话：18210156021  邮箱：zhuyue@catarc.ac.cn</div>
-    <div style="margin-top:3%;margin-bottom:3%;font-size:16px;"><span style="margin-right:4%;">楚思思</span>联系电话：13113019634  邮箱：chusisi@catarc.ac.cn</div>
+    <div style="margin-top:3%;margin-bottom:3%;font-size:16px;"><span style="letter-spacing:0.2em;margin-left:-1%;margin-right:2%;">楚思思</span>联系电话：13113019634  邮箱：chusisi@catarc.ac.cn</div>
+  </div>
   <span slot="footer" class="dialog-footer">
     <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
   </span>
