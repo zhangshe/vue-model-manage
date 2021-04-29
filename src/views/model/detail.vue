@@ -99,7 +99,7 @@
                 <label style="width:128px;font-weight:500;text-align:right;">开发语言：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
-                <span style="font-size:16px;font-weight:100;">{{
+                <span style="font-size:16px;font-weight:500;">{{
                   modelForm.ModelType | parseType
                 }}</span>
               </el-col>
@@ -117,7 +117,7 @@
                 <label style="width:128px;font-weight:500;text-align:right;">GUID：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
-                <span id="model_description.guid" style="font-size:16px;font-weight:100;" />
+                <span id="model_description.guid" style="font-size:16px;font-weight:500;" />
               </el-col>
             </el-col>
             <el-col :span="14" style="font-size:16px;margin-bottom:1%;">
@@ -125,7 +125,7 @@
                 <label style="width:128px;font-weight:500;text-align:right;">FMI版本：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
-                <span id="model_description.fmi_version" style="font-size:16px;font-weight:100;" />
+                <span id="model_description.fmi_version" style="font-size:16px;font-weight:500;" />
               </el-col>
             </el-col>
             <el-col :span="10" style="font-size:16px;margin-bottom:1%;">
@@ -133,7 +133,7 @@
                 <label style="width:128px;font-weight:500;text-align:right;">作者：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
-                <span id="model_description.author" style="font-size:16px;font-weight:100;" />
+                <span id="model_description.author" style="font-size:16px;font-weight:500;" />
               </el-col>
             </el-col>
             <el-col :span="14" style="font-size:16px;margin-bottom:1%;">
@@ -141,7 +141,7 @@
                 <label style="width:128px;font-weight:500;text-align:right;">生成工具：</label>
               </el-col>
               <el-col :span="18" :pull="1" style="text-align:left;">
-                <span id="model_description.generation_tool" style="font-size:16px;font-weight:100;" />
+                <span id="model_description.generation_tool" style="font-size:16px;font-weight:500;" />
               </el-col>
             </el-col>
             <el-col :span="10" style="font-size:16px;margin-bottom:1%;">
@@ -149,7 +149,7 @@
                 <label style="width:128px;font-weight:500;text-align:right;">生成时间：</label>
               </el-col>
               <el-col :span="17" :pull="1" style="text-align:left;">
-                <span id="model_description.generation_date_and_time" style="font-size:16px;font-weight:100;" />
+                <span id="model_description.generation_date_and_time" style="font-size:16px;font-weight:500;" />
               </el-col>
             </el-col>
           </el-row>
@@ -308,19 +308,31 @@
     </div>
       <el-dialog
   :visible.sync="centerDialogVisible"
-  width="40%"
+  width="50%"
   center>
   <template slot="title">
     <div style="font-weight:blod;font-size:20px;color:#409EFF">模型试用</div>
   </template>
   <div style="margin:0 auto;text-align:center;">
-<el-row>
-  <el-col :offset="4" :span="4"><img style="width:50px;height:50px;" src="@/assets/images/customerService.png"></el-col>
-  <el-col :span="12"><div style="text-align:left;margin-top:6%;margin-bottom:3%;font-size:16px;"> 如需试用该模型，请联系数据技术研究室！</div></el-col>
+<el-row style="height:50;">
+  <el-col :span="7" style="text-align:right;"><img style="width:50px;height:50px;" src="@/assets/images/customerService.png"></el-col>
+  <el-col :span="17"><div style="text-align:left;font-size:16px;height:50px;display: flex;align-items: center;text-align: justify;"> <div style="padding-left:2%;">如需试用该模型，请联系数据技术应用室！</div></div></el-col>
 </el-row>
-  
-    <div style="margin-top:3%;margin-bottom:3%;font-size:16px;"><span style="letter-spacing:0.94em;">朱悦</span> 联系电话：18210156021  邮箱：zhuyue@catarc.ac.cn</div>
-    <div style="margin-top:3%;margin-bottom:3%;font-size:16px;"><span style="letter-spacing:0.2em;margin-left:-1%;margin-right:2%;">楚思思</span>联系电话：13113019634  邮箱：chusisi@catarc.ac.cn</div>
+  <el-row>
+    <el-col :span="24" style="margin-top:1%;">
+      <el-col :span="6" style="text-align:right;"><div style="line-height:30px;letter-spacing:0.5em;font-size:16px;">朱悦</div> </el-col>
+      <el-col :span="18" style="text-align:left;"> <div style="line-height:30px;font-size:16px;">联系电话：18210156021  邮箱：zhuyue@catarc.ac.cn</div></el-col>
+     </el-col>
+  </el-row>
+    <el-row>
+       <el-col :span="24" style="margin-top:1%;">
+  <el-col :span="6" style="text-align:right;"><div style="line-height:30px;letter-spacing:0.3em;font-size:16px;">楚思思</div> </el-col>
+      <el-col :span="18" style="text-align:left;"> <div style="line-height:30px;font-size:16px;">联系电话：13113019634  邮箱：chusisi@catarc.ac.cn</div></el-col>
+       </el-col>
+    <!-- <el-col :span="24"><div style="margin-top:1.5%;margin-bottom:1.5%;font-size:16px;"><span style="letter-spacing:0.2em;margin-left:-1%;margin-right:2%;">楚思思</span>联系电话：13113019634  邮箱：chusisi@catarc.ac.cn</div>
+    </el-col> -->
+  </el-row>
+
   </div>
   <span slot="footer" class="dialog-footer">
     <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>

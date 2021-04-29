@@ -88,7 +88,7 @@
           </div>
           <div class="item_bottom">
             <div style="width: 150px">
-              <span>科室名称：</span>
+              <span>部门名称：</span>
               <span>{{ item.OrgName }}</span>
             </div>
             <div style="width: 200px">
